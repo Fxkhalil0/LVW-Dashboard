@@ -1,36 +1,73 @@
-export const columnsDataCheck = [
+export const columnsDirectors = [
   {
     Header: "NAME",
     accessor: "name",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "RATE",
+    accessor: "rate",
   },
   {
-    Header: "QUANTITY",
-    accessor: "quantity",
+    Header: "TOURS",
+    accessor: "tours",
+  },
+  {
+    Header: "LANGUAGE",
+    accessor: "language",
+  },
+];
+export const columnsTourGuides = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "RATE",
+    accessor: "rate",
+  },
+  {
+    Header: "TOURS",
+    accessor: "tours",
+  },
+  {
+    Header: "LANGUAGE",
+    accessor: "language",
+  },
+];
+export const columnsTourData = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "RATE",
+    accessor: "rate",
+  },
+  {
+    Header: "GUESTS",
+    accessor: "guests",
   },
   {
     Header: "DATE",
     accessor: "date",
   },
 ];
-export const columnsDataComplex = [
+
+export const columnsCameraOperator = [
   {
     Header: "NAME",
     accessor: "name",
   },
   {
-    Header: "STATUS",
-    accessor: "status",
+    Header: "RATE",
+    accessor: "rate",
   },
   {
-    Header: "DATE",
-    accessor: "date",
+    Header: "TOURS",
+    accessor: "tours",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "LANGUAGE",
+    accessor: "language",
   },
 ];

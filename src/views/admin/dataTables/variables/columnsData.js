@@ -73,3 +73,183 @@ export const columnsDataComplex = [
     accessor: "progress",
   },
 ];
+
+export const AllUsersData = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "PHONE",
+    accessor: "phone",
+  },
+  {
+    Header: "ADDRESS",
+    accessor: "address",
+  },
+  {
+    Header: "TOURS",
+    accessor: "tours",
+  },
+  {
+    Header: "JOINED AT",
+    accessor: "joined at",
+  },
+
+];
+
+export const AllTourGuidesData = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "PHONE",
+    accessor: "phone",
+  },
+  {
+    Header: "AVGRATE",
+    accessor: "avgrate",
+  },
+  {
+    Header: "TOURS",
+    accessor: "tours",
+  },
+  {
+    Header: "LANGUAGE",
+    accessor: "language",
+  },
+  {
+    Header: "JOINED AT",
+    accessor: "joined at",
+  },
+  {
+    Header: "ROLE",
+    accessor: "role",
+  },
+
+];
+
+export const AllCameraOperatorsData = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "PHONE",
+    accessor: "phone",
+  },
+  {
+    Header: "AVGRATE",
+    accessor: "avgrate",
+  },
+  {
+    Header: "TOURS",
+    accessor: "tours",
+  },
+  {
+    Header: "LANGUAGE",
+    accessor: "language",
+  },
+  {
+    Header: "JOINED AT",
+    accessor: "joined at",
+  },
+  {
+    Header: "ROLE",
+    accessor: "role",
+  },
+
+];
+
+export const AllDirectorsData = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "PHONE",
+    accessor: "phone",
+  },
+  {
+    Header: "AVGRATE",
+    accessor: "avgrate",
+  },
+  {
+    Header: "TOURS",
+    accessor: "tours",
+  },
+  {
+    Header: "LANGUAGE",
+    accessor: "language",
+  },
+  {
+    Header: "JOINED AT",
+    accessor: "joined at",
+  },
+  {
+    Header: "ROLE",
+    accessor: "role",
+  },
+
+];
+
+export const AllToursData = [
+  {
+    Header: "TITLE",
+    accessor: "title",
+  },
+  {
+    Header: "LOCATION",
+    accessor: "location",
+  },
+  {
+    Header: "PRICE",
+    accessor: "price",
+  },
+  {
+    Header: "AVGRATE",
+    accessor: "avgrate",
+  },
+  {
+    Header: "TOUR GUIDE",
+    accessor: "tourguide",
+  },
+  {
+    Header: "CAMERA OPERATOR",
+    accessor: "cameraoperator",
+  },
+  {
+    Header: "DIRECTOR",
+    accessor: "director",
+  },
+  {
+    Header: "CATEGORY",
+    accessor: "category",
+  },
+  {
+    Header: "DATE",
+    accessor: "date",
+  },
+  {
+    Header: "TIME",
+    accessor: "time",
+  },
+
+];

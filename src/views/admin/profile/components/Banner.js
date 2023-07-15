@@ -4,7 +4,7 @@ import Card from "components/card/Card.js";
 import React from "react";
 
 export default function Banner(props) {
-  const { banner, avatar, name, job, posts, followers, following } = props;
+  const { banner, avatar, name, email, phone, followers, following } = props;
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "gray.400";
@@ -34,31 +34,15 @@ export default function Banner(props) {
         {name}
       </Text>
       <Text color={textColorSecondary} fontSize='sm'>
-        {job}
+        {email}
       </Text>
-      <Flex w='max-content' mx='auto' mt='26px'>
-        <Flex mx='auto' me='60px' align='center' direction='column'>
-          <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
-            {posts}
-          </Text>
+      <Text color={textColorSecondary} fontSize='sm'>
+        {phone}
+      </Text>
+      <Flex mx='auto' mt='26px'>
+        <Flex mx='auto' me='5px' align='center' direction='column'>
           <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-            Posts
-          </Text>
-        </Flex>
-        <Flex mx='auto' me='60px' align='center' direction='column'>
-          <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
-            {followers}
-          </Text>
-          <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-            Followers
-          </Text>
-        </Flex>
-        <Flex mx='auto' align='center' direction='column'>
-          <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
-            {following}
-          </Text>
-          <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-            Following
+            "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
           </Text>
         </Flex>
       </Flex>

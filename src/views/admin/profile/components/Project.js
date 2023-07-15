@@ -1,5 +1,10 @@
 // Chakra imports
 import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
   Box,
   Flex,
   Icon,
@@ -7,15 +12,42 @@ import {
   Link,
   Text,
   useColorModeValue,
+  Textarea,
+  InputGroup,
+  InputRightElement,
+  InputLeftAddon,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
 } from "@chakra-ui/react";
+
+import { MdChevronLeft, MdChevronRight, MdOutlineCalendarMonth, MdAvTimer } from "react-icons/md";
+import Calendar from "react-calendar";
+import { MobileTimePicker } from "@mui/lab";
+import dayjs from "dayjs";
+
+
 // Custom components
 import Card from "components/card/Card.js";
-import React from "react";
+import React, { useState } from "react";
 // Assets
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdUpload } from "react-icons/md";
+import Dropzone from "views/admin/profile/components/Dropzone";
 
 export default function Project(props) {
-  const { title, ranking, link, image, ...rest } = props;
+  const { title, ranking, link, image, selectRange, ...rest } = props;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [value, onChange] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    onChange(date);
+    onClose();
+  };
+
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "gray.400";
@@ -24,34 +56,94 @@ export default function Project(props) {
   return (
     <Card bg={bg} {...rest} p='14px'>
       <Flex align='center' direction={{ base: "column", md: "row" }}>
-        <Image h='80px' w='80px' src={image} borderRadius='8px' me='20px' />
-        <Box mt={{ base: "10px", md: "0" }}>
-          <Text
-            color={textColorPrimary}
-            fontWeight='500'
-            fontSize='md'
-            mb='4px'>
-            {title}
-          </Text>
-          <Text
-            fontWeight='500'
-            color={textColorSecondary}
-            fontSize='sm'
-            me='4px'>
-            Project #{ranking} •{" "}
-            <Link fontWeight='500' color={brandColor} href={link} fontSize='sm'>
-              See project details
-            </Link>
-          </Text>
+        <Box w={{ base: "100%", md: "60%" }} me={{ md: "36px" }}>
+
+          <FormControl id="title">
+            <FormLabel>Title</FormLabel>
+            <InputGroup>
+              <Input type="text" />
+            </InputGroup>
+          </FormControl>
+
+          <FormControl id="desc">
+            <FormLabel>Description</FormLabel>
+            <InputGroup>
+              <Textarea type="text" />
+            </InputGroup>
+          </FormControl>
+
+          <FormControl id="date">
+            <FormLabel>Add date</FormLabel>
+            <InputGroup>
+              <InputLeftAddon width="5rem">
+                <Icon as={MdOutlineCalendarMonth} color={brandColor} boxSize={6} />
+              </InputLeftAddon>
+              <Input
+                id="date"
+                onClick={onOpen}
+                placeholder="Select date"
+                pr="5rem"
+              />
+            </InputGroup>
+          </FormControl>
+
+          <FormControl id="title">
+            <FormLabel>Time</FormLabel>
+            <InputGroup>
+              <InputLeftAddon width="5rem">
+                <Icon as={MdAvTimer} color={brandColor} boxSize={6} />
+              </InputLeftAddon>
+                <MobileTimePicker defaultValue={dayjs('2022-04-17T15:30')} />
+            </InputGroup>
+          </FormControl>
+
+          <FormControl id="title">
+            <FormLabel>Hours</FormLabel>
+            <InputGroup>
+              <Input type="number" placeholder="Enter Hours" />
+            </InputGroup>
+          </FormControl>
+
         </Box>
-        <Link
-          href={link}
-          variant='no-hover'
-          me='16px'
-          ms='auto'
-          p='0px !important'>
-          <Icon as={MdEdit} color='secondaryGray.500' h='18px' w='18px' />
-        </Link>
+
+        <Dropzone
+          w={{ base: "100%", md: "auto" }}
+          maxH={{ base: "60%", lg: "80%", "2xl": "100%" }}
+          minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+          mb='20px'
+          content={
+            <Box>
+              <Icon as={MdUpload} w='80px' h='80px' color={brandColor} />
+              <Flex justify='center' mx='auto' mb='12px'>
+                <Text fontSize='xl' fontWeight='700' color={brandColor}>
+                  Upload Files
+                </Text>
+              </Flex>
+              <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
+                PNG, JPG and GIF files are allowed
+              </Text>
+            </Box>
+          }
+        />
+        <Modal isOpen={isOpen} onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Select Date</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Calendar
+                onChange={handleDateChange}
+                value={value}
+                selectRange={false}
+                view={"month"}
+                tileContent={<Text color="brand.500"></Text>}
+                prevLabel={<Icon as={MdChevronLeft} w="24px" h="24px" mt="4px" />}
+                nextLabel={<Icon as={MdChevronRight} w="24px" h="24px" mt="4px" />}
+              />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Flex>
     </Card>
   );

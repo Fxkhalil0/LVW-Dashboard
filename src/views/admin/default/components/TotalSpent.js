@@ -48,34 +48,14 @@ export default function TotalSpent(props) {
       {...rest}>
       <Flex justify='space-between' ps='0px' pe='20px' pt='5px'>
         <Flex align='center' w='100%'>
-          <Button
-            bg={boxBg}
-            fontSize='sm'
-            fontWeight='500'
-            color={textColorSecondary}
-            borderRadius='7px'>
-            <Icon
-              as={MdOutlineCalendarToday}
-              color={textColorSecondary}
-              me='4px'
-            />
-            This month
-          </Button>
-          <Button
-            ms='auto'
-            align='center'
-            justifyContent='center'
-            bg={bgButton}
-            _hover={bgHover}
-            _focus={bgFocus}
-            _active={bgFocus}
-            w='37px'
-            h='37px'
-            lineHeight='100%'
-            borderRadius='10px'
-            {...rest}>
-            <Icon as={MdBarChart} color={iconColor} w='24px' h='24px' />
-          </Button>
+        <Text
+          me='auto'
+          color={textColor}
+          fontSize='xl'
+          fontWeight='700'
+          lineHeight='100%'>
+          This Month
+        </Text>
         </Flex>
       </Flex>
       <Flex w='100%' flexDirection={{ base: "column", lg: "row" }}>

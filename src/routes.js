@@ -11,7 +11,9 @@ import {
   MdSupervisedUserCircle,
   MdCameraEnhance,
   MdControlCamera,
-  MdLocationOn
+  MdLocationOn,
+  MdMessage,
+  MdAttachMoney
 } from "react-icons/md";
 
 // Admin Imports
@@ -25,6 +27,9 @@ import tourGuidesTable from 'views/admin/tourGuideTable/TourGuides'
 import cameraOperators from "views/admin/cameraOperators/CameraOperators"
 import directors from "views/admin/directors/Directors"
 import tours from "views/admin/tours/Tours"
+import reveiws from"views/admin/reveiws/Reveiws"
+import payment from "views/admin/payment/Payment"
+import userpayment from "views/admin/userpayment/UserPayment"
 
 
 // Auth Imports
@@ -73,6 +78,27 @@ const routes = [
     icon: <Icon as={MdLocationOn} width='20px' height='20px' color='inherit' />,
     component: tours,
   },
+  {
+    name: "Reveiws Table",
+    layout: "/admin",
+    path: "/reveiws-table",
+    icon: <Icon as={MdMessage} width='20px' height='20px' color='inherit' />,
+    component: reveiws,
+  },
+  {
+    name: "Payment Table",
+    layout: "/admin",
+    path: "/payment-table",
+    icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+    component: payment,
+  },
+  {
+    name: "User Payment Table",
+    layout: "/admin",
+    path: "/userpayment-table",
+    icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+    component: userpayment,
+  },
   // {
   //   name: "NFT Marketplace",
   //   layout: "/admin",
@@ -102,13 +128,13 @@ const routes = [
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
   },
-  // {
-  //   name: "Sign In",
-  //   layout: "/auth",
-  //   path: "/sign-in",
-  //   icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-  //   component: SignInCentered,
-  // },
+  {
+    name: "Sign In",
+    layout: "/auth",
+    path: "/sign-in",
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: SignInCentered,
+  },
   // {
   //   name: "RTL Admin",
   //   layout: "/rtl",

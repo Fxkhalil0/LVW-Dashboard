@@ -96,16 +96,16 @@ export default function HeaderLinks(props) {
 					</Flex>
 					<Flex flexDirection="column">
 						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="0" borderRadius="8px" mb="10px">
-							<ItemContent info="Horizon UI Dashboard PRO" aName="Alicia" />
+							<ItemContent info="You have a tour guide register!" aName="Alicia" />
 						</MenuItem>
 						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="0" borderRadius="8px" mb="10px">
-							<ItemContent info="Horizon Design System Free" aName="Josh Henry" />
+							<ItemContent info="You have a tour guide register!" aName="Josh Henry" />
 						</MenuItem>
 					</Flex>
 				</MenuList>
 			</Menu>
 
-      <Menu>
+      {/* <Menu>
         <MenuButton p='0px'>
           <Icon
             mt='6px'
@@ -162,7 +162,7 @@ export default function HeaderLinks(props) {
             </Link>
           </Flex>
         </MenuList>
-      </Menu>
+      </Menu> */}
 
 			<ThemeEditor navbarIcon={navbarIcon} />
 
@@ -171,7 +171,7 @@ export default function HeaderLinks(props) {
 					<Avatar
 						_hover={{ cursor: 'pointer' }}
 						color="white"
-						name="Adela Parkson"
+						name="Admin"
 						bg="#11047A"
 						size="sm"
 						w="40px"
@@ -190,15 +190,15 @@ export default function HeaderLinks(props) {
 							fontSize="sm"
 							fontWeight="700"
 							color={textColor}>
-							👋&nbsp; Hey, Adela
+							👋&nbsp; Hey, Admin
 						</Text>
 					</Flex>
 					<Flex flexDirection="column" p="10px">
 						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
-							<Text fontSize="sm">Profile Settings</Text>
+							<Text fontSize="sm">Profile</Text>
 						</MenuItem>
 						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
-							<Text fontSize="sm">Newsletter Settings</Text>
+							<Text fontSize="sm">Go to website</Text>
 						</MenuItem>
 						<MenuItem
 							_hover={{ bg: 'none' }}

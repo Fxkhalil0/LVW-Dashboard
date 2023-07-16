@@ -253,3 +253,107 @@ export const AllToursData = [
   },
 
 ];
+
+export const AllReveiwsData = [
+  {
+    Header: "USERNAME",
+    accessor: "user",
+  },
+  {
+    Header: "TOUR",
+    accessor: "tour",
+  },
+  {
+    Header: "RATE",
+    accessor: "rate",
+  },
+  {
+    Header: "COMMENTS",
+    accessor: "comments",
+  },
+  {
+    Header: "LANGUAGE",
+    accessor: "language",
+  },
+  {
+    Header: "TOUR GUIDE RATE",
+    accessor: "tourguiderate",
+  },
+  {
+    Header: "TOUR GUIDE COMM",
+    accessor: "tourguidecomment",
+  },
+  {
+    Header: "CAM OPERATOR RATE",
+    accessor: "cameraoperatorrate",
+  },
+  {
+    Header: "CAM OPERATOR COMM",
+    accessor: "cameraoperatorcomment",
+  },
+  {
+    Header: "DIRECTOR RATE",
+    accessor: "directorrate",
+  },
+  {
+    Header: "DIRECTOR COMM",
+    accessor: "directorcomment",
+  },
+
+];
+
+export const AllPaymentData = [
+  {
+    Header: "USERNAME",
+    accessor: "username",
+  },
+  {
+    Header: "TOUR",
+    accessor: "tour",
+  },
+  {
+    Header: "AMOUNT",
+    accessor: "amount",
+  },
+  {
+    Header: "TIME",
+    accessor: "time",
+  },
+  {
+    Header: "DATE",
+    accessor: "date",
+  },
+  {
+    Header: "PAYMENT METHOD",
+    accessor: "paymentmethod",
+  }
+
+];
+
+export const AllUserPaymentData = [
+  {
+    Header: "PROCESS NUM",
+    accessor: "processnum",
+  },
+  {
+    Header: "DATE",
+    accessor: "date",
+  },
+  {
+    Header: "TIME",
+    accessor: "time",
+  },
+  {
+    Header: "AMOUNT",
+    accessor: "amount",
+  },
+  {
+    Header: "PAYMENT METHOD",
+    accessor: "paymentmethod",
+  },
+  {
+    Header: "TOUR",
+    accessor: "tour",
+  }
+
+];

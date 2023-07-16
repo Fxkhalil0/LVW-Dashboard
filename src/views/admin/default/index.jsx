@@ -115,8 +115,8 @@ export default function UserReports() {
             <IconBox
               w='56px'
               h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdControlCamera} color='white' />}
+              bg={boxBg}
+              icon={<Icon w='28px' h='28px' as={MdControlCamera} color={brandColor} />}
             />
           }
           name='Total Directors'

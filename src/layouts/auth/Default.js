@@ -1,5 +1,5 @@
 // Chakra imports
-import { Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import React from "react";
 import Footer from "components/footer/FooterAuth";
@@ -8,6 +8,8 @@ import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 import { NavLink } from "react-router-dom";
 // Assets
 import { FaChevronLeft } from "react-icons/fa";
+import vector from "assets/img/Group 39467.svg"
+import logo from 'assets/img/logo.svg'
 
 function AuthIllustration(props) {
   const { children, illustrationBackground } = props;
@@ -40,7 +42,7 @@ function AuthIllustration(props) {
             ps={{ base: "25px", lg: "0px" }}
             pt={{ lg: "0px", xl: "0px" }}
             w='fit-content'>
-            <Icon
+            {/* <Icon
               as={FaChevronLeft}
               me='12px'
               h='13px'
@@ -49,7 +51,7 @@ function AuthIllustration(props) {
             />
             <Text ms='0px' fontSize='sm' color='secondaryGray.600'>
               Back to Simmmple
-            </Text>
+            </Text> */}
           </Flex>
         </NavLink>
         {children}
@@ -69,7 +71,16 @@ function AuthIllustration(props) {
             bgSize='cover'
             bgPosition='50%'
             position='absolute'
-            borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}></Flex>
+            borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}>
+              <Text fontSize='30px' position='absolute' top='15%' left='60px' fontWeight='600'>
+                Welcome to
+              </Text>
+            <Image src={logo} alt='Gold chip' position='absolute' top='20%' left='65px' objectFit='cover' width='25%' />
+            <Text fontSize='50px' position='absolute' top='47%' left='25%' fontWeight='600'>
+              Admin Dashboard
+            </Text>
+            <Image src={vector} alt='Gold chip' position='absolute' bottom='0' right='0' objectFit='cover' width='40%' />
+          </Flex>
         </Box>
         <Footer />
       </Flex>

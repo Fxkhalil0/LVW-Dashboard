@@ -1,4 +1,5 @@
 import {
+  Button,
     Avatar,
     Flex,
     Table,
@@ -21,7 +22,6 @@ import {
   
   // Custom components
   import Card from "components/card/Card";
-
 
   export default function TourGuidesTable(props) {
     const { columnsData, tableData } = props;
@@ -156,6 +156,32 @@ import {
                           <Text color={textColor} fontSize='sm' fontWeight='700'>
                             {cell.value}
                           </Text>
+                        );
+                      }
+                      else if (cell.column.Header === "CV") {
+                        data = (
+                          <Text color={textColor} fontSize='sm' fontWeight='700'>
+                            {cell.value}
+                          </Text>
+                        );
+                      }
+                      else if (cell.column.Header === "LICENSE") {
+                        data = (
+                          <Text color={textColor} fontSize='sm' fontWeight='700'>
+                            {cell.value}
+                          </Text>
+                        );
+                      }
+                      else if (cell.column.Header === "BUTTONS") {
+                        data = (
+                          <Button
+                          fontSize='sm'
+                          variant='brand'
+                          w='90%'
+                          h='10'
+                          mb='24px'>
+                          Block
+                        </Button>
                         );
                       }
                     return (

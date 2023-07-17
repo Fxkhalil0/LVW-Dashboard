@@ -26,18 +26,16 @@ export default function Conversion(props) {
         w='100%'
         mb='8px'>
         <Text color={textColor} fontSize='md' fontWeight='600' mt='4px'>
-          Your Pie Chart
+          Your Tours Chart
         </Text>
-        <Select
+        <Text
           fontSize='sm'
           variant='subtle'
-          defaultValue='monthly'
           width='unset'
-          fontWeight='700'>
-          <option value='daily'>Daily</option>
-          <option value='monthly'>Monthly</option>
-          <option value='yearly'>Yearly</option>
-        </Select>
+          fontWeight='700'
+          color='secondaryGray.600'>
+          Monthly
+        </Text>
       </Flex>
 
       <PieChart
@@ -63,7 +61,7 @@ export default function Conversion(props) {
               color='secondaryGray.600'
               fontWeight='700'
               mb='5px'>
-              Your files
+              Public
             </Text>
           </Flex>
           <Text fontSize='lg' color={textColor} fontWeight='700'>
@@ -79,7 +77,7 @@ export default function Conversion(props) {
               color='secondaryGray.600'
               fontWeight='700'
               mb='5px'>
-              System
+              VIP
             </Text>
           </Flex>
           <Text fontSize='lg' color={textColor} fontWeight='700'>

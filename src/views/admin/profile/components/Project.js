@@ -23,12 +23,13 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Button,
+  Select
 } from "@chakra-ui/react";
 
-import { MdChevronLeft, MdChevronRight, MdOutlineCalendarMonth, MdAvTimer } from "react-icons/md";
+import { MdChevronLeft, MdChevronRight, MdOutlineCalendarMonth, MdAvTimer, MdOutlineAccessTime, MdAdd, MdAttachMoney } from "react-icons/md";
 import Calendar from "react-calendar";
-import { MobileTimePicker } from "@mui/lab";
-import dayjs from "dayjs";
+
 
 
 // Custom components
@@ -42,11 +43,65 @@ export default function Project(props) {
   const { title, ranking, link, image, selectRange, ...rest } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, onChange] = useState(new Date());
+  const [time, setTime] = useState(null);
+
+  const [formData, setFormData] = useState({
+    title: '',
+    desc: '',
+    date: '',
+    startTime: '',
+    hours: '',
+    language: [],
+    tourGuide: [],
+    cameraOperator: [],
+    director: [],
+    price: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  function handleTimeChange(newTime) {
+    setTime(newTime);
+  }
 
   const handleDateChange = (date) => {
     onChange(date);
     onClose();
   };
+  const [activeButtons, setActiveButtons] = useState([]);
+
+  function handleButtonClick(language) {
+    if (!activeButtons.includes(language)) {
+      setActiveButtons([...activeButtons, language]);
+      setFormData((prevData) => ({
+        ...prevData,
+        language: [...prevData.language, language],
+        tourGuide: [...prevData.tourGuide, { language: language, guide: null }],
+        cameraOperator: [...prevData.cameraOperator, { language: language, operator: null }],
+        director: [...prevData.director, { language: language, director: null }],
+      }));
+    } else {
+      setActiveButtons(activeButtons.filter((button) => button !== language));
+      setFormData((prevData) => ({
+        ...prevData,
+        language: prevData.language.filter((lang) => lang !== language),
+        tourGuide: prevData.tourGuide.filter((guide) => guide.language !== language),
+        cameraOperator: prevData.cameraOperator.filter((operator) => operator.language !== language),
+        director: prevData.director.filter((director) => director.language !== language),
+      }));
+    }
+  }
+
+  const handleSubmit = () => {
+    console.log(formData);
+  };
+
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -61,14 +116,14 @@ export default function Project(props) {
           <FormControl id="title">
             <FormLabel>Title</FormLabel>
             <InputGroup>
-              <Input type="text" />
+              <Input type="text" onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
             </InputGroup>
           </FormControl>
 
           <FormControl id="desc">
             <FormLabel>Description</FormLabel>
             <InputGroup>
-              <Textarea type="text" />
+              <Textarea type="text" onChange={(e) => setFormData({ ...formData, desc: e.target.value })} />
             </InputGroup>
           </FormControl>
 
@@ -83,26 +138,284 @@ export default function Project(props) {
                 onClick={onOpen}
                 placeholder="Select date"
                 pr="5rem"
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
               />
             </InputGroup>
           </FormControl>
 
-          <FormControl id="title">
-            <FormLabel>Time</FormLabel>
+          <FormControl id="startTime">
+            <FormLabel>Start Time:</FormLabel>
             <InputGroup>
-              <InputLeftAddon width="5rem">
-                <Icon as={MdAvTimer} color={brandColor} boxSize={6} />
-              </InputLeftAddon>
-                <MobileTimePicker defaultValue={dayjs('2022-04-17T15:30')} />
+
+              <input type="time" id="startTime" onChange={(e) => setFormData({ ...formData, startTime: e.target.value })} />
+
+
+
             </InputGroup>
           </FormControl>
 
-          <FormControl id="title">
+          <FormControl id="hours">
             <FormLabel>Hours</FormLabel>
             <InputGroup>
-              <Input type="number" placeholder="Enter Hours" />
+              <Input type="number" placeholder="Enter Hours" onChange={(e) => setFormData({ ...formData, hours: e.target.value })} />
             </InputGroup>
           </FormControl>
+
+          <FormControl id="language">
+            <FormLabel>Choose Language:</FormLabel>
+            <Button
+              fontSize="sm"
+              variant="brand"
+              w="20%"
+              h="10"
+              mb="24px"
+              mr="10px"
+              rightIcon={<Icon as={MdAdd} color='white' boxSize={6} />}
+              isActive={activeButtons.includes('Arabic')}
+              onClick={() => handleButtonClick('Arabic')}
+            >
+              Arabic
+            </Button>
+            {activeButtons.includes('Arabic') && (
+              <>
+                <Select
+                  placeholder="Select tour guide"
+                  mb="24px"
+                  mr="10px"
+                  name="tourGuideArabic"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      tourGuide: [
+                        ...formData.tourGuide.filter((guide) => guide.language !== 'Arabic'),
+                        { language: 'Arabic', guide: e.target.value },
+                      ],
+                    })
+                  }
+                >
+                  <option value="guide1">Tour guide 1</option>
+                  <option value="guide2">Tour guide 2</option>
+                  <option value="guide3">Tour guide 3</option>
+                </Select>
+                
+                <Select
+                  placeholder="Select camera operator"
+                  mb="24px"
+                  mr="10px"
+                  name="cameraOperatorArabic"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      cameraOperator: [
+                        ...formData.cameraOperator.filter((operator) => operator.language !== 'Arabic'),
+                        { language: 'Arabic', operator: e.target.value },
+                      ],
+                    })
+                  }
+                >
+                  <option value="operator1">Camera operator 1</option>
+                  <option value="operator2">Camera operator 2</option>
+                  <option value="operator3">Camera operator 3</option>
+                </Select>
+
+                <Select
+                  placeholder="Select director"
+                  mb="24px"
+                  mr="10px"
+                  name="directorArabic"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      director: [
+                        ...formData.director.filter((director) => director.language !== 'Arabic'),
+                        { language: 'Arabic', director: e.target.value },
+                      ],
+                    })
+                  }
+                >                  
+                  <option value="director1">Director 1</option>
+                  <option value="director2">Director 2</option>
+                  <option value="director3">Director 3</option>
+                </Select>
+              </>
+            )}
+
+            <Button
+              fontSize="sm"
+              variant="brand"
+              w="20%"
+              h="10"
+              mb="24px"
+              mr="10px"
+              rightIcon={<Icon as={MdAdd} color='white' boxSize={6} />}
+              isActive={activeButtons.includes('English')}
+              onClick={() => handleButtonClick('English')}
+            >
+              English
+            </Button>
+            {activeButtons.includes('English') && (
+              <>
+                <Select
+                  placeholder="Select tour guide"
+                  mb="24px"
+                  mr="10px"
+                  name="tourGuideEnglish"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      tourGuide: [
+                        ...formData.tourGuide.filter((guide) => guide.language !== 'English'),
+                        { language: 'English', guide: e.target.value },
+                      ],
+                    })
+                  }
+                >
+                  <option value="guide1">Tour guide 1</option>
+                  <option value="guide2">Tour guide 2</option>
+                  <option value="guide3">Tour guide 3</option>
+                </Select>
+
+                <Select
+                  placeholder="Select camera operator"
+                  mb="24px"
+                  mr="10px"
+                  name="cameraOperatorEnglish"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      cameraOperator: [
+                        ...formData.cameraOperator.filter((operator) => operator.language !== 'English'),
+                        { language: 'English', operator: e.target.value },
+                      ],
+                    })
+                  }
+                >                  
+                  <option value="operator1">Camera operator 1</option>
+                  <option value="operator2">Camera operator 2</option>
+                  <option value="operator3">Camera operator 3</option>
+                </Select>
+
+                <Select
+                  placeholder="Select director"
+                  mb="24px"
+                  mr="10px"
+                  name="directorEnglish"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      director: [
+                        ...formData.director.filter((director) => director.language !== 'English'),
+                        { language: 'English', director: e.target.value },
+                      ],
+                    })
+                  }
+                >                  
+                  <option value="director1">Director 1</option>
+                  <option value="director2">Director 2</option>
+                  <option value="director3">Director 3</option>
+                </Select>
+              </>
+            )}
+
+            <Button
+              fontSize="sm"
+              variant="brand"
+              w="20%"
+              h="10"
+              mb="24px"
+              rightIcon={<Icon as={MdAdd} color='white' boxSize={6} />}
+              isActive={activeButtons.includes('Italiano')}
+              onClick={() => handleButtonClick('Italiano')}
+            >
+              Italiano
+            </Button>
+            {activeButtons.includes('Italiano') && (
+              <>
+                <Select
+                  placeholder="Select tour guide"
+                  mb="24px"
+                  mr="10px"
+                  name="tourGuideItaliano"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      tourGuide: [
+                        ...formData.tourGuide.filter((guide) => guide.language !== 'Italiano'),
+                        { language: 'Italiano', guide: e.target.value },
+                      ],
+                    })
+                  }
+                >
+                  <option value="guide1">Tour guide 1</option>
+                  <option value="guide2">Tour guide 2</option>
+                  <option value="guide3">Tour guide 3</option>
+                </Select>
+
+                <Select
+                  placeholder="Select camera operator"
+                  mb="24px"
+                  mr="10px"
+                  name="cameraOperatorItaliano"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      cameraOperator: [
+                        ...formData.cameraOperator.filter((operator) => operator.language !== 'Italiano'),
+                        { language: 'Italiano', operator: e.target.value },
+                      ],
+                    })
+                  }
+                >                  
+                  <option value="operator1">Camera operator 1</option>
+                  <option value="operator2">Camera operator 2</option>
+                  <option value="operator3">Camera operator 3</option>
+                </Select>
+
+                <Select
+                  placeholder="Select director"
+                  mb="24px"
+                  mr="10px"
+                  name="directorItaliano"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      director: [
+                        ...formData.director.filter((director) => director.language !== 'Italiano'),
+                        { language: 'Italiano', director: e.target.value },
+                      ],
+                    })
+                  }
+                >                  
+                  <option value="director1">Director 1</option>
+                  <option value="director2">Director 2</option>
+                  <option value="director3">Director 3</option>
+                </Select>
+              </>
+            )}
+          </FormControl>
+
+          <FormControl id="price">
+            <FormLabel>Add Price</FormLabel>
+            <InputGroup>
+              <InputLeftAddon width="5rem">
+                <Icon as={MdAttachMoney} color={brandColor} boxSize={6} />
+              </InputLeftAddon>
+              <Input
+                id="price"
+                type="number"
+                placeholder="Add Price"
+                pr="5rem"
+                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+              />
+            </InputGroup>
+          </FormControl>
+          <Button
+            variant="brand"
+            mt="20px"
+            onClick={() => console.log(formData)}
+          >
+            Submit
+          </Button>
 
         </Box>
 

@@ -135,6 +135,19 @@ export const AllTourGuidesData = [
     Header: "ROLE",
     accessor: "role",
   },
+  {
+    Header: "CV",
+    accessor: "cv",
+    
+  },
+  {
+    Header: "LICENSE",
+    accessor: "license",
+  },
+  {
+    Header: "BUTTONS",
+    accessor: "buttons",
+  },
 
 ];
 

@@ -42,7 +42,8 @@ import Dropzone from "views/admin/profile/components/Dropzone";
 export default function Project(props) {
   const { title, ranking, link, image, selectRange, ...rest } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, onChange] = useState(new Date());
+  console.log(isOpen)
+  const [value, onChange] = useState(null);
   const [time, setTime] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -71,7 +72,10 @@ export default function Project(props) {
   }
 
   const handleDateChange = (date) => {
+    setFormData({ ...formData, date: date.toISOString() });
+    // setFormData({ ...formData, date: date ? date.toLocaleDateString("en-GB").split("T")[0] : null });
     onChange(date);
+    console.log(date)
     onClose();
   };
   const [activeButtons, setActiveButtons] = useState([]);
@@ -136,6 +140,8 @@ export default function Project(props) {
               <Input
                 id="date"
                 onClick={onOpen}
+                value={value? value.toLocaleDateString("en-GB").split("T")[0]: ""}
+                // value={formData.date || ''}
                 placeholder="Select date"
                 pr="5rem"
                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}

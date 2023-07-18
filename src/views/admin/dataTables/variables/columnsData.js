@@ -212,14 +212,7 @@ export const AllDirectorsData = [
     Header: "LANGUAGE",
     accessor: "language",
   },
-  {
-    Header: "JOINED AT",
-    accessor: "joined at",
-  },
-  {
-    Header: "ROLE",
-    accessor: "role",
-  },
+  
 
 ];
 

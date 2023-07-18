@@ -7,10 +7,16 @@ import AllDirectorsTable from "views/admin/dataTables/components/TourGuidesTable
 import { AllDirectorsData } from "views/admin/dataTables/variables/columnsData";
 
 import tableAllDirectors from "views/admin/dataTables/variables/tableAllDirectors.json"
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 export default function DirectorsTable() {
+  const [director,setDirector] = useState([])
   // Chakra Color Mode
+  useEffect(()=>{
+    axios.get("http://localhost:5000/admin/allTours").then((res)=>{
+      setTours(res.data.data)
+    })
+  },[])
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid

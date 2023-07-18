@@ -256,15 +256,15 @@ import {
                   </Tr>
                     }
                     {row.values["italianCameraOperator"] &&
-                    <Tr>
-                    <Td>Italian Camera Operator</Td>
-                    <Td>{row.values["italianCameraOperator"].name}</Td>
+                    <Tr borderColor='var(--chakra-colors-gray-200)'>
+                    <Td borderColor='var(--chakra-colors-gray-200)'>Italian Camera Operator</Td>
+                    <Td borderColor='var(--chakra-colors-gray-200)'>{row.values["italianCameraOperator"].name}</Td>
                   </Tr>
                   }
                   {row.values["italianDirector"] &&
                     <Tr>
-                    <Td>Italian Director</Td>
-                    <Td>{row.values["italianDirector"].name}</Td>
+                    <Td borderColor='var(--chakra-colors-gray-200)'>Italian Director</Td>
+                    <Td borderColor='var(--chakra-colors-gray-200)'>{row.values["italianDirector"].name}</Td>
                   </Tr>
                     }
                   
@@ -285,6 +285,7 @@ import {
         </ModalContent>
       </Modal>  </>)
                       }
+<<<<<<< Updated upstream
                       return (
                         <>
                           {cell.column.Header && (
@@ -300,6 +301,18 @@ import {
                           )}
                         </>
                       );
+=======
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: "14px" }}
+                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                        borderColor='var(--chakra-colors-gray-200)'>
+                        {data}
+                      </Td>
+                    );
+>>>>>>> Stashed changes
                   })}
                 </Tr>
               );

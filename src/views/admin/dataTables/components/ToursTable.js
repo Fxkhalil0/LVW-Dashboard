@@ -59,7 +59,7 @@ import {
       prepareRow,
       initialState,
     } = tableInstance;
-    initialState.pageSize = 11;
+    initialState.pageSize = 5;
   
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -117,6 +117,7 @@ import {
               return (
                 <Tr {...row.getRowProps()} key={index}>
                   {row.cells.map((cell, cellIndex) => {
+                    {cell.column.Header && 
                     let data = "";
                     if (cell.column.Header === "TITLE") {
                         data = (
@@ -284,16 +285,21 @@ import {
         </ModalContent>
       </Modal>  </>)
                       }
-                    return (
-                      <Td
-                        {...cell.getCellProps()}
-                        key={index}
-                        fontSize={{ sm: "14px" }}
-                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                        borderColor='transparent'>
-                        {data}
-                      </Td>
-                    );
+                      return (
+                        <>
+                          {cell.column.Header && (
+                            <Td
+                              {...cell.getCellProps()}
+                              key={index}
+                              fontSize={{ sm: "14px" }}
+                              minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                              borderColor='transparent'
+                            >
+                              {cell.render("Cell")}
+                            </Td>
+                          )}
+                        </>
+                      );
                   })}
                 </Tr>
               );

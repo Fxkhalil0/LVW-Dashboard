@@ -256,30 +256,39 @@ export const AllToursData = [
     Header:"More Details"
   },
   {
+    Header: "",
     accessor:"arabicTourGuide"
   },
   {
+    Header: "",
     accessor:"arabicCameraOperator"
   },
   {
+    Header: "",
     accessor:"arabicDirector"
   },
   {
+    Header: "",
     accessor:"englishTourGuide"
   },
   {
+    Header: "",
     accessor:"englishCameraOperator"
   },
   {
+    Header: "",
     accessor:"englishDirector"
   },
   {
+    Header: "",
     accessor:"italianTourGuide"
   },
   {
+    Header: "",
     accessor:"italianCameraOperator"
   },
   {
+    Header: "",
     accessor:"italianDirector"
   },
 
@@ -388,3 +397,7 @@ export const AllUserPaymentData = [
   }
 
 ];
+
+export const ToursModalData = [
+
+]

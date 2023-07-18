@@ -236,13 +236,13 @@ import {
                     <Td>{row.values["englishTourGuide"].name}</Td>
                   </Tr>
                     }
-                    {
+                    {row.values["englishCameraOperator"] &&
                     <Tr>
                     <Td>English Camera Operator</Td>
                     <Td>{row.values["englishCameraOperator"].name}</Td>
                   </Tr>
                   }
-                  {
+                  {row.values["englishDirector"] &&
                     <Tr>
                     <Td>English Director</Td>
                     <Td>{row.values["englishDirector"].name}</Td>
@@ -254,13 +254,13 @@ import {
                     <Td>{row.values["italianTourGuide"].name}</Td>
                   </Tr>
                     }
-                    {
+                    {row.values["italianCameraOperator"] &&
                     <Tr>
                     <Td>Italian Camera Operator</Td>
                     <Td>{row.values["italianCameraOperator"].name}</Td>
                   </Tr>
                   }
-                  {
+                  {row.values["italianDirector"] &&
                     <Tr>
                     <Td>Italian Director</Td>
                     <Td>{row.values["italianDirector"].name}</Td>
@@ -279,7 +279,7 @@ import {
             <Button colorScheme='blue' mr={3} onClick={()=>handleCloseModal(index)}>
               Close
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            
           </ModalFooter>
         </ModalContent>
       </Modal>  </>)

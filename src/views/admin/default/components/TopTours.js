@@ -113,11 +113,12 @@ import {
                             color={textColor}
                             fontSize='sm'
                             fontWeight='700'>
-                            {cell.value}%
+                            {cell.value ? `${(cell.value * 20).toFixed(1)}%` : '0%'}
+                            
                           </Text>
                         </Flex>
                       );
-                    } else if (cell.column.Header === "GUESTS") {
+                    } else if (cell.column.Header === "Address") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
                           {cell.value}
@@ -126,7 +127,7 @@ import {
                     } else if (cell.column.Header === "DATE") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
+                          {(cell.value).slice(0,10)}
                         </Text>
                       );
                     }

@@ -2,6 +2,7 @@ import {
     Avatar,
     Flex,
     Table,
+    Box,
     Checkbox,
     Tbody,
     Td,
@@ -10,8 +11,19 @@ import {
     Thead,
     Tr,
     useColorModeValue,
+    Button,
+    Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  TableContainer,
   } from "@chakra-ui/react";
-  import React, { useMemo } from "react";
+  import { useDisclosure } from "@chakra-ui/react";
+  
+  import React, { useMemo, useState } from "react";
   import {
     useGlobalFilter,
     usePagination,
@@ -51,6 +63,22 @@ import {
   
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+    const [isRowModalOpen, setIsRowModalOpen] = useState(new Array(data.length).fill(false));
+
+  const handleOpenModal = (rowIndex) => {
+    // Create a copy of the state array and set the specific index to true
+    const updatedModalState = [...isRowModalOpen];
+    updatedModalState[rowIndex] = true;
+    setIsRowModalOpen(updatedModalState);
+  };
+
+  const handleCloseModal = (rowIndex) => {
+    // Create a copy of the state array and set the specific index to false
+    const updatedModalState = [...isRowModalOpen];
+    updatedModalState[rowIndex] = false;
+    setIsRowModalOpen(updatedModalState);
+  };
+  
     return (
       <Card
         direction='column'
@@ -85,9 +113,10 @@ import {
           <Tbody {...getTableBodyProps()}>
             {page.map((row, index) => {
               prepareRow(row);
+              
               return (
                 <Tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => {
+                  {row.cells.map((cell, cellIndex) => {
                     let data = "";
                     if (cell.column.Header === "TITLE") {
                         data = (
@@ -121,14 +150,14 @@ import {
                     } else if (cell.column.Header === "AVGRATE") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}%
+                          {cell.value ? `${(cell.value * 20).toFixed(1)}%` : '0%'}
                         </Text>
                       );
                     }
                     else if (cell.column.Header === "TOUR GUIDE") {
                         data = (
                           <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
+                            {cell.value.name}
                           </Text>
                         );
                       }
@@ -156,16 +185,104 @@ import {
                       else if (cell.column.Header === "DATE") {
                         data = (
                           <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
+                            {(cell.value).slice(0,10)}
                           </Text>
                         );
                       }
                       else if (cell.column.Header === "TIME") {
+                        const dataValue = row.values["date"];
                         data = (
                           <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
+                            {dataValue.slice(11,16)}
                           </Text>
                         );
+                      }
+                      else if(cell.column.Header === "More Details"){
+                      data=(<> <Button onClick={()=>handleOpenModal(index)} colorScheme='blue'>More Details</Button> 
+                      <Modal isOpen={isRowModalOpen[index]} onClose={() => handleCloseModal(index)}>
+        <ModalOverlay />
+        <ModalContent minW="500px" maxH="400px">
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <TableContainer>
+            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+              <Table variant="simple">
+                <Tbody>
+                    {row.values["arabicTourGuide"] && 
+                      
+                    <Tr>
+                    <Td>Arabic Tour Guide</Td>
+                    <Td>{row.values["arabicTourGuide"].name}</Td>
+                  </Tr>
+                    
+                    }
+                    {row.values["arabicCameraOperator"] && 
+                    <Tr>
+                    <Td>Arabic Camera Operator</Td>
+                    <Td>{row.values["arabicCameraOperator"].name}</Td>
+                  </Tr>
+                    }
+                    
+                    {row.values["arabicDirector"] && 
+                    <Tr>
+                    <Td>Arabic Director</Td>
+                    <Td>{row.values["arabicDirector"].name}</Td>
+                  </Tr>
+                    }
+                    {row.values["englishTourGuide"] && 
+                    <Tr>
+                    <Td>English Tour Guide</Td>
+                    <Td>{row.values["englishTourGuide"].name}</Td>
+                  </Tr>
+                    }
+                    {
+                    <Tr>
+                    <Td>English Camera Operator</Td>
+                    <Td>{row.values["englishCameraOperator"].name}</Td>
+                  </Tr>
+                  }
+                  {
+                    <Tr>
+                    <Td>English Director</Td>
+                    <Td>{row.values["englishDirector"].name}</Td>
+                  </Tr>
+                    }
+                    {row.values["italianTourGuide"] && 
+                    <Tr>
+                    <Td>Italian Tour Guide</Td>
+                    <Td>{row.values["italianTourGuide"].name}</Td>
+                  </Tr>
+                    }
+                    {
+                    <Tr>
+                    <Td>Italian Camera Operator</Td>
+                    <Td>{row.values["italianCameraOperator"].name}</Td>
+                  </Tr>
+                  }
+                  {
+                    <Tr>
+                    <Td>Italian Director</Td>
+                    <Td>{row.values["italianDirector"].name}</Td>
+                  </Tr>
+                    }
+                  
+                      
+                </Tbody>
+
+              </Table>
+              </Box>
+            </TableContainer>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={()=>handleCloseModal(index)}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>  </>)
                       }
                     return (
                       <Td

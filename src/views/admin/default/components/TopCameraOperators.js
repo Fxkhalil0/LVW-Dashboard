@@ -98,7 +98,7 @@ import {
                       data = (
                         <Flex align='center'>
                           <Avatar
-                            src={cell.value[1]}
+                            src={cell.value}
                             w='30px'
                             h='30px'
                             me='8px'
@@ -107,7 +107,7 @@ import {
                             color={textColor}
                             fontSize='sm'
                             fontWeight='600'>
-                            {cell.value[0]}
+                            {cell.value}
                           </Text>
                         </Flex>
                       );
@@ -119,14 +119,14 @@ import {
                             color={textColor}
                             fontSize='sm'
                             fontWeight='700'>
-                            {cell.value}%
+                            {(cell.value * 20).toFixed(1)}%
                           </Text>
                         </Flex>
                       );
                     } else if (cell.column.Header === "TOURS") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
+                          {(cell.value).length}
                         </Text>
                       );
                     } else if (cell.column.Header === "LANGUAGE") {

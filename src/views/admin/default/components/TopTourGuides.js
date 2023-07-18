@@ -11,12 +11,12 @@ import {
     Tr,
     useColorModeValue,
   } from "@chakra-ui/react";
-  import React, { useMemo } from "react";
+  import React, { useEffect, useMemo } from "react";
   import {
     useGlobalFilter,
     usePagination,
     useSortBy,
-    useTable,
+    useTable
   } from "react-table";
   
   // Custom components
@@ -26,7 +26,12 @@ import {
     const { columnsData, tableData } = props;
   
     const columns = useMemo(() => columnsData, [columnsData]);
-    const data = useMemo(() => tableData, [tableData]);
+    const data = useMemo(() => tableData , [tableData]);
+    
+    // if (!Array.isArray(tableData)) {
+    //   console.error("tableData must be an array.");
+    //   return null; // Return early if the data is not an array
+    // }
   
     const tableInstance = useTable(
       {
@@ -37,7 +42,7 @@ import {
       useSortBy,
       usePagination
     );
-  
+    
     const {
       getTableProps,
       getTableBodyProps,
@@ -50,6 +55,14 @@ import {
   
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+    useEffect(() => {
+      
+    
+      console.log(props.tableData)
+  
+  }, []);
+
     return (
       <Card
         direction='column'
@@ -107,7 +120,7 @@ import {
                             color={textColor}
                             fontSize='sm'
                             fontWeight='600'>
-                            {cell.value[0]}
+                            {cell.value}
                           </Text>
                         </Flex>
                       );
@@ -115,18 +128,18 @@ import {
                       data = (
                         <Flex align='center'>
                           <Text
-                            me='10px'
+                            me='5px'
                             color={textColor}
                             fontSize='sm'
                             fontWeight='700'>
-                            {cell.value}%
+                            {cell.value ? `${(cell.value * 20).toFixed(1)}%` : '0%'}
                           </Text>
                         </Flex>
                       );
                     } else if (cell.column.Header === "TOURS") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
+                          {(cell.value).length}
                         </Text>
                       );
                     } else if (cell.column.Header === "LANGUAGE") {
@@ -155,4 +168,3 @@ import {
       </Card>
     );
   }
-  

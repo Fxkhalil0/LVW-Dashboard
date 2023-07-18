@@ -10,7 +10,7 @@ import {
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
+import React ,{useState, useEffect} from "react";
 import { MdAttachMoney,MdAccountCircle, MdGroup, MdCameraEnhance, MdControlCamera, MdLocationOn, MdSupervisedUserCircle, } from "react-icons/md";
 import TopTourGuides from "views/admin/default/components/TopTourGuides";
 import TopDirectors from "views/admin/default/components/TopDirectors";
@@ -28,12 +28,81 @@ import tableTourGuides from "views/admin/default/variables/tableTourGuides.json"
 import tableDirectors from "views/admin/default/variables/tableDirectors.json";
 import tableTours from "views/admin/default/variables/tableTours.json";
 import tableCameraOperators from "views/admin/default/variables/tableCameraOperators.json"
-
+import axios from 'axios';
 
 export default function UserReports() {
+  const [earnings,setEarnings] = useState(0)
+  const [tours,setTours]=useState(0)
+  const [users,setUsers]=useState(0)
+  const [tourGuides,setTourGuides]=useState(0)
+  const [cameraOperators,setCameraOperators]=useState(0)
+  const [directors,setDirectors]=useState(0)
+  const [topTourGuides,setTopTourGuides] = useState([])
+  const [topDirectors,setTopDirectors] = useState([])
+  const [topCameraOperators,setTopCameraOperators] = useState([])
+  const [topTours,setTopTours] = useState([])
+
+
+
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  useEffect(() => {
+    axios.get("http://localhost:5000/admin/allRevenue").then((res)=>{
+    setEarnings(res.data)
+    })
+    axios.get("http://localhost:5000/admin/allTours").then((res)=>{
+      if(res.data.status === 400){
+      setTours(res.data.data.length)}
+      else{
+        setTours(0)
+      }
+    })
+    axios.get("http://localhost:5000/admin/allUsers").then((res)=>{
+      if(res.data.status === 400){
+        setUsers(res.data.data.length)}
+        else{
+          setUsers(0)
+        }
+    })
+    axios.get("http://localhost:5000/admin/allCameraOperators").then((res)=>{
+      if(res.data.status === 400){
+        setCameraOperators(res.data.data.length)}
+        else{
+          setCameraOperators(0)
+        }
+    })
+    axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+      if(res.data.status === 400){
+        setDirectors(res.data.data.length)}
+        else{
+          setDirectors(0)
+        }
+    })
+    axios.get("http://localhost:5000/admin/topFiveTourGuides").then((res)=>{
+      setTopTourGuides(res.data)
+      console.log(res.data)
+    })
+    axios.get("http://localhost:5000/admin/topFiveDirectors").then((res)=>{
+      setTopDirectors(res.data)
+      console.log(res.data)
+    })
+    axios.get("http://localhost:5000/admin/topFiveCameraOperators").then((res)=>{
+      setTopCameraOperators(res.data)
+    })
+    axios.get("http://localhost:5000/admin/topFiveTours").then((res)=>{
+      setTopTours(res.data)
+    })
+    axios.get("http://localhost:5000/admin//allTourGuides").then((res)=>{
+      if(res.data.status === 400){
+        setTourGuides(res.data.data.length)}
+        else{
+          setTourGuides(0)
+        }
+    })
+    
+
+  }, []);
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -52,7 +121,7 @@ export default function UserReports() {
             />
           }
           name='Earnings'
-          value='$350.4'
+          value={"$"+earnings}
         />
         <MiniStatistics
           startContent={
@@ -66,7 +135,7 @@ export default function UserReports() {
             />
           }
           name='Total Tours'
-          value='2935'
+          value={tours}
         />
         <MiniStatistics
           startContent={
@@ -80,7 +149,7 @@ export default function UserReports() {
             />
           }
           name='Total Users'
-          value='642'
+          value={users}
         />
         <MiniStatistics
           startContent={
@@ -94,7 +163,7 @@ export default function UserReports() {
             />
           }
           name='Total Tour Guides'
-          value='298'
+          value={tourGuides}
         />
         <MiniStatistics
           startContent={
@@ -108,7 +177,7 @@ export default function UserReports() {
             />
           }
           name='Total Camera Operators'
-          value='642'
+          value={cameraOperators}
         />
         <MiniStatistics
           startContent={
@@ -120,7 +189,7 @@ export default function UserReports() {
             />
           }
           name='Total Directors'
-          value='154'
+          value={directors}
         />
 
       </SimpleGrid>
@@ -136,20 +205,22 @@ export default function UserReports() {
 
 
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <TopTourGuides columnsData={columnsTourGuides} tableData={tableTourGuides} />
+        
+        <TopTourGuides columnsData={columnsTourGuides} tableData={topTourGuides} />
+        
 
-        <TopTours columnsData={columnsTourData} tableData={tableTours} />
+        <TopTours columnsData={columnsTourData} tableData={topTours} />
       </SimpleGrid>
       
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
         <TopDirectors
-          columnsData={columnsDirectors} tableData={tableDirectors}
+          columnsData={columnsDirectors} tableData={topDirectors}
         />
 
 
         <TopCameraOperators
           columnsData={columnsCameraOperator}
-          tableData={tableCameraOperators}
+          tableData={topCameraOperators}
         />
         </SimpleGrid>
 

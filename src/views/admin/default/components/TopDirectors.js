@@ -62,7 +62,7 @@ import {
             fontSize='22px'
             fontWeight='700'
             lineHeight='100%'>
-            Top Tour Guides
+            Top Dirctors
           </Text>
         </Flex>
         <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
@@ -107,26 +107,29 @@ import {
                             color={textColor}
                             fontSize='sm'
                             fontWeight='600'>
-                            {cell.value[0]}
+                            {cell.value}
                           </Text>
                         </Flex>
                       );
                     } else if (cell.column.Header === "RATE") {
                       data = (
                         <Flex align='center'>
-                          <Text
+                          <Text onClick={()=>{
+                            console.log(cell.value)
+                          }}
                             me='10px'
                             color={textColor}
                             fontSize='sm'
                             fontWeight='700'>
-                            {cell.value}%
+                            {(cell.value * 20).toFixed(1)}%
+                            
                           </Text>
                         </Flex>
                       );
                     } else if (cell.column.Header === "TOURS") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
+                          {(cell.value).length}
                         </Text>
                       );
                     } else if (cell.column.Header === "LANGUAGE") {

@@ -230,7 +230,7 @@ export const AllToursData = [
   },
   {
     Header: "LOCATION",
-    accessor: "location",
+    accessor: "address",
   },
   {
     Header: "PRICE",
@@ -238,19 +238,7 @@ export const AllToursData = [
   },
   {
     Header: "AVGRATE",
-    accessor: "avgrate",
-  },
-  {
-    Header: "TOUR GUIDE",
-    accessor: "tourguide",
-  },
-  {
-    Header: "CAMERA OPERATOR",
-    accessor: "cameraoperator",
-  },
-  {
-    Header: "DIRECTOR",
-    accessor: "director",
+    accessor: "avgRate",
   },
   {
     Header: "CATEGORY",
@@ -263,6 +251,36 @@ export const AllToursData = [
   {
     Header: "TIME",
     accessor: "time",
+  },
+  {
+    Header:"More Details"
+  },
+  {
+    accessor:"arabicTourGuide"
+  },
+  {
+    accessor:"arabicCameraOperator"
+  },
+  {
+    accessor:"arabicDirector"
+  },
+  {
+    accessor:"englishTourGuide"
+  },
+  {
+    accessor:"englishCameraOperator"
+  },
+  {
+    accessor:"englishDirector"
+  },
+  {
+    accessor:"italianTourGuide"
+  },
+  {
+    accessor:"italianCameraOperator"
+  },
+  {
+    accessor:"italianDirector"
   },
 
 ];

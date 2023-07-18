@@ -5,7 +5,7 @@ export const columnsDirectors = [
   },
   {
     Header: "RATE",
-    accessor: "rate",
+    accessor: "avgRate",
   },
   {
     Header: "TOURS",
@@ -13,7 +13,7 @@ export const columnsDirectors = [
   },
   {
     Header: "LANGUAGE",
-    accessor: "language",
+    accessor: "languages",
   },
 ];
 export const columnsTourGuides = [
@@ -23,7 +23,7 @@ export const columnsTourGuides = [
   },
   {
     Header: "RATE",
-    accessor: "rate",
+    accessor: "avgRate",
   },
   {
     Header: "TOURS",
@@ -31,21 +31,21 @@ export const columnsTourGuides = [
   },
   {
     Header: "LANGUAGE",
-    accessor: "language",
+    accessor: "languages",
   },
 ];
 export const columnsTourData = [
   {
     Header: "NAME",
-    accessor: "name",
+    accessor: "title",
   },
   {
     Header: "RATE",
-    accessor: "rate",
+    accessor: "avgRate",
   },
   {
-    Header: "GUESTS",
-    accessor: "guests",
+    Header: "Address",
+    accessor: "address",
   },
   {
     Header: "DATE",
@@ -60,7 +60,7 @@ export const columnsCameraOperator = [
   },
   {
     Header: "RATE",
-    accessor: "rate",
+    accessor: "avgRate",
   },
   {
     Header: "TOURS",
@@ -68,6 +68,6 @@ export const columnsCameraOperator = [
   },
   {
     Header: "LANGUAGE",
-    accessor: "language",
+    accessor: "languages",
   },
 ];

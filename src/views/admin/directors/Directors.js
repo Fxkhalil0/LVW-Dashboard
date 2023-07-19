@@ -1,5 +1,3 @@
-
-
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
 
@@ -13,9 +11,9 @@ export default function DirectorsTable() {
   const [director,setDirector] = useState([])
   // Chakra Color Mode
   useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allTours").then((res)=>{
-      setTours(res.data.data)
-    })
+    // axios.get("http://localhost:5000/admin/allTours").then((res)=>{
+    //   setTours(res.data.data)
+    //})
   },[])
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>

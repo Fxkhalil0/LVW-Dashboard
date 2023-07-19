@@ -229,13 +229,13 @@ import axios from "axios";
                                           
                                             <Tr>
                                               <Td>Email</Td>
-                                              <Td>{row.values["email"].name}</Td>
+                                              <Td>{row.values["email"]}</Td>
                                             </Tr>
                                         
                                           {row.values["phone"] && (
                                             <Tr>
-                                              <Td>Arabic Camera Operator</Td>
-                                              <Td>{row.values["phone"].name}</Td>
+                                              <Td>Phone</Td>
+                                              <Td>{row.values["phone"]}</Td>
                                             </Tr>
                                           )}
                                           

@@ -38,10 +38,11 @@ import axios from "axios";
     const { columnsData, tableData } = props;
   
     const columns = useMemo(() => columnsData, [columnsData]);
-    const data = useMemo(() => tableData, [tableData]);
+    const [data, setData] = useState(tableData);
+    // const data = useMemo(() => tableData, [tableData]);
     useEffect(()=>{
-      
-    },[])
+      setData(tableData);
+    },[tableData])
     const tableInstance = useTable(
       {
         columns,
@@ -188,6 +189,10 @@ import axios from "axios";
                           <Button onClick={() => {
                             axios.put("http://localhost:5000/admin/accept", {
                               id: row.values["_id"],
+                            }).then((res)=>{
+                              axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+                                setData(res.data.data)
+                              })
                             })
                           }} colorScheme="blue">accept</Button>
                         ) : row.values["status"] === "accepted" ? (
@@ -196,8 +201,7 @@ import axios from "axios";
                               id: row.values["_id"]
                             }).then((res)=>{
                               axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
-                                data = res.data.data
-                                console.log(data)
+                                setData(res.data.data)
                               })
                             })
                           }} colorScheme="blue">block</Button>
@@ -205,6 +209,10 @@ import axios from "axios";
                           <Button onClick={() => {
                             axios.put("http://localhost:5000/admin/unblock", {
                               id: row.values["_id"]
+                            }).then((res)=>{
+                              axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+                                setData(res.data.data)
+                              })
                             })
                           }} colorScheme="blue">unblock</Button>
                         ) : null;

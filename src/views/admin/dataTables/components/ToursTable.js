@@ -95,28 +95,27 @@ export default function ToursTable(props) {
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => {
-                if (column.Header) {
-                  return (
-                    <Th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                      pe="10px"
-                      key={index}
-                      borderColor={borderColor}
-                    >
-                      <Flex
-                        justify="space-between"
-                        align="center"
-                        fontSize={{ sm: "10px", lg: "12px" }}
-                        color="gray.400"
-                      >
-                        {column.render("Header")}
-                      </Flex>
-                    </Th>
-                  );
-                } else {
-                  return null;
-                }
-              })}
+  if (column.Header) {
+    return (
+      <Th
+        {...column.getHeaderProps(column.getSortByToggleProps())}
+        pe="10px"
+        key={index}
+        borderColor={borderColor}
+      >
+        <Flex
+          justify="space-between"
+          align="center"
+          fontSize={{ sm: "10px", lg: "12px" }}
+          color="gray.400"
+        >
+          {column.render("Header")}
+        </Flex>
+      </Th>
+    );
+  }
+})}
+
             </Tr>
           ))}
         </Thead>
@@ -204,7 +203,8 @@ export default function ToursTable(props) {
                           {dataValue.slice(11, 16)}
                         </Text>
                       );
-                    } else if (cell.column.Header === "More Details") {
+                    } 
+                    else if (cell.column.Header === "More Details") {
                       data = (
                         <>
                           {" "}

@@ -63,7 +63,7 @@ export default function ToursTable(props) {
     canPreviousPage,
     state: { pageIndex },
   } = tableInstance;
-  initialState.pageSize = 2;
+  initialState.pageSize = 5;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");

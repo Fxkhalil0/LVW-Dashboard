@@ -1,7 +1,7 @@
 // Chakra imports
 import { Box, Flex, Icon, Text, Image } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import React from "react";
+import React, {useState} from "react";
 import Footer from "components/footer/FooterAuth";
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 // Custom components
@@ -13,6 +13,8 @@ import logo from 'assets/img/logo.svg'
 
 function AuthIllustration(props) {
   const { children, illustrationBackground } = props;
+  const [showSignUpForm, setShowSignUpForm] = React.useState(false);
+  const [showSignInForm, setShowSignInForm] = React.useState(true);
   // Chakra color mode
   return (
     <Flex position='relative' h='max-content'>
@@ -82,7 +84,7 @@ function AuthIllustration(props) {
             <Image src={vector} alt='Gold chip' position='absolute' bottom='0' right='0' objectFit='cover' width='40%' />
           </Flex>
         </Box>
-        <Footer />
+        {/* <Footer /> */}
       </Flex>
       <FixedPlugin />
     </Flex>

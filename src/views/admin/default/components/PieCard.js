@@ -13,7 +13,8 @@ export default function Conversion(props) {
   const [publicData,setPublicData] = useState(0)
   const [tours,setTours] = useState(0)
   const [vip,setVip] = useState(0)
-  const [isLoading, setIsLoading] = useState(true);
+  const [charts, setCharts] = useState([]);
+  const [loading, setLoading] = useState(true); 
   
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -22,20 +23,33 @@ export default function Conversion(props) {
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [vipResponse, publicResponse, allToursResponse] = await Promise.all([
+          axios.get("http://localhost:5000/admin/vip"),
+          axios.get("http://localhost:5000/admin/public"),
+          axios.get("http://localhost:5000/admin/allTours"),
+        ]);
+
+        setVip(vipResponse.data.length);
+        setPublicData(publicResponse.data.length);
+        setTours(allToursResponse.data.data.length);
+        // setCharts([publicResponse.data.length,vipResponse.data.length])
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   useEffect(()=>{
-    axios.get("http://localhost:5000/admin/vip").then((res)=>{
-      setVip(res.data.length)
-      console.log(res.data.length)
-    })
-    axios.get("http://localhost:5000/admin/public").then((res)=>{
-      setPublicData(res.data.length)
-      console.log(res.data.length)
-    })
-    axios.get("http://localhost:5000/admin/allTours").then((res)=>{
-      setTours(res.data.data.length)
-      setIsLoading(true)
-    })
-  },[])
+    if (publicData !== 0 && vip !== 0) {
+      setCharts([publicData, vip])
+      console.log("Charts updated:", [publicData, vip]);
+    }
+  },[publicData,vip])
   
   return (
     <Card p='20px' align='center' direction='column' w='100%' {...rest}>
@@ -48,22 +62,19 @@ export default function Conversion(props) {
         <Text color={textColor} fontSize='md' fontWeight='600' mt='4px'>
           Your Tours Chart
         </Text>
-        <Text
-          fontSize='sm'
-          variant='subtle'
-          width='unset'
-          fontWeight='700'
-          color='secondaryGray.600'>
-          Monthly
-        </Text>
+        
       </Flex>
 
-      <PieChart
-        h='100%'
-        w='100%'
-        chartData={[publicData?publicData:0,vip?vip:0]}
-        chartOptions={pieChartOptions}
-      />
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <PieChart
+          h="100%"
+          w="100%"
+          chartData={charts.length === 2 ? charts : [1, 1]}
+          chartOptions={pieChartOptions}
+        />
+      )}
       <Card
         bg={cardColor}
         flexDirection='row'
@@ -105,7 +116,7 @@ export default function Conversion(props) {
             </Text>
           </Flex>
           <Text fontSize='lg' color={textColor} fontWeight='700'>
-            {vip/tours*100}
+            {vip/tours*100}%
           </Text>
         </Flex>
       </Card>

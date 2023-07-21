@@ -104,45 +104,52 @@ export const AllTourGuidesData = [
     accessor: "name",
   },
   {
-    Header: "EMAIL",
+    Header: "cv",
+    accessor: "cv",
+  },
+  {
+    Header: "Licence",
+    accessor: "license",
+  },
+  
+  {
+    Header: "status",
+    accessor: "status",
+  },
+  {
+    Header: "action",
+  },
+  {
+    Header: "More Details",
+  },
+  {
+    Header: "",
     accessor: "email",
   },
   {
-    Header: "PHONE",
+    Header: "",
+    accessor: "reviews",
+  },
+  
+  {
+    Header: "",
+    accessor: "_id",
+  },
+  {
+    Header: "",
     accessor: "phone",
   },
   {
-    Header: "AVGRATE",
-    accessor: "avgrate",
+    Header: "",
+    accessor: "avgRate",
   },
   {
-    Header: "TOURS",
+    Header: "",
     accessor: "tours",
   },
   {
-    Header: "LANGUAGE",
-    accessor: "language",
-  },
-  {
-    Header: "JOINED AT",
-    accessor: "joined at",
-  },
-  {
-    Header: "ROLE",
-    accessor: "role",
-  },
-  {
-    Header: "CV",
-    accessor: "cv",
-    
-  },
-  {
-    Header: "LICENSE",
-    accessor: "license",
-  },
-  {
-    Header: "BUTTONS",
-    accessor: "buttons",
+    Header: "",
+    accessor: "languages",
   },
 
 ];

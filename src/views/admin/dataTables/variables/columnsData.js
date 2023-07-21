@@ -439,6 +439,29 @@ export const AllUserPaymentData = [
 
 ];
 
-export const ToursModalData = [
-
-]
+export const AllAdminsData = [
+  {
+    Header: "NAME",
+    accessor: "name",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "PHONE",
+    accessor: "phone",
+  },
+  {
+    Header: "ADDRESS",
+    accessor: "address",
+  },
+  {
+    Header: "ROLE",
+    accessor: "role",
+  },
+  {
+    Header: "JOINED AT",
+    accessor: "joinedAt",
+  }
+];

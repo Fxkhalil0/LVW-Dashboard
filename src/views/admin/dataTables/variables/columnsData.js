@@ -95,10 +95,6 @@ export const AllUsersData = [
     Header: "TOURS",
     accessor: "tours",
   },
-  {
-    Header: "JOINED AT",
-    accessor: "joined at",
-  },
 
 ];
 

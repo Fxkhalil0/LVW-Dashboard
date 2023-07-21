@@ -103,7 +103,7 @@ import {
                                 color={textColor}
                                 fontSize='sm'
                                 fontWeight='600'>
-                                {cell.value[0]}
+                                {cell.value}
                               </Text>
                             </Flex>
                           );
@@ -122,30 +122,23 @@ import {
                     } else if (cell.column.Header === "PHONE") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
+                          {cell.value?cell.value:"not asigned yet"}
                         </Text>
                       );
                     } else if (cell.column.Header === "ADDRESS") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
+                          {cell.value?cell.vlaue:"not assigned yet"}
                         </Text>
                       );
                     }
                     else if (cell.column.Header === "TOURS") {
                         data = (
                           <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
+                            {(cell.value).length}
                           </Text>
                         );
-                      }
-                      else if (cell.column.Header === "JOINED AT") {
-                        data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
-                          </Text>
-                        );
-                      }
+                        }
                     return (
                       <Td
                         {...cell.getCellProps()}

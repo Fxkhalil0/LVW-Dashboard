@@ -29,11 +29,22 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import Footer from "components/footer/FooterAuth"
+import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 function SignIn() {
+
+  const history = useHistory();
   const [showSignUpForm, setShowSignUpForm] = React.useState(false);
   const [showSignInForm, setShowSignInForm] = React.useState(true);
 
+  
+  //sign up form
+  const [signUpEnail,setSignUpEmail] = useState("")
+  const [signUpName,setSignUpName] = useState("")
+  const [signUpPassword,setSignUpPasswors] = useState("")
+  const [loginEmail , setLoginEmail] = useState("")
+  const [loginPassword,setLoginPassword] = useState("")
 
 
   // Chakra color mode
@@ -164,6 +175,10 @@ function SignIn() {
                 mb='24px'
                 fontWeight='500'
                 size='lg'
+                onChange={(e)=>{
+                  console.log(e.target.value)
+                  setLoginEmail(e.target.value)
+                }}
               />
               <FormLabel
                 ms='4px'
@@ -182,6 +197,10 @@ function SignIn() {
                   mb='24px'
                   size='lg'
                   type={show ? "text" : "password"}
+                  onChange={(e)=>{
+                    console.log(e.target.value)
+                    setLoginPassword(e.target.value)
+                  }}
                 // variant='auth'
                 />
                 <InputRightElement display='flex' alignItems='center' mt='4px'>
@@ -225,7 +244,21 @@ function SignIn() {
                 fontWeight='500'
                 w='100%'
                 h='50'
-                mb='24px'>
+                mb='24px'
+                onClick={()=>{
+                  axios.post("http://localhost:5000/admin/login",{
+                    email:loginEmail,
+                    password:loginPassword
+                  }).then((res)=>{
+                    if(res.data.status === 200){
+                      console.log(res.data.data)
+                      localStorage.setItem("admin", JSON.stringify(res.data.data._id));
+                      history.push("/admin/default");
+                    }else{
+                      console.log(res.data.message)
+                    }
+                  })
+                }}>
                 Sign In
               </Button>
             </FormControl>
@@ -357,6 +390,10 @@ function SignIn() {
                   mb='24px'
                   fontWeight='500'
                   size='lg'
+                  onChange={(e)=>{
+                    console.log(e.target.value)
+                    setSignUpName(e.target.value)
+                  }}
                 />
 
                 <FormLabel
@@ -379,6 +416,10 @@ function SignIn() {
                   mb='24px'
                   fontWeight='500'
                   size='lg'
+                  onChange={(e)=>{
+                    console.log(e.target.value)
+                    setSignUpEmail(e.target.value)
+                  }}
                 />
                 <FormLabel
                   ms='4px'
@@ -397,6 +438,10 @@ function SignIn() {
                     mb='24px'
                     size='lg'
                     type={show ? "text" : "password"}
+                    onChange={(e)=>{
+                      console.log(e.target.value)
+                      setSignUpPasswors(e.target.value)
+                    }}
                   // variant='auth'
                   />
                   <InputRightElement display='flex' alignItems='center' mt='4px'>
@@ -414,7 +459,23 @@ function SignIn() {
                   fontWeight='500'
                   w='100%'
                   h='50'
-                  mb='24px'>
+                  mb='24px'
+                  onClick={() => {
+  axios.post("http://localhost:5000/admin/register", {
+    name: signUpName,
+    email: signUpEnail,
+    password: signUpPassword
+  }).then((res) => {
+    if(res.data.status === 200){
+    console.log(res.data.data);
+    toggleSignInForm()
+    }
+    else
+    console.log(res.data.message)
+
+  })
+}}
+                  >
                   Sign Up
                 </Button>
               </FormControl>

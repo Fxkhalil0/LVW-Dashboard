@@ -19,9 +19,15 @@ import Nft2 from "assets/img/nfts/Nft2.png";
 import Nft5 from "assets/img/nfts/Nft5.png";
 
 
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 
 export default function Overview() {
+  useEffect(()=>{
+    let id = (localStorage.getItem("admin"))
+    console.log(id)
+    axios.get(`http://localhost:5000/admin/oneAdmin/${id}`)
+  },[])
   const textColor = useColorModeValue("secondaryGray.900", "white");
 
   return (

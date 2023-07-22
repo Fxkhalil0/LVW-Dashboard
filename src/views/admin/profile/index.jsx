@@ -26,7 +26,7 @@ export default function Overview() {
   useEffect(()=>{
     let id = (localStorage.getItem("admin"))
     console.log(id)
-    axios.get(`http://localhost:5000/admin/oneAdmin/${id}`)
+    // axios.get(`http://localhost:5000/admin/oneAdmin/${id}`)
   },[])
   const textColor = useColorModeValue("secondaryGray.900", "white");
 

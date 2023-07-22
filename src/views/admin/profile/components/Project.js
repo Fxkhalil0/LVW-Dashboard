@@ -39,15 +39,26 @@ import React, { useState , useEffect } from "react";
 // Assets
 import { MdEdit, MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
+import axios from "axios";
 
 export default function Project(props) {
   const { title, ranking, link, image, selectRange, ...rest } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(isOpen)
   const [value, onChange] = useState(null);
   const [time, setTime] = useState(null);
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
+  const [instructions, setInstructions] = useState([]);
+  const [arabicTourGuides,setArabicTourGuides] = useState([])
+  const [arabicCameraOperators,setArabicCameraOperators] = useState([])
+  const [arabicDirectors,setArabicDirectors] = useState([])
+  const [englishTourGuides,setEnglishTourGuides] = useState([])
+  const [englishCameraOperators,setEnglishCameraOperators] = useState([])
+  const [englishDirectors,setEnglishDirectors] = useState([])
+  const [italianTourGuides,setItalianTourGuides] = useState([])
+  const [italianCameraOperators,setItalianCameraOperators] = useState([])
+  const [italianDirectors,setItalianDirectors] = useState([])
+  
 
   const [formData, setFormData] = useState({
     title: '',
@@ -60,7 +71,9 @@ export default function Project(props) {
     cameraOperator: [],
     director: [],
     price: '',
-    tags: []
+    tags: [],
+    instructions:[],
+    images:[]
   });
 
   const handleInputChange = (event) => {
@@ -130,14 +143,59 @@ export default function Project(props) {
 //   setFormData({ ...formData, tags: tags });
 //   console.log(formData);
 // };
+const handleAddInstruction = () => {
+  setInstructions([...instructions, ""]);
+};
 
+const handleInstructionChange = (index, value) => {
+  const updatedInstructions = [...instructions];
+  updatedInstructions[index] = value;
+  setInstructions(updatedInstructions);
+  console.log(instructions)
+  setFormData({...formData,instructions:instructions})
+};
+const handleImagesSelect = (imageFiles) => {
+  setFormData({ ...formData, images: imageFiles });
+};
   const handleSubmit = () => {
     // Update the formData with the tags array
     setFormData({ ...formData, tags:tags });
+    axios.post("http://localhost:5000/admin/addTour",formData).then((res)=>{
+      console.log(res)
+    })
     // console.log(formData);
   };
   useEffect(() => {
-    console.log(formData);
+    axios.get("http://localhost:5000/admin/arabicTourGuides").then((res)=>{
+      console.log(res.data.data)
+      setArabicTourGuides(res.data.data)
+      console.log(arabicTourGuides)
+    })
+    axios.get("http://localhost:5000/admin/arabicCameraOperators").then((res)=>{
+      setArabicCameraOperators(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/arabicDierctors").then((res)=>{
+      setArabicDirectors(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/englishTourGuides").then((res)=>{
+      setEnglishTourGuides(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/englishCameraOperator").then((res)=>{
+      setEnglishCameraOperators(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/englishDirectors").then((res)=>{
+      setEnglishDirectors(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/italianoTourGuides").then((res)=>{
+      setItalianTourGuides(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/italianoCameraOperator").then((res)=>{
+      setItalianCameraOperators(res.data.data)
+    })
+    axios.get("http://localhost:5000/admin/italianoDirectors").then((res)=>{
+      setItalianDirectors(res.data.data)
+    })
+  
   }, [formData]);
 
   // Chakra Color Mode
@@ -235,9 +293,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="guide1">Tour guide 1</option>
-                  <option value="guide2">Tour guide 2</option>
-                  <option value="guide3">Tour guide 3</option>
+                  { arabicTourGuides&&
+                     arabicTourGuides.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
 
                 <Select
@@ -255,9 +315,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="operator1">Camera operator 1</option>
-                  <option value="operator2">Camera operator 2</option>
-                  <option value="operator3">Camera operator 3</option>
+                  { arabicCameraOperators&&
+                     arabicCameraOperators.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
 
                 <Select
@@ -275,9 +337,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="director1">Director 1</option>
-                  <option value="director2">Director 2</option>
-                  <option value="director3">Director 3</option>
+                  { arabicDirectors&&
+                     arabicDirectors.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
               </>
             )}
@@ -312,9 +376,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="guide1">Tour guide 1</option>
-                  <option value="guide2">Tour guide 2</option>
-                  <option value="guide3">Tour guide 3</option>
+                  { englishTourGuides&&
+                    englishTourGuides.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
 
                 <Select
@@ -332,9 +398,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="operator1">Camera operator 1</option>
-                  <option value="operator2">Camera operator 2</option>
-                  <option value="operator3">Camera operator 3</option>
+                  { englishCameraOperators&&
+                     englishCameraOperators.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
 
                 <Select
@@ -352,9 +420,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="director1">Director 1</option>
-                  <option value="director2">Director 2</option>
-                  <option value="director3">Director 3</option>
+                  { englishDirectors&&
+                     englishDirectors.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
               </>
             )}
@@ -388,9 +458,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="guide1">Tour guide 1</option>
-                  <option value="guide2">Tour guide 2</option>
-                  <option value="guide3">Tour guide 3</option>
+                  { italianTourGuides&&
+                     italianTourGuides.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
 
                 <Select
@@ -408,9 +480,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="operator1">Camera operator 1</option>
-                  <option value="operator2">Camera operator 2</option>
-                  <option value="operator3">Camera operator 3</option>
+                  { italianCameraOperators&&
+                     italianCameraOperators.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
 
                 <Select
@@ -428,9 +502,11 @@ export default function Project(props) {
                     })
                   }
                 >
-                  <option value="director1">Director 1</option>
-                  <option value="director2">Director 2</option>
-                  <option value="director3">Director 3</option>
+                  { italianDirectors&&
+                     italianDirectors.map((value, index) => {
+                    return <option key={value._id} value={value._id}>{value.name}</option>;
+                          })
+                  }
                 </Select>
               </>
             )}
@@ -476,6 +552,28 @@ export default function Project(props) {
               <TagCloseButton onClick={() => handleTagRemove(tag)} />
             </Tag>
           ))}
+          <Button
+            variant="brand"
+            mt="40px"
+            display='block'
+            onClick={handleAddInstruction}
+          >
+            Add Instruction
+          </Button>
+
+          {/* Display the Instructions */}
+          {instructions.map((instruction, index) => (
+            <FormControl key={index} id={`instruction_${index}`}>
+              <FormLabel>Instruction {index + 1}</FormLabel>
+              <InputGroup>
+                <Input
+                  type="text"
+                  value={instruction}
+                  onChange={(e) => handleInstructionChange(index, e.target.value)}
+                />
+              </InputGroup>
+            </FormControl>
+          ))}
 
 
           <Button
@@ -495,6 +593,8 @@ export default function Project(props) {
           maxH={{ base: "60%", lg: "80%", "2xl": "100%" }}
           minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
           mb='20px'
+          onImagesSelect={handleImagesSelect} // Pass the callback function here
+
           content={
             <Box>
               <Icon as={MdUpload} w='80px' h='80px' color={brandColor} />

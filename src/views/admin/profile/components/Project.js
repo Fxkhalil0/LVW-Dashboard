@@ -24,7 +24,8 @@ import {
   ModalCloseButton,
   ModalBody,
   Button,
-  Select
+  Select,
+  Tag, TagLabel, TagCloseButton
 } from "@chakra-ui/react";
 
 import { MdChevronLeft, MdChevronRight, MdOutlineCalendarMonth, MdAvTimer, MdOutlineAccessTime, MdAdd, MdAttachMoney } from "react-icons/md";
@@ -34,7 +35,7 @@ import Calendar from "react-calendar";
 
 // Custom components
 import Card from "components/card/Card.js";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 // Assets
 import { MdEdit, MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
@@ -45,6 +46,8 @@ export default function Project(props) {
   console.log(isOpen)
   const [value, onChange] = useState(null);
   const [time, setTime] = useState(null);
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
 
   const [formData, setFormData] = useState({
     title: '',
@@ -57,6 +60,7 @@ export default function Project(props) {
     cameraOperator: [],
     director: [],
     price: '',
+    tags: []
   });
 
   const handleInputChange = (event) => {
@@ -102,10 +106,39 @@ export default function Project(props) {
     }
   }
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleTagInputChange = (e) => {
+    setTagInput(e.target.value);
   };
 
+  const handleTagInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const trimmedInput = tagInput.trim();
+      if (trimmedInput !== "") {
+        setTags([...tags, trimmedInput]);
+        setTagInput("");
+      }
+    }
+  };
+
+  const handleTagRemove = (tag) => {
+    const updatedTags = tags.filter((t) => t !== tag);
+    setTags(updatedTags);
+  };
+//   const handleSubmit = () => {
+//   // Update the formData with the tags array
+//   setFormData({ ...formData, tags: tags });
+//   console.log(formData);
+// };
+
+  const handleSubmit = () => {
+    // Update the formData with the tags array
+    setFormData({ ...formData, tags:tags });
+    // console.log(formData);
+  };
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -127,7 +160,10 @@ export default function Project(props) {
           <FormControl id="desc">
             <FormLabel>Description</FormLabel>
             <InputGroup>
-              <Textarea type="text" onChange={(e) => setFormData({ ...formData, desc: e.target.value })} />
+              <Textarea 
+              type="text"
+              resize='none'
+              onChange={(e) => setFormData({ ...formData, desc: e.target.value })} />
             </InputGroup>
           </FormControl>
 
@@ -140,7 +176,7 @@ export default function Project(props) {
               <Input
                 id="date"
                 onClick={onOpen}
-                value={value? value.toLocaleDateString("en-GB").split("T")[0]: ""}
+                value={value ? value.toLocaleDateString("en-GB").split("T")[0] : ""}
                 // value={formData.date || ''}
                 placeholder="Select date"
                 pr="5rem"
@@ -203,7 +239,7 @@ export default function Project(props) {
                   <option value="guide2">Tour guide 2</option>
                   <option value="guide3">Tour guide 3</option>
                 </Select>
-                
+
                 <Select
                   placeholder="Select camera operator"
                   mb="24px"
@@ -238,7 +274,7 @@ export default function Project(props) {
                       ],
                     })
                   }
-                >                  
+                >
                   <option value="director1">Director 1</option>
                   <option value="director2">Director 2</option>
                   <option value="director3">Director 3</option>
@@ -295,7 +331,7 @@ export default function Project(props) {
                       ],
                     })
                   }
-                >                  
+                >
                   <option value="operator1">Camera operator 1</option>
                   <option value="operator2">Camera operator 2</option>
                   <option value="operator3">Camera operator 3</option>
@@ -315,7 +351,7 @@ export default function Project(props) {
                       ],
                     })
                   }
-                >                  
+                >
                   <option value="director1">Director 1</option>
                   <option value="director2">Director 2</option>
                   <option value="director3">Director 3</option>
@@ -371,7 +407,7 @@ export default function Project(props) {
                       ],
                     })
                   }
-                >                  
+                >
                   <option value="operator1">Camera operator 1</option>
                   <option value="operator2">Camera operator 2</option>
                   <option value="operator3">Camera operator 3</option>
@@ -391,7 +427,7 @@ export default function Project(props) {
                       ],
                     })
                   }
-                >                  
+                >
                   <option value="director1">Director 1</option>
                   <option value="director2">Director 2</option>
                   <option value="director3">Director 3</option>
@@ -415,10 +451,39 @@ export default function Project(props) {
               />
             </InputGroup>
           </FormControl>
+
+          <FormControl id="tags">
+            <FormLabel>Tags</FormLabel>
+            <InputGroup>
+              <Input
+                type="text"
+                value={tagInput}
+                onChange={handleTagInputChange}
+                onKeyDown={handleTagInputKeyDown}
+                placeholder="Add tags (press Enter to add)"
+              />
+            </InputGroup>
+          </FormControl>
+
+          {/* Display the tags */}
+          {tags.map((tag, index) => (
+            <Tag 
+            key={index}
+            variant="subtle"
+            colorScheme="blue" mt="2"
+            marginRight="10px">
+              <TagLabel>{tag}</TagLabel>
+              <TagCloseButton onClick={() => handleTagRemove(tag)} />
+            </Tag>
+          ))}
+
+
           <Button
             variant="brand"
-            mt="20px"
-            onClick={() => console.log(formData)}
+            mt="40px"
+            display='block'
+            // onClick={() => console.log(formData)}
+            onClick={handleSubmit}
           >
             Submit
           </Button>

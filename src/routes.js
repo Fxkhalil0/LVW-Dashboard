@@ -13,7 +13,8 @@ import {
   MdControlCamera,
   MdLocationOn,
   MdMessage,
-  MdAttachMoney
+  MdAttachMoney,
+  MdVerifiedUser
 } from "react-icons/md";
 
 // Admin Imports
@@ -30,6 +31,7 @@ import tours from "views/admin/tours/Tours"
 import reveiws from"views/admin/reveiws/Reveiws"
 import payment from "views/admin/payment/Payment"
 import userpayment from "views/admin/userpayment/UserPayment"
+import admins from "views/admin/admintable/Admin"
 
 
 // Auth Imports
@@ -42,6 +44,13 @@ const routes = [
     path: "/default",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
+  },
+  {
+    name: "Admins Table",
+    layout: "/admin",
+    path: "/admins-table",
+    icon: <Icon as={MdVerifiedUser} width='20px' height='20px' color='inherit' />,
+    component: admins,
   },
   {
     name: "Users Table",

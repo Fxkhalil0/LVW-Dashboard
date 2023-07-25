@@ -338,47 +338,47 @@ export const AllToursData = [
 export const AllReveiwsData = [
   {
     Header: "USERNAME",
-    accessor: "user",
   },
   {
     Header: "TOUR",
-    accessor: "tour",
   },
   {
     Header: "RATE",
     accessor: "rate",
   },
   {
-    Header: "COMMENTS",
-    accessor: "comments",
+    Header: "TOUR COMMENT",
+    accessor: "comment",
   },
   {
-    Header: "LANGUAGE",
-    accessor: "language",
+    Header: "GUESTS",
   },
   {
-    Header: "TOUR GUIDE RATE",
-    accessor: "tourguiderate",
+    Header: "PRICE",
   },
   {
-    Header: "TOUR GUIDE COMM",
-    accessor: "tourguidecomment",
+    Header: "More Details",
   },
   {
-    Header: "CAM OPERATOR RATE",
-    accessor: "cameraoperatorrate",
+    accessor: "tourGideRate",
   },
   {
-    Header: "CAM OPERATOR COMM",
-    accessor: "cameraoperatorcomment",
+    accessor: "tourGideComment",
   },
   {
-    Header: "DIRECTOR RATE",
-    accessor: "directorrate",
+    accessor: "book",
   },
   {
-    Header: "DIRECTOR COMM",
-    accessor: "directorcomment",
+    accessor: "cameraOperatorRate",
+  },
+  {
+    accessor: "cameraOperatorComment",
+  },
+  {
+    accessor: "directorRate",
+  },
+  {
+    accessor: "directorComment",
   },
 
 ];

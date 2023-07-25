@@ -1,5 +1,5 @@
 import { Button, Flex, Input, useColorModeValue } from "@chakra-ui/react";
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 function Dropzone(props) {
@@ -14,10 +14,6 @@ function Dropzone(props) {
       }
     },
   });
-  const handleImagesSelect = (imageFiles) => {
-    setSelectedImages((prevSelectedImages) => [...prevSelectedImages, ...imageFiles]);
-    onImagesSelect([...selectedImages, ...imageFiles]);
-  };
 
   const bg = useColorModeValue("gray.100", "navy.700");
   const borderColor = useColorModeValue("secondaryGray.100", "whiteAlpha.100");

@@ -1,17 +1,27 @@
 import {
-    Avatar,
-    Flex,
-    Table,
-    Checkbox,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tr,
-    useColorModeValue,
-  } from "@chakra-ui/react";
-  import React, { useMemo } from "react";
+  Avatar,
+  Flex,
+  Table,
+  Box,
+  Checkbox,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useColorModeValue,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  TableContainer,
+} from "@chakra-ui/react";
+  import React, { useEffect, useMemo, useState } from "react";
   import {
     useGlobalFilter,
     usePagination,
@@ -21,14 +31,19 @@ import {
   
   // Custom components
   import Card from "components/card/Card";
+import axios from "axios";
+
 
 
   export default function ReveiwsTable(props) {
     const { columnsData, tableData } = props;
   
     const columns = useMemo(() => columnsData, [columnsData]);
-    const data = useMemo(() => tableData, [tableData]);
-  
+    const [data, setData] = useState(tableData);
+    // const data = useMemo(() => tableData, [tableData]);
+    useEffect(()=>{
+      setData(tableData);
+    },[tableData])
     const tableInstance = useTable(
       {
         columns,
@@ -46,11 +61,29 @@ import {
       page,
       prepareRow,
       initialState,
+      nextPage,
+      previousPage,
+      canNextPage,
+      canPreviousPage,
+      state: { pageIndex },
     } = tableInstance;
-    initialState.pageSize = 11;
+    initialState.pageSize = 5;
   
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+    const [isRowModalOpen, setIsRowModalOpen] = useState(new Array(data.length).fill(false));
+
+  const handleOpenModal = (rowIndex) => {
+    const updatedModalState = [...isRowModalOpen];
+    updatedModalState[rowIndex] = true;
+    setIsRowModalOpen(updatedModalState);
+  };
+
+  const handleCloseModal = (rowIndex) => {
+    const updatedModalState = [...isRowModalOpen];
+    updatedModalState[rowIndex] = false;
+    setIsRowModalOpen(updatedModalState);
+  };
     return (
       <Card
         direction='column'
@@ -64,10 +97,11 @@ import {
           <Thead>
             {headerGroups.map((headerGroup, index) => (
               <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
+                {headerGroup.headers.map((column, index) => {
+                  if(column.Header){
+                    return(
                   <Th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    pe='10px'
                     key={index}
                     borderColor={borderColor}>
                     <Flex
@@ -78,7 +112,9 @@ import {
                       {column.render("Header")}
                     </Flex>
                   </Th>
-                ))}
+                    )
+                  }
+  })}
               </Tr>
             ))}
           </Thead>
@@ -87,18 +123,17 @@ import {
               prepareRow(row);
               return (
                 <Tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => {
+                  {row.cells.map((cell, xellIndex) => {
+                    if (cell.column.Header) {
                     let data = "";
                     if (cell.column.Header === "USERNAME") {
                         data = (
-                            <Flex align='center'>
                               <Text
                                 color={textColor}
                                 fontSize='sm'
                                 fontWeight='600'>
-                                {cell.value}
+                                {row.values["book"].user.name}
                               </Text>
-                            </Flex>
                           );
                     } else if (cell.column.Header === "TOUR") {
                       data = (
@@ -108,87 +143,249 @@ import {
                             color={textColor}
                             fontSize='sm'
                             fontWeight='700'>
+                            {row.values["book"].tour.title}
+                          </Text>
+                        </Flex>
+                      );
+                    } 
+                    else if (cell.column.Header === "RATE") {
+                      data = (
+                        <Flex align='center'>
+                          <Text
+                            me='10px'
+                            color={textColor}
+                            fontSize='sm'
+                            fontWeight='700'>
+                            {(cell.value * 20).toFixed(1)}%
+                          </Text>
+                        </Flex>
+                      );
+                    } 
+                    else if (cell.column.Header === "TOUR COMMENT") {
+                      data = (
+                        <Flex align='center'>
+                          <Text
+                            w='150px'
+                            me='10px'
+                            color={textColor}
+                            fontSize='sm'
+                            fontWeight='700'>
                             {cell.value}
                           </Text>
                         </Flex>
                       );
-                    } else if (cell.column.Header === "RATE") {
+                    } 
+                    else if (cell.column.Header === "GUESTS") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}%
-                        </Text>
+                        <Flex align='center'>
+                          <Text
+                            w='150px'
+                            me='10px'
+                            color={textColor}
+                            fontSize='sm'
+                            fontWeight='700'>
+                            {row.values["book"].numberOfGuests}
+                          </Text>
+                        </Flex>
                       );
-                    } else if (cell.column.Header === "COMMENTS") {
+                    } 
+                    else if (cell.column.Header === "PRICE") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
-                        </Text>
+                        <Flex align='center'>
+                          <Text
+                            w='150px'
+                            me='10px'
+                            color={textColor}
+                            fontSize='sm'
+                            fontWeight='700'>
+                            {row.values["book"].price}
+                          </Text>
+                        </Flex>
                       );
-                    } else if (cell.column.Header === "LANGUAGE") {
-                      data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
-                        </Text>
-                      );
-                    }
-                    else if (cell.column.Header === "TOUR GUIDE RATE") {
+                    } 
+                     
+                      else if (cell.column.Header === "More Details") {
                         data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}%
-                          </Text>
+                          <>
+                            {" "}
+                            <Button onClick={() => handleOpenModal(index)} colorScheme="blue">
+                              More Details
+                            </Button>{" "}
+                            <Modal isOpen={isRowModalOpen[index]} onClose={() => handleCloseModal(index)}>
+                              <ModalOverlay />
+                              <ModalContent minW="500px">
+                                <ModalHeader>Modal Title</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                  <TableContainer>
+                                    <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+                                      <Table variant="simple">
+                                        <Tbody>
+                                          {row.values["book"].language === "Arabic" &&
+                                          <>
+                                            <Tr>
+                                              <Td>tour  Guide name</Td>
+                                              <Td>{row.values["book"].tour.arabicTourGuide.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>tour  Guide rate</Td>
+                                              <Td>{(row.values["tourGideRate"] * 20).toFixed(1)}%</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>tour  Guide comment</Td>
+                                              <Td>{row.values["tourGideComment"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator name</Td>
+                                              <Td>{row.values["book"].tour.arabicCameraOperator.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator rate</Td>
+                                              <Td>{(row.values["cameraOperatorRate"] * 20).toFixed(1)}%</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator comment</Td>
+                                              <Td>{row.values["cameraOperatorComment"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director name</Td>
+                                              <Td>{row.values["book"].tour.arabicDirector.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director rate</Td>
+                                              <Td>{(row.values["directorRate"] * 20).toFixed(1)}%</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director comment</Td>
+                                              <Td>{row.values["directorComment"]}</Td>
+                                            </Tr>
+                                            </>
+                                              }
+                                          {row.values["book"].language === "English" &&
+                                          <>
+                                            <Tr>
+                                              <Td>tour  Guide name</Td>
+                                              <Td>{row.values["book"].tour.englishTourGuide.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>tour  Guide rate</Td>
+                                              <Td>{row.values["tourGuideRate"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>tour  Guide comment</Td>
+                                              <Td>{row.values["tourGuideComment"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator name</Td>
+                                              <Td>{row.values["book"].tour.englishCameraOperator.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator rate</Td>
+                                              <Td>{row.values["cameraOperatorRate"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator comment</Td>
+                                              <Td>{row.values["cameraOperatorComment"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director name</Td>
+                                              <Td>{row.values["book"].tour.englishDirector.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director rate</Td>
+                                              <Td>{row.values["directorRate"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director comment</Td>
+                                              <Td>{row.values["directorComment"]}</Td>
+                                            </Tr>
+                                            </>
+                                              }
+                                          {row.values["book"].language === "Italian" &&
+                                          <>
+                                            <Tr>
+                                              <Td>tour  Guide name</Td>
+                                              <Td>{row.values["book"].tour.italianTourGuide.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>tour  Guide rate</Td>
+                                              <Td>{row.values["tourGuideRate"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>tour  Guide comment</Td>
+                                              <Td>{row.values["tourGuideComment"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator name</Td>
+                                              <Td>{row.values["book"].tour.italianCameraOperator.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator rate</Td>
+                                              <Td>{row.values["cameraOperatorRate"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Camera Operator comment</Td>
+                                              <Td>{row.values["cameraOperatorComment"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director name</Td>
+                                              <Td>{row.values["book"].tour.italianDirector.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director rate</Td>
+                                              <Td>{row.values["directorRate"]}</Td>
+                                            </Tr>
+                                            <Tr>
+                                              <Td>Director comment</Td>
+                                              <Td>{row.values["directorComment"]}</Td>
+                                            </Tr>
+                                            </>
+                                              }
+                                          
+                                        </Tbody>
+                                      </Table>
+                                    </Box>
+                                  </TableContainer>
+                                </ModalBody>
+  
+                                <ModalFooter>
+                                  <Button colorScheme="blue" mr={3} onClick={() => handleCloseModal(index)}>
+                                    Close
+                                  </Button>
+                                </ModalFooter>
+                              </ModalContent>
+                            </Modal>{" "}
+                          </>
                         );
                       }
-                      else if (cell.column.Header === "TOUR GUIDE COMM") {
-                        data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
-                          </Text>
-                        );
-                      }
-                      else if (cell.column.Header === "CAM OPERATOR RATE") {
-                        data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}%
-                          </Text>
-                        );
-                      }
-                      else if (cell.column.Header === "CAM OPERATOR COMM") {
-                        data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
-                          </Text>
-                        );
-                      }
-                      else if (cell.column.Header === "DIRECTOR RATE") {
-                        data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}%
-                          </Text>
-                        );
-                      }
-                      else if (cell.column.Header === "DIRECTOR COMM") {
-                        data = (
-                          <Text color={textColor} fontSize='sm' fontWeight='700'>
-                            {cell.value}
-                          </Text>
-                        );
-                      }
+                      
                     return (
                       <Td
                         {...cell.getCellProps()}
                         key={index}
                         fontSize={{ sm: "14px" }}
-                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
                         borderColor='transparent'>
                         {data}
                       </Td>
                     );
+                  }
+                    
                   })}
                 </Tr>
+  
               );
+                              
             })}
           </Tbody>
         </Table>
+        <Flex justify="center">
+        <Button onClick={previousPage} disabled={!canPreviousPage}>
+          Previous
+        </Button>
+        <Button onClick={nextPage} disabled={!canNextPage}>
+          Next
+        </Button>
+      </Flex>
       </Card>
     );
   }

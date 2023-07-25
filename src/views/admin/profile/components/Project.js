@@ -160,9 +160,16 @@ const handleImagesSelect = (imageFiles) => {
   const handleSubmit = () => {
     // Update the formData with the tags array
     setFormData({ ...formData, tags:tags });
-    axios.post("http://localhost:5000/admin/addTour",formData).then((res)=>{
-      console.log(res)
-    })
+    console.log(formData)
+    axios
+  .post("http://localhost:5000/admin/addTour", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  .then((res) => {
+    console.log(res);
+  })
     // console.log(formData);
   };
   useEffect(() => {

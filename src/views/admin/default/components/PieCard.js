@@ -86,7 +86,7 @@ export default function Conversion(props) {
         mx='auto'>
         <Flex direction='column' py='5px'>
           <Flex align='center'>
-            <Box h='8px' w='8px' bg='brand.500' borderRadius='50%' me='4px' />
+            <Box h='8px' w='8px' bg='brand.500' borderRadius='50%' me='5px' marginBottom='4px'/>
             <Text onClick={()=>{
               console.log(publicData,"pub")
               console.log(vip,"vip")
@@ -100,13 +100,13 @@ export default function Conversion(props) {
             </Text>
           </Flex>
           <Text fontSize='lg' color={textColor} fontWeight='700'>
-            {publicData/tours*100}%
+          {(publicData / tours * 100).toFixed(1)}%
           </Text>
         </Flex>
         <VSeparator mx={{ base: "60px", xl: "30px", "2xl": "60px" }} />
         <Flex direction='column' py='5px' me='10px'>
           <Flex align='center'>
-            <Box h='8px' w='8px' bg='#6AD2FF' borderRadius='50%' me='0px' />
+            <Box h='8px' w='8px' bg='#6AD2FF' borderRadius='50%' me='3px' marginBottom='4px'/>
             <Text
               fontSize='xs'
               color='secondaryGray.600'
@@ -116,7 +116,7 @@ export default function Conversion(props) {
             </Text>
           </Flex>
           <Text fontSize='lg' color={textColor} fontWeight='700'>
-            {vip/tours*100}%
+            {(vip / tours * 100).toFixed(1)}%
           </Text>
         </Flex>
       </Card>

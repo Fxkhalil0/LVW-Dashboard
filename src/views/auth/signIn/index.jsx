@@ -92,20 +92,6 @@ function SignIn() {
         mt={{ base: "40px", md: "6vh" }}
         flexDirection='column'>
 
-        {/* <Box me='auto'>
-          <Heading color={textColor} fontSize='36px' mb='10px'>
-            {showSignInForm ? "Sign In" : "Sign Up"}
-          </Heading>
-          <Text
-            mb='36px'
-            ms='4px'
-            color={textColorSecondary}
-            fontWeight='400'
-            fontSize='md'>
-            {showSignInForm ? "Enter your email and password to sign in!" : "Enter your email and password to sign up!"}
-          </Text>
-        </Box> */}
-
         {showSignInForm && (
           <>
           <Box me='auto'>

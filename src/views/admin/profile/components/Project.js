@@ -159,17 +159,60 @@ const handleImagesSelect = (imageFiles) => {
 };
   const handleSubmit = () => {
     // Update the formData with the tags array
+
     setFormData({ ...formData, tags:tags });
-    console.log(formData)
-    axios
-  .post("http://localhost:5000/admin/addTour", formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-  .then((res) => {
+    const formDataToSend = new FormData();
+
+  // Append the non-file fields to formDataToSend
+  formDataToSend.append("title", formData.title);
+  formDataToSend.append("desc", formData.desc);
+  formDataToSend.append("date", formData.date);
+  formDataToSend.append("startTime", formData.startTime);
+  formDataToSend.append("hours", formData.hours);
+  formDataToSend.append("price", formData.price);
+
+  // Append the language fields to formDataToSend
+  formData.language.forEach((language) => {
+    formDataToSend.append("language", language);
+  });
+
+ // Append the tourGuide fields to formDataToSend
+ formData.tourGuide.forEach((guide) => {
+  formDataToSend.append("tourGuide", JSON.stringify(guide));
+});
+
+
+  // Append the cameraOperator fields to formDataToSend
+  formData.cameraOperator.forEach((operator) => {
+    formDataToSend.append("cameraOperator", JSON.stringify(operator));
+  });
+
+  // Append the director fields to formDataToSend
+  formData.director.forEach((director) => {
+    formDataToSend.append("director", JSON.stringify(director));
+  });
+
+  // Append the tags array to formDataToSend
+  formData.tags.forEach((tag) => {
+    formDataToSend.append("tags", tag);
+  });
+
+  // Append the instructions array to formDataToSend
+  formData.instructions.forEach((instruction) => {
+    formDataToSend.append("instructions", instruction);
+  });
+
+  // Append each image to formDataToSend
+  formData.images.forEach((image, index) => {
+    formDataToSend.append(`images`, image);
+  });
+console.log(formData)
+  // Now you can use formDataToSend to submit your data
+  console.log(formDataToSend);
+
+  axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
     console.log(res);
-  })
+  });
     // console.log(formData);
   };
   useEffect(() => {

@@ -152,6 +152,20 @@ export default function AdminsTable(props) {
                                             </Text>
                                         );
                                     }
+                                    else if (cell.column.Header === "ACCTION") {
+                                        data = (
+                                            <Button  colorScheme="blue">
+                                            Remove
+                                          </Button>
+                                        );
+                                    }
+                                    else if (cell.column.Header === "CHANGE ROLE") {
+                                        data = (
+                                            <Button  colorScheme="blue">
+                                            Change Role
+                                          </Button>
+                                        );
+                                    }
                                     return (
                                         <Td
                                             {...cell.getCellProps()}

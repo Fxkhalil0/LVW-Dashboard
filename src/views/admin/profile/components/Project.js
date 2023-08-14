@@ -35,7 +35,7 @@ import Calendar from "react-calendar";
 
 // Custom components
 import Card from "components/card/Card.js";
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 // Assets
 import { MdEdit, MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
@@ -49,16 +49,36 @@ export default function Project(props) {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
   const [instructions, setInstructions] = useState([]);
-  const [arabicTourGuides,setArabicTourGuides] = useState([])
-  const [arabicCameraOperators,setArabicCameraOperators] = useState([])
-  const [arabicDirectors,setArabicDirectors] = useState([])
-  const [englishTourGuides,setEnglishTourGuides] = useState([])
-  const [englishCameraOperators,setEnglishCameraOperators] = useState([])
-  const [englishDirectors,setEnglishDirectors] = useState([])
-  const [italianTourGuides,setItalianTourGuides] = useState([])
-  const [italianCameraOperators,setItalianCameraOperators] = useState([])
-  const [italianDirectors,setItalianDirectors] = useState([])
-  
+  const [arabicTourGuides, setArabicTourGuides] = useState([])
+  const [arabicCameraOperators, setArabicCameraOperators] = useState([])
+  const [arabicDirectors, setArabicDirectors] = useState([])
+  const [englishTourGuides, setEnglishTourGuides] = useState([])
+  const [englishCameraOperators, setEnglishCameraOperators] = useState([])
+  const [englishDirectors, setEnglishDirectors] = useState([])
+  const [italianTourGuides, setItalianTourGuides] = useState([])
+  const [italianCameraOperators, setItalianCameraOperators] = useState([])
+  const [italianDirectors, setItalianDirectors] = useState([])
+
+  const [allCountriesData, setAllCountriesData] = useState([]);
+  const [addAddress, setAddAddress] = useState("");
+  const [addCity, setAddCity] = useState("")
+  const [country, setCountry] = useState([]);
+  const [city, setCity] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json")
+      .then(res => {
+        setAllCountriesData(res.data);
+        console.log(res.data)
+        let countries = [...new Set(res.data.map(item => item.country))];
+        countries.sort();
+        setCountry(countries);
+        console.log(countries)
+      })
+      .catch(err => console.log(err))
+  }, []);
+
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -72,8 +92,8 @@ export default function Project(props) {
     director: [],
     price: '',
     tags: [],
-    instructions:[],
-    images:[]
+    instructions: [],
+    images: []
   });
 
   const handleInputChange = (event) => {
@@ -138,114 +158,114 @@ export default function Project(props) {
     const updatedTags = tags.filter((t) => t !== tag);
     setTags(updatedTags);
   };
-//   const handleSubmit = () => {
-//   // Update the formData with the tags array
-//   setFormData({ ...formData, tags: tags });
-//   console.log(formData);
-// };
-const handleAddInstruction = () => {
-  setInstructions([...instructions, ""]);
-};
+  //   const handleSubmit = () => {
+  //   // Update the formData with the tags array
+  //   setFormData({ ...formData, tags: tags });
+  //   console.log(formData);
+  // };
+  const handleAddInstruction = () => {
+    setInstructions([...instructions, ""]);
+  };
 
-const handleInstructionChange = (index, value) => {
-  const updatedInstructions = [...instructions];
-  updatedInstructions[index] = value;
-  setInstructions(updatedInstructions);
-  console.log(instructions)
-  setFormData({...formData,instructions:instructions})
-};
-const handleImagesSelect = (imageFiles) => {
-  setFormData({ ...formData, images: imageFiles });
-};
+  const handleInstructionChange = (index, value) => {
+    const updatedInstructions = [...instructions];
+    updatedInstructions[index] = value;
+    setInstructions(updatedInstructions);
+    console.log(instructions)
+    setFormData({ ...formData, instructions: instructions })
+  };
+  const handleImagesSelect = (imageFiles) => {
+    setFormData({ ...formData, images: imageFiles });
+  };
   const handleSubmit = () => {
     // Update the formData with the tags array
 
-    setFormData({ ...formData, tags:tags });
+    setFormData({ ...formData, tags: tags });
     const formDataToSend = new FormData();
 
-  // Append the non-file fields to formDataToSend
-  formDataToSend.append("title", formData.title);
-  formDataToSend.append("desc", formData.desc);
-  formDataToSend.append("date", formData.date);
-  formDataToSend.append("startTime", formData.startTime);
-  formDataToSend.append("hours", formData.hours);
-  formDataToSend.append("price", formData.price);
+    // Append the non-file fields to formDataToSend
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("desc", formData.desc);
+    formDataToSend.append("date", formData.date);
+    formDataToSend.append("startTime", formData.startTime);
+    formDataToSend.append("hours", formData.hours);
+    formDataToSend.append("price", formData.price);
 
-  // Append the language fields to formDataToSend
-  formData.language.forEach((language) => {
-    formDataToSend.append("language", language);
-  });
+    // Append the language fields to formDataToSend
+    formData.language.forEach((language) => {
+      formDataToSend.append("language", language);
+    });
 
- // Append the tourGuide fields to formDataToSend
- formData.tourGuide.forEach((guide) => {
-  formDataToSend.append("tourGuide", JSON.stringify(guide));
-});
+    // Append the tourGuide fields to formDataToSend
+    formData.tourGuide.forEach((guide) => {
+      formDataToSend.append("tourGuide", JSON.stringify(guide));
+    });
 
 
-  // Append the cameraOperator fields to formDataToSend
-  formData.cameraOperator.forEach((operator) => {
-    formDataToSend.append("cameraOperator", JSON.stringify(operator));
-  });
+    // Append the cameraOperator fields to formDataToSend
+    formData.cameraOperator.forEach((operator) => {
+      formDataToSend.append("cameraOperator", JSON.stringify(operator));
+    });
 
-  // Append the director fields to formDataToSend
-  formData.director.forEach((director) => {
-    formDataToSend.append("director", JSON.stringify(director));
-  });
+    // Append the director fields to formDataToSend
+    formData.director.forEach((director) => {
+      formDataToSend.append("director", JSON.stringify(director));
+    });
 
-  // Append the tags array to formDataToSend
-  formData.tags.forEach((tag) => {
-    formDataToSend.append("tags", tag);
-  });
+    // Append the tags array to formDataToSend
+    formData.tags.forEach((tag) => {
+      formDataToSend.append("tags", tag);
+    });
 
-  // Append the instructions array to formDataToSend
-  formData.instructions.forEach((instruction) => {
-    formDataToSend.append("instructions", instruction);
-  });
+    // Append the instructions array to formDataToSend
+    formData.instructions.forEach((instruction) => {
+      formDataToSend.append("instructions", instruction);
+    });
 
-  // Append each image to formDataToSend
-  formData.images.forEach((image, index) => {
-    formDataToSend.append(`images`, image);
-  });
-console.log(formData)
-  // Now you can use formDataToSend to submit your data
-  console.log(formDataToSend);
+    // Append each image to formDataToSend
+    formData.images.forEach((image, index) => {
+      formDataToSend.append(`images`, image);
+    });
+    console.log(formData)
+    // Now you can use formDataToSend to submit your data
+    console.log(formDataToSend);
 
-  axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
-    console.log(res);
-  });
+    axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
+      console.log(res);
+    });
     // console.log(formData);
   };
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/arabicTourGuides").then((res)=>{
+    axios.get("http://localhost:5000/admin/arabicTourGuides").then((res) => {
       console.log(res.data.data)
       setArabicTourGuides(res.data.data)
       console.log(arabicTourGuides)
     })
-    axios.get("http://localhost:5000/admin/arabicCameraOperators").then((res)=>{
+    axios.get("http://localhost:5000/admin/arabicCameraOperators").then((res) => {
       setArabicCameraOperators(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/arabicDierctors").then((res)=>{
+    axios.get("http://localhost:5000/admin/arabicDierctors").then((res) => {
       setArabicDirectors(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/englishTourGuides").then((res)=>{
+    axios.get("http://localhost:5000/admin/englishTourGuides").then((res) => {
       setEnglishTourGuides(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/englishCameraOperator").then((res)=>{
+    axios.get("http://localhost:5000/admin/englishCameraOperator").then((res) => {
       setEnglishCameraOperators(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/englishDirectors").then((res)=>{
+    axios.get("http://localhost:5000/admin/englishDirectors").then((res) => {
       setEnglishDirectors(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/italianoTourGuides").then((res)=>{
+    axios.get("http://localhost:5000/admin/italianoTourGuides").then((res) => {
       setItalianTourGuides(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/italianoCameraOperator").then((res)=>{
+    axios.get("http://localhost:5000/admin/italianoCameraOperator").then((res) => {
       setItalianCameraOperators(res.data.data)
     })
-    axios.get("http://localhost:5000/admin/italianoDirectors").then((res)=>{
+    axios.get("http://localhost:5000/admin/italianoDirectors").then((res) => {
       setItalianDirectors(res.data.data)
     })
-  
+
   }, [formData]);
 
   // Chakra Color Mode
@@ -268,10 +288,10 @@ console.log(formData)
           <FormControl id="desc">
             <FormLabel>Description</FormLabel>
             <InputGroup>
-              <Textarea 
-              type="text"
-              resize='none'
-              onChange={(e) => setFormData({ ...formData, desc: e.target.value })} />
+              <Textarea
+                type="text"
+                resize='none'
+                onChange={(e) => setFormData({ ...formData, desc: e.target.value })} />
             </InputGroup>
           </FormControl>
 
@@ -307,9 +327,62 @@ console.log(formData)
           <FormControl id="hours">
             <FormLabel>Hours</FormLabel>
             <InputGroup>
-              <Input type="number" placeholder="Enter Hours" onChange={(e) => setFormData({ ...formData, hours: e.target.value })} />
+              <Input
+                type="number"
+                placeholder="Enter Hours"
+                mb="10px"
+                onChange={(e) => setFormData({ ...formData, hours: e.target.value })}
+              />
             </InputGroup>
           </FormControl>
+
+          <FormLabel>Address:</FormLabel>
+
+          <div style={{ display: 'flex' }}>
+            <FormControl id="address" style={{ marginRight: '10px' }}>
+              <Select
+                placeholder="Select Country"
+                value={addAddress}
+                onChange={(e) => setAddAddress(e.target.value)}
+                mb="24px"
+                name="address"
+              >
+                <option>Select Country</option>
+                {country?.map((item, index) => (
+                  <option key={index} value={item}>{item}</option>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl id="city">
+              <Select
+                placeholder="Select City"
+                value={addCity}
+                onChange={(e) => setAddCity(e.target.value)}
+                mb="24px"
+                name="city"
+              >
+                {addAddress !== 'Select Country' && allCountriesData
+                  .filter(item => item.country === addAddress)
+                  .map((item, index) => (
+                    <option key={index} value={item.name}>{item.name}</option>
+                  ))}
+              </Select>
+            </FormControl>
+
+          </div>
+
+          <FormControl id="address" style={{ marginRight: '10px' }}>
+            <FormLabel>Add Category</FormLabel>
+              <Select
+                placeholder="Select Category"
+                mb="24px"
+                name="category"
+              >
+                <option>Public</option>
+                <option>VIP</option>
+              </Select>
+            </FormControl>
 
           <FormControl id="language">
             <FormLabel>Choose Language:</FormLabel>
@@ -343,10 +416,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { arabicTourGuides&&
-                     arabicTourGuides.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {arabicTourGuides &&
+                    arabicTourGuides.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
 
@@ -365,10 +438,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { arabicCameraOperators&&
-                     arabicCameraOperators.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {arabicCameraOperators &&
+                    arabicCameraOperators.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
 
@@ -387,10 +460,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { arabicDirectors&&
-                     arabicDirectors.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {arabicDirectors &&
+                    arabicDirectors.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
               </>
@@ -426,10 +499,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { englishTourGuides&&
+                  {englishTourGuides &&
                     englishTourGuides.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
 
@@ -448,10 +521,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { englishCameraOperators&&
-                     englishCameraOperators.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {englishCameraOperators &&
+                    englishCameraOperators.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
 
@@ -470,10 +543,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { englishDirectors&&
-                     englishDirectors.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {englishDirectors &&
+                    englishDirectors.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
               </>
@@ -508,10 +581,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { italianTourGuides&&
-                     italianTourGuides.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {italianTourGuides &&
+                    italianTourGuides.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
 
@@ -530,10 +603,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { italianCameraOperators&&
-                     italianCameraOperators.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {italianCameraOperators &&
+                    italianCameraOperators.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
 
@@ -552,10 +625,10 @@ console.log(formData)
                     })
                   }
                 >
-                  { italianDirectors&&
-                     italianDirectors.map((value, index) => {
-                    return <option key={value._id} value={value._id}>{value.name}</option>;
-                          })
+                  {italianDirectors &&
+                    italianDirectors.map((value, index) => {
+                      return <option key={value._id} value={value._id}>{value.name}</option>;
+                    })
                   }
                 </Select>
               </>
@@ -593,11 +666,11 @@ console.log(formData)
 
           {/* Display the tags */}
           {tags.map((tag, index) => (
-            <Tag 
-            key={index}
-            variant="subtle"
-            colorScheme="blue" mt="2"
-            marginRight="10px">
+            <Tag
+              key={index}
+              variant="subtle"
+              colorScheme="blue" mt="2"
+              marginRight="10px">
               <TagLabel>{tag}</TagLabel>
               <TagCloseButton onClick={() => handleTagRemove(tag)} />
             </Tag>

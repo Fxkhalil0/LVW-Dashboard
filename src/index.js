@@ -8,9 +8,11 @@ import RtlLayout from 'layouts/rtl';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from 'theme/theme';
 import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
+import { CSSReset } from "@chakra-ui/react";
 
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
+		<CSSReset />
 		<React.StrictMode>
 			<ThemeEditorProvider>
 				<HashRouter>

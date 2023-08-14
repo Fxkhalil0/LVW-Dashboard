@@ -314,6 +314,13 @@ import axios from "axios";
                           </>
                         );
                       }
+                      else if (cell.column.Header === "CHANGE ROLE") {
+                        data = (
+                            <Button  colorScheme="blue">
+                            Change Role
+                          </Button>
+                        );
+                    }
                       
                     return (
                       <Td

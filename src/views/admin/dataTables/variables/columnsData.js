@@ -151,6 +151,9 @@ export const AllTourGuidesData = [
     Header: "",
     accessor: "languages",
   },
+  {
+    Header: "CHANGE ROLE",
+  }
 
 ];
 
@@ -463,5 +466,11 @@ export const AllAdminsData = [
   {
     Header: "JOINED AT",
     accessor: "joinedAt",
+  },
+  {
+    Header: "ACCTION",
+  },
+  {
+    Header: "CHANGE ROLE",
   }
 ];

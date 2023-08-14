@@ -32,36 +32,12 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 export default function TourGuidesTable() {
-  const cvUpload = async (event) => {
-    console.log("gggggggggggg")
-    const file = event.files[0];
-    const reader = new FileReader();
-    let blob = await fetch(file.objectURL).then((r) => r.blob());
+  
 
-    reader.readAsDataURL(blob);
-    console.log(blob)
-    reader.onloadend = function () {
-      const base64data = reader.result;
-      console.log(base64data)
-    };
-  };
-
-  const licenseUpload = async (event) => {
-    console.log("gggghhhhhhhhhgg")
-    const file = event.files[0];
-    const reader = new FileReader();
-    let blob = await fetch(file.objectURL).then((r) => r.blob());
-
-    reader.readAsDataURL(blob);
-
-    reader.onloadend = function () {
-      const base64data = reader.result;
-    };
-  };
   const [isRowModalOpen, setIsRowModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [passwoed, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [tourGuideRole, setTourGuideRole] = useState("");
   const [cv, setCv] = useState(null)
   const [license, setLicense] = useState(null)
@@ -86,7 +62,23 @@ export default function TourGuidesTable() {
   };
 
   const handleSave = () => {
-    // Perform save logic here
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("cv", cv);
+    formData.append("license", license);
+    formData.append("role", tourGuideRole);
+
+    axios.post("http://localhost:5000/admin/addTourGuide", formData).then((res) => {
+      if (res.data.status === 200) {
+        console.log(res.data)
+      }
+    })
+    axios.get("http://localhost:5000/admin/allTourGuides").then((res) => {
+      console.log(res.data.data)
+      setTourGuides(res.data.data)
+    })
     handleCloseModal();
   };
 
@@ -94,7 +86,7 @@ export default function TourGuidesTable() {
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <>
-        <div className="add__admin__button" style={{ alignItems: 'center', textAlign: 'center', marginBottom: '20px' }}>
+        <div className="add__admin__button" style={{ alignItems: 'center', textAlign: 'center', marginBottom: '20px'}}>
           <Button onClick={handleOpenModal} colorScheme="blue">
             Add Tour Guide
           </Button>
@@ -102,7 +94,7 @@ export default function TourGuidesTable() {
         <Modal isOpen={isRowModalOpen} onClose={handleCloseModal}>
           <ModalOverlay />
           <ModalContent minW="500px">
-            <ModalHeader>Add Director</ModalHeader>
+            <ModalHeader>Add Tour Guide</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Input
@@ -119,22 +111,22 @@ export default function TourGuidesTable() {
               />
               <Input
                 placeholder="Password"
-                value={passwoed}
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 mb='15px'
               />
 
               <Select
-                placeholder="Select Admin Role"
+                placeholder="Select Tour Guide Role"
                 mb="24px"
                 mr="10px"
-                name="adminRole"
+                name="tourGuideRole"
                 value={tourGuideRole}
                 onChange={(e) => setTourGuideRole(e.target.value)}
 
               >
-                <option value="admin">Tour Guide</option>
-                <option value="headAdmin">Head Tour Guide</option>
+                <option value="tourGuide">Tour Guide</option>
+                <option value="headTourGuide">Head Tour Guide</option>
 
               </Select>
 
@@ -143,9 +135,8 @@ export default function TourGuidesTable() {
                   name="cv"
                   url="/api/upload"
                   customUpload
-                  uploadHandler={cvUpload}
                   onSelect={(e) => {
-                    console.log(e.files[0])
+                    setCv(e.files[0])
                   }}
                   style={{ marginRight: '10px' }}
                   chooseLabel="Upload CV"
@@ -157,10 +148,8 @@ export default function TourGuidesTable() {
                   name="license"
                   url="/api/upload"
                   customUpload
-                  uploadHandler={licenseUpload}
                   onSelect={(e) => {
-                    console.log(e.files[0])
-
+                    setLicense(e.files[0])
                   }}
                   chooseLabel="Upload License"
                   chooseOptions={{ style: { backgroundColor: "#3965FF" } }}

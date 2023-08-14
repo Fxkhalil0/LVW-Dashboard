@@ -374,15 +374,15 @@ export default function Project(props) {
 
           <FormControl id="address" style={{ marginRight: '10px' }}>
             <FormLabel>Add Category</FormLabel>
-              <Select
-                placeholder="Select Category"
-                mb="24px"
-                name="category"
-              >
-                <option>Public</option>
-                <option>VIP</option>
-              </Select>
-            </FormControl>
+            <Select
+              placeholder="Select Category"
+              mb="24px"
+              name="category"
+            >
+              <option>Public</option>
+              <option>VIP</option>
+            </Select>
+          </FormControl>
 
           <FormControl id="language">
             <FormLabel>Choose Language:</FormLabel>

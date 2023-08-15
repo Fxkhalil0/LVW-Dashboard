@@ -84,7 +84,7 @@ export default function Project(props) {
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
-    date: '',
+    date: {},
     startTime: '',
     hours: '',
     language: [],
@@ -187,7 +187,7 @@ export default function Project(props) {
     // Append the non-file fields to formDataToSend
     formDataToSend.append("title", formData.title);
     formDataToSend.append("desc", formData.desc);
-    formDataToSend.append("date", formData.date);
+    formDataToSend.append("date", new Date(formData.date).toISOString());
     formDataToSend.append("startTime", formData.startTime);
     formDataToSend.append("hours", formData.hours);
     formDataToSend.append("price", formData.price);
@@ -231,10 +231,10 @@ export default function Project(props) {
     });
     console.log(formData)
     // Now you can use formDataToSend to submit your data
-    console.log(formDataToSend);
-
+    
     axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
       console.log(res);
+      console.log(formDataToSend);
     });
     // console.log(formData);
   };
@@ -307,11 +307,14 @@ export default function Project(props) {
               <Input
                 id="date"
                 onClick={onOpen}
-                value={value ? value.toLocaleDateString("en-GB").split("T")[0] : ""}
+                value={value ? value.toLocaleDateString("en-GB", { timeZone: "Africa/Cairo" }).split("T")[0] : ""}
                 // value={formData.date || ''}
                 placeholder="Select date"
                 pr="5rem"
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                onChange={(e)=>{
+                  setFormData({ ...formData, date: e.target.value })
+                  console.log(e.target.value)
+                }}
               />
             </InputGroup>
           </FormControl>

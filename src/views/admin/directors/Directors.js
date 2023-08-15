@@ -1,5 +1,6 @@
 // Chakra imports
-import { Box, SimpleGrid, useColorModeValue,
+import {
+  Box, SimpleGrid, useColorModeValue,
   Button,
   Modal,
   ModalOverlay,
@@ -10,17 +11,18 @@ import { Box, SimpleGrid, useColorModeValue,
   ModalCloseButton,
   TableContainer,
   Input,
-  Select, } from "@chakra-ui/react";
+  Select,
+} from "@chakra-ui/react";
 
-  import { FileUpload } from 'primereact/fileupload';
+import { FileUpload } from 'primereact/fileupload';
 
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
-        
+
 //theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";     
-    
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+
 //core
-import "primereact/resources/primereact.min.css";      
+import "primereact/resources/primereact.min.css";
 
 import AllDirectorsTable from "views/admin/dataTables/components/DirectorsTable"
 import { AllDirectorsData } from "views/admin/dataTables/variables/columnsData";
@@ -29,44 +31,21 @@ import tableAllDirectors from "views/admin/dataTables/variables/tableAllDirector
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 export default function DirectorsTable() {
-  const cvUpload = async (event) => {
-    console.log("gggggggggggg")
-    const file = event.files[0];
-    const reader = new FileReader();
-    let blob = await fetch(file.objectURL).then((r) => r.blob());
 
-    reader.readAsDataURL(blob);
-    console.log(blob)
-    reader.onloadend = function () {
-      const base64data = reader.result;
-      console.log(base64data)
-    };
-  };
-
-  const licenseUpload = async (event) => {
-    console.log("gggghhhhhhhhhgg")
-    const file = event.files[0];
-    const reader = new FileReader();
-    let blob = await fetch(file.objectURL).then((r) => r.blob());
-
-    reader.readAsDataURL(blob);
-
-    reader.onloadend = function () {
-      const base64data = reader.result;
-    };
-  };
   const [isRowModalOpen, setIsRowModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [passwoed, setPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [cv, setCv] = useState(null)
+  const [license, setLicense] = useState(null)
 
-  const [director,setDirector] = useState([])
+  const [director, setDirector] = useState([])
   // Chakra Color Mode
-  useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+  useEffect(() => {
+    axios.get("http://localhost:5000/admin/allDirectors").then((res) => {
       setDirector(res.data.data)
     })
-  },[])
+  }, [])
 
   const handleOpenModal = () => {
     setIsRowModalOpen(true);
@@ -77,7 +56,22 @@ export default function DirectorsTable() {
   };
 
   const handleSave = () => {
-    // Perform save logic here
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("cv", cv);
+    formData.append("license", license);
+
+    axios.post("http://localhost:5000/admin/addDirector", formData).then((res) => {
+      if (res.data.status === 200) {
+        console.log(res.data)
+      }
+    })
+    axios.get("http://localhost:5000/admin/allDirectors").then((res) => {
+      setDirector(res.data.data)
+    })
+    
     handleCloseModal();
   };
 
@@ -109,35 +103,34 @@ export default function DirectorsTable() {
               />
               <Input
                 placeholder="Password"
-                value={passwoed}
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 mb='15px'
               />
 
-              <div className="card" style={{ display: 'flex'}}>
+              <div className="card" style={{ display: 'flex' }}>
                 <FileUpload mode="basic"
-                name="cv"
-                url="/api/upload"
-                customUpload
-                uploadHandler={cvUpload}
-                onSelect={(e)=> { console.log(e.files[0])
-                }}
-                style={{marginRight: '10px'}}
-                chooseLabel="Upload CV"
-                chooseOptions={{ style: { backgroundColor: "#3965FF" } }}
-                
+                  name="cv"
+                  url="/api/upload"
+                  customUpload
+                  onSelect={(e) => {
+                    setCv(e.files[0])
+                  }}
+                  style={{ marginRight: '10px' }}
+                  chooseLabel="Upload CV"
+                  chooseOptions={{ style: { backgroundColor: "#3965FF" } }}
+
                 />
 
                 <FileUpload mode="basic"
-                name="license"
-                url="/api/upload"
-                customUpload
-                uploadHandler={licenseUpload}
-                onSelect={(e)=> { console.log(e.files[0])
-                  
-                }}
-                chooseLabel="Upload License"
-                chooseOptions={{ style: { backgroundColor: "#3965FF" } }}
+                  name="license"
+                  url="/api/upload"
+                  customUpload
+                  onSelect={(e) => {
+                    setLicense(e.files[0])
+                  }}
+                  chooseLabel="Upload License"
+                  chooseOptions={{ style: { backgroundColor: "#3965FF" } }}
                 />
               </div>
 
@@ -154,7 +147,7 @@ export default function DirectorsTable() {
         mb='20px'
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}>
-            <AllDirectorsTable columnsData={AllDirectorsData} tableData={director} />
+        <AllDirectorsTable columnsData={AllDirectorsData} tableData={director} />
       </SimpleGrid>
     </Box>
   );

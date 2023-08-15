@@ -83,6 +83,8 @@ import axios from "axios";
     updatedModalState[rowIndex] = false;
     setIsRowModalOpen(updatedModalState);
   };
+
+  
     return (
       <Card
         direction='column'
@@ -157,6 +159,19 @@ import axios from "axios";
                       );
                     } 
                     else if (cell.column.Header === "status") {
+                      data = (
+                        <Flex align='center'>
+                          <Text
+                            me='10px'
+                            color={textColor}
+                            fontSize='sm'
+                            fontWeight='700'>
+                            {cell.value}
+                          </Text>
+                        </Flex>
+                      );
+                    } 
+                    else if (cell.column.Header === "ROLE") {
                       data = (
                         <Flex align='center'>
                           <Text
@@ -316,11 +331,29 @@ import axios from "axios";
                       }
                       else if (cell.column.Header === "CHANGE ROLE") {
                         data = (
-                            <Button  colorScheme="blue">
-                            Change Role
-                          </Button>
+                          row.values["role"] === "tourGuide" ? (
+                            <Button onClick={() => {
+                              axios.put("http://localhost:5000/admin/updateTourGuide", {
+                                id: row.values["_id"]
+                              }).then((res)=>{
+                                axios.get("http://localhost:5000/admin/allTourGuides").then((res)=>{
+                                  setData(res.data.data)
+                                })
+                              })
+                            }} colorScheme="blue">Change Role</Button>
+                          ) : row.values["role"] === "headTourGuide" ? (
+                            <Button onClick={() => {
+                              axios.put("http://localhost:5000/admin/updateHeadTourGuide", {
+                                id: row.values["_id"]
+                              }).then((res)=>{
+                                axios.get("http://localhost:5000/admin/allTourGuides").then((res)=>{
+                                  setData(res.data.data)
+                                })
+                              })
+                            }} colorScheme="blue">Change Role</Button>
+                          ) : null
                         );
-                    }
+                      }                      
                       
                     return (
                       <Td

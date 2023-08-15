@@ -117,6 +117,10 @@ export const AllTourGuidesData = [
     accessor: "status",
   },
   {
+    Header: "ROLE",
+    accessor: "role",
+  },
+  {
     Header: "action",
   },
   {

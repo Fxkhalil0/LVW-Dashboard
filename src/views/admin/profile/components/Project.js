@@ -64,6 +64,7 @@ export default function Project(props) {
   const [addCity, setAddCity] = useState("")
   const [country, setCountry] = useState([]);
   const [city, setCity] = useState([]);
+  const [category,setCategory] = useState("")
 
   useEffect(() => {
     axios.get("https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json")
@@ -190,7 +191,9 @@ export default function Project(props) {
     formDataToSend.append("startTime", formData.startTime);
     formDataToSend.append("hours", formData.hours);
     formDataToSend.append("price", formData.price);
-
+    formDataToSend.append("address",addAddress)
+    formDataToSend.append("city",addCity)
+    formDataToSend.append("category",category)
     // Append the language fields to formDataToSend
     formData.language.forEach((language) => {
       formDataToSend.append("language", language);
@@ -375,12 +378,17 @@ export default function Project(props) {
           <FormControl id="address" style={{ marginRight: '10px' }}>
             <FormLabel>Add Category</FormLabel>
               <Select
+                defaultValue={0}
                 placeholder="Select Category"
                 mb="24px"
                 name="category"
+                onChange={(e)=>{
+                  setCategory(e.target.value)
+                }}
               >
-                <option>Public</option>
-                <option>VIP</option>
+                
+                <option value={"public"}>public</option>
+                <option value={"VIP"}>VIP</option>
               </Select>
             </FormControl>
 

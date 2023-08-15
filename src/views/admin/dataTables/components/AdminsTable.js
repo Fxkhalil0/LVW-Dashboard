@@ -11,8 +11,16 @@ import {
     Tr,
     Button,
     useColorModeValue,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    Select,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
     useGlobalFilter,
     usePagination,
@@ -58,6 +66,24 @@ export default function AdminsTable(props) {
 
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+    const [isRoleModalOpen, setIsRoleModalOpen] = useState(new Array(data.length).fill(false));
+
+    const handleOpenRoleModal = (rowIndex) => {
+        const updatedModalState = [...isRoleModalOpen];
+        updatedModalState[rowIndex] = true;
+        setIsRoleModalOpen(updatedModalState);
+    };
+
+    const handleCloseRoleModal = (rowIndex) => {
+        const updatedModalState = [...isRoleModalOpen];
+        updatedModalState[rowIndex] = false;
+        setIsRoleModalOpen(updatedModalState);
+    };
+
+    const [adminRole, setAdminRole] = useState(""); // State for selected admin role
+
+
     return (
         <Card
             direction='column'
@@ -154,16 +180,49 @@ export default function AdminsTable(props) {
                                     }
                                     else if (cell.column.Header === "ACCTION") {
                                         data = (
-                                            <Button  colorScheme="blue">
-                                            Remove
-                                          </Button>
+                                            <Button colorScheme="blue">
+                                                Remove
+                                            </Button>
                                         );
                                     }
                                     else if (cell.column.Header === "CHANGE ROLE") {
                                         data = (
-                                            <Button  colorScheme="blue">
-                                            Change Role
-                                          </Button>
+                                            <>
+                                                <Button onClick={() => handleOpenRoleModal(index)} colorScheme="blue">
+                                                    Change Role
+                                                </Button>
+                                                <Modal isOpen={isRoleModalOpen[index]} onClose={() => handleCloseRoleModal(index)}>
+                                                    <ModalOverlay />
+                                                    <ModalContent minW="500px">
+                                                        <ModalHeader>Change Role</ModalHeader>
+                                                        <ModalCloseButton />
+                                                        <ModalBody>
+                                                            <Select
+                                                                placeholder="Select Admin Role"
+                                                                mb="24px"
+                                                                mr="10px"
+                                                                name="adminRole"
+                                                                value={adminRole}
+                                                                onChange={(e) => setAdminRole(e.target.value)}
+
+                                                            >
+                                                                <option value="admin">Admin</option>
+                                                                <option value="headAdmin">Head Admin</option>
+                                                                <option value="superAdmin">Super Admin</option>
+
+                                                            </Select>
+                                                        </ModalBody>
+                                                        <ModalFooter>
+                                                            <Button colorScheme="blue" mr={3} onClick={() => handleCloseRoleModal(index)}>
+                                                                Close
+                                                            </Button>
+                                                            <Button colorScheme="blue" mr={3}>
+                                                                Save
+                                                            </Button>
+                                                        </ModalFooter>
+                                                    </ModalContent>
+                                                </Modal>
+                                            </>
                                         );
                                     }
                                     return (

@@ -30,6 +30,8 @@ import {
 
 import { MdChevronLeft, MdChevronRight, MdOutlineCalendarMonth, MdAvTimer, MdOutlineAccessTime, MdAdd, MdAttachMoney } from "react-icons/md";
 import Calendar from "react-calendar";
+import { parse } from 'date-fns';
+
 
 
 
@@ -110,10 +112,10 @@ export default function Project(props) {
   }
 
   const handleDateChange = (date) => {
-    setFormData({ ...formData, date: date.toISOString() });
-    // setFormData({ ...formData, date: date ? date.toLocaleDateString("en-GB").split("T")[0] : null });
-    onChange(date);
-    console.log(date)
+    const selectedDate = typeof date === 'string' ? parse(date, 'yyyy-MM-dd', new Date()) : date;
+    setFormData({ ...formData, date: selectedDate });
+    onChange(selectedDate);
+    console.log(selectedDate)
     onClose();
   };
   const [activeButtons, setActiveButtons] = useState([]);
@@ -187,7 +189,7 @@ export default function Project(props) {
     // Append the non-file fields to formDataToSend
     formDataToSend.append("title", formData.title);
     formDataToSend.append("desc", formData.desc);
-    formDataToSend.append("date", new Date(formData.date).toISOString());
+    formDataToSend.append('date', formData.date ? formData.date : '');
     formDataToSend.append("startTime", formData.startTime);
     formDataToSend.append("hours", formData.hours);
     formDataToSend.append("price", formData.price);
@@ -311,9 +313,9 @@ export default function Project(props) {
                 // value={formData.date || ''}
                 placeholder="Select date"
                 pr="5rem"
-                onChange={(e)=>{
-                  setFormData({ ...formData, date: e.target.value })
-                  console.log(e.target.value)
+                onChange={(e) => {
+                  const selectedDate = parse(e.target.value, 'dd/MM/yyyy', new Date());
+                  handleDateChange(selectedDate);
                 }}
               />
             </InputGroup>
@@ -323,10 +325,12 @@ export default function Project(props) {
             <FormLabel>Start Time:</FormLabel>
             <InputGroup>
 
-              <input type="time" id="startTime" onChange={(e) => setFormData({ ...formData, startTime: e.target.value })} />
-
-
-
+              <input
+              type="time"
+              id="startTime"
+              onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
+              
+              />
             </InputGroup>
           </FormControl>
 

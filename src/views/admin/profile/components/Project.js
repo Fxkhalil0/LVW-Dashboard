@@ -66,7 +66,7 @@ export default function Project(props) {
   const [addCity, setAddCity] = useState("")
   const [country, setCountry] = useState([]);
   const [city, setCity] = useState([]);
-  const [category,setCategory] = useState("")
+  const [category, setCategory] = useState("")
 
   useEffect(() => {
     axios.get("https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json")
@@ -112,12 +112,17 @@ export default function Project(props) {
   }
 
   const handleDateChange = (date) => {
-    const selectedDate = typeof date === 'string' ? parse(date, 'yyyy-MM-dd', new Date()) : date;
-    setFormData({ ...formData, date: selectedDate });
+    // Ensure date is in UTC
+    const selectedDate = date instanceof Date ? date : new Date(date);
+    selectedDate.setMinutes(selectedDate.getMinutes() - selectedDate.getTimezoneOffset());
+
+    setFormData({ ...formData, date: selectedDate.toISOString() });
     onChange(selectedDate);
-    console.log(selectedDate)
+    console.log(selectedDate);
     onClose();
   };
+
+
   const [activeButtons, setActiveButtons] = useState([]);
 
   function handleButtonClick(language) {
@@ -193,9 +198,9 @@ export default function Project(props) {
     formDataToSend.append("startTime", formData.startTime);
     formDataToSend.append("hours", formData.hours);
     formDataToSend.append("price", formData.price);
-    formDataToSend.append("address",addAddress)
-    formDataToSend.append("city",addCity)
-    formDataToSend.append("category",category)
+    formDataToSend.append("address", addAddress)
+    formDataToSend.append("city", addCity)
+    formDataToSend.append("category", category)
     // Append the language fields to formDataToSend
     formData.language.forEach((language) => {
       formDataToSend.append("language", language);
@@ -233,7 +238,7 @@ export default function Project(props) {
     });
     console.log(formData)
     // Now you can use formDataToSend to submit your data
-    
+
     axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
       console.log(res);
       console.log(formDataToSend);
@@ -309,8 +314,7 @@ export default function Project(props) {
               <Input
                 id="date"
                 onClick={onOpen}
-                value={value ? value.toLocaleDateString("en-GB", { timeZone: "Africa/Cairo" }).split("T")[0] : ""}
-                // value={formData.date || ''}
+                value={value ? new Date(value).toLocaleDateString("en-GB", { timeZone: "Africa/Cairo" }) : ""}
                 placeholder="Select date"
                 pr="5rem"
                 onChange={(e) => {
@@ -318,6 +322,7 @@ export default function Project(props) {
                   handleDateChange(selectedDate);
                 }}
               />
+
             </InputGroup>
           </FormControl>
 
@@ -326,10 +331,10 @@ export default function Project(props) {
             <InputGroup>
 
               <input
-              type="time"
-              id="startTime"
-              onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-              
+                type="time"
+                id="startTime"
+                onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
+
               />
             </InputGroup>
           </FormControl>
@@ -384,20 +389,20 @@ export default function Project(props) {
 
           <FormControl id="address" style={{ marginRight: '10px' }}>
             <FormLabel>Add Category</FormLabel>
-              <Select
-                defaultValue={0}
-                placeholder="Select Category"
-                mb="24px"
-                name="category"
-                onChange={(e)=>{
-                  setCategory(e.target.value)
-                }}
-              >
-                
-                <option value={"public"}>public</option>
-                <option value={"VIP"}>VIP</option>
-              </Select>
-            </FormControl>
+            <Select
+              defaultValue={0}
+              placeholder="Select Category"
+              mb="24px"
+              name="category"
+              onChange={(e) => {
+                setCategory(e.target.value)
+              }}
+            >
+
+              <option value={"public"}>public</option>
+              <option value={"VIP"}>VIP</option>
+            </Select>
+          </FormControl>
 
           <FormControl id="language">
             <FormLabel>Choose Language:</FormLabel>

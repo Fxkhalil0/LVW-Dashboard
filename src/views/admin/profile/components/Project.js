@@ -115,7 +115,6 @@ export default function Project(props) {
     // Ensure date is in UTC
     const selectedDate = date instanceof Date ? date : new Date(date);
     selectedDate.setMinutes(selectedDate.getMinutes() - selectedDate.getTimezoneOffset());
-
     setFormData({ ...formData, date: selectedDate.toISOString() });
     onChange(selectedDate);
     console.log(selectedDate);
@@ -201,6 +200,10 @@ export default function Project(props) {
     formDataToSend.append("address", addAddress)
     formDataToSend.append("city", addCity)
     formDataToSend.append("category", category)
+
+    console.log("my start time is:", formData.startTime)
+    console.log("my start time type:", typeof formData.startTime)
+
     // Append the language fields to formDataToSend
     formData.language.forEach((language) => {
       formDataToSend.append("language", language);
@@ -333,6 +336,7 @@ export default function Project(props) {
               <input
                 type="time"
                 id="startTime"
+                value={formData.startTime}
                 onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
 
               />

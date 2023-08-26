@@ -37,6 +37,7 @@ import { parse } from 'date-fns';
 
 // Custom components
 import Card from "components/card/Card.js";
+import SuccessandErrorModals from "../../SuccessandErorrModals/SuccessandErrorModals";
 import React, { useState, useEffect } from "react";
 // Assets
 import { MdEdit, MdUpload } from "react-icons/md";
@@ -193,7 +194,7 @@ export default function Project(props) {
     // Append the non-file fields to formDataToSend
     formDataToSend.append("title", formData.title);
     formDataToSend.append("desc", formData.desc);
-    formDataToSend.append('date', formData.date ? formData.date : '');
+    formDataToSend.append('date', formData.date?formData.date:"");
     formDataToSend.append("startTime", formData.startTime);
     formDataToSend.append("hours", formData.hours);
     formDataToSend.append("price", formData.price);
@@ -243,8 +244,20 @@ export default function Project(props) {
     // Now you can use formDataToSend to submit your data
 
     axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
-      console.log(res);
-      console.log(formDataToSend);
+      console.log(res.data);
+      if(res.data.status === 200){
+        setErrorMsg(res.data.message)
+        setShowErrorModal(true)
+        setTimeout(()=>{
+          setShowErrorModal(false)
+        },3000)
+      }
+      else if(res.data.status === 400){
+        setShowSuccessModal(true)
+        setTimeout(()=>{
+          setShowSuccessModal(false)
+        },3000)
+      }
     });
     // console.log(formData);
   };
@@ -286,8 +299,23 @@ export default function Project(props) {
   const textColorSecondary = "gray.400";
   const brandColor = useColorModeValue("brand.500", "white");
   const bg = useColorModeValue("white", "navy.700");
+
+  //succes modaal
+  const [showSuccessModal,setShowSuccessModal] = useState(false)
+  const [showErrorModal,setShowErrorModal] = useState(false)
+  const [errorMsg,setErrorMsg] = useState("")
   return (
     <Card bg={bg} {...rest} p='14px'>
+      {
+        showErrorModal &&
+        <SuccessandErrorModals success={false} message={errorMsg} />
+      }
+      {
+        showSuccessModal &&
+        <SuccessandErrorModals success={true} message={"tour Added Successfully"} />
+      }
+
+
       <Flex align='center' direction={{ base: "column", md: "row" }}>
         <Box w={{ base: "100%", md: "60%" }} me={{ md: "36px" }}>
 

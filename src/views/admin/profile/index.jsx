@@ -2,7 +2,7 @@
 
 // Chakra imports
 import { Box, Grid, Flex, Text, Button, useColorModeValue} from "@chakra-ui/react";
-
+import SuccessandEroorModal from "../../../views/admin/SuccessandErorrModals/SuccessandErrorModals"
 // Custom components
 import Banner from "views/admin/profile/components/Banner";
 import Projects from "views/admin/profile/components/Projects";
@@ -32,6 +32,10 @@ export default function Overview() {
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+      
+
+      
+      
       {/* Main Fields */}
       <Grid
         templateColumns={{

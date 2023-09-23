@@ -143,7 +143,7 @@ import axios from "axios";
                             color={textColor}
                             fontSize='sm'
                             fontWeight='700'>
-                            {row.values["book"].tour.title}
+                            {row.values["book"].tour?.title}
                           </Text>
                         </Flex>
                       );
@@ -225,7 +225,7 @@ import axios from "axios";
                                           <>
                                             <Tr>
                                               <Td>tour  Guide name</Td>
-                                              <Td>{row.values["book"].tour.arabicTourGuide.name}</Td>
+                                              <Td>{row.values["book"].tour?.arabicTourGuide?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>tour  Guide rate</Td>
@@ -237,7 +237,7 @@ import axios from "axios";
                                             </Tr>
                                             <Tr>
                                               <Td>Camera Operator name</Td>
-                                              <Td>{row.values["book"].tour.arabicCameraOperator.name}</Td>
+                                              <Td>{row.values["book"].tour?.arabicCameraOperator?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>Camera Operator rate</Td>
@@ -249,7 +249,7 @@ import axios from "axios";
                                             </Tr>
                                             <Tr>
                                               <Td>Director name</Td>
-                                              <Td>{row.values["book"].tour.arabicDirector.name}</Td>
+                                              <Td>{row.values["book"].tour?.arabicDirector?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>Director rate</Td>
@@ -265,7 +265,7 @@ import axios from "axios";
                                           <>
                                             <Tr>
                                               <Td>tour  Guide name</Td>
-                                              <Td>{row.values["book"].tour.englishTourGuide.name}</Td>
+                                              <Td>{row.values["book"].tour?.englishTourGuide?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>tour  Guide rate</Td>
@@ -277,7 +277,7 @@ import axios from "axios";
                                             </Tr>
                                             <Tr>
                                               <Td>Camera Operator name</Td>
-                                              <Td>{row.values["book"].tour.englishCameraOperator.name}</Td>
+                                              <Td>{row.values["book"].tour?.englishCameraOperator?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>Camera Operator rate</Td>
@@ -289,7 +289,7 @@ import axios from "axios";
                                             </Tr>
                                             <Tr>
                                               <Td>Director name</Td>
-                                              <Td>{row.values["book"].tour.englishDirector.name}</Td>
+                                              <Td>{row.values["book"].tour?.englishDirector?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>Director rate</Td>
@@ -305,7 +305,7 @@ import axios from "axios";
                                           <>
                                             <Tr>
                                               <Td>tour  Guide name</Td>
-                                              <Td>{row.values["book"].tour.italianTourGuide.name}</Td>
+                                              <Td>{row.values["book"].tour?.italianTourGuide?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>tour  Guide rate</Td>
@@ -317,7 +317,7 @@ import axios from "axios";
                                             </Tr>
                                             <Tr>
                                               <Td>Camera Operator name</Td>
-                                              <Td>{row.values["book"].tour.italianCameraOperator.name}</Td>
+                                              <Td>{row.values["book"].tour?.italianCameraOperator?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>Camera Operator rate</Td>
@@ -329,7 +329,7 @@ import axios from "axios";
                                             </Tr>
                                             <Tr>
                                               <Td>Director name</Td>
-                                              <Td>{row.values["book"].tour.italianDirector.name}</Td>
+                                              <Td>{row.values["book"].tour?.italianDirector?.name}</Td>
                                             </Tr>
                                             <Tr>
                                               <Td>Director rate</Td>

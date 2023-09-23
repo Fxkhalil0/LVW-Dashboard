@@ -19,16 +19,23 @@ import Nft2 from "assets/img/nfts/Nft2.png";
 import Nft5 from "assets/img/nfts/Nft5.png";
 
 
-import React, { useEffect } from "react";
+import React, { useEffect , useState } from "react";
 import axios from "axios";
 
 export default function Overview() {
-  useEffect(()=>{
-    let id = (localStorage.getItem("admin"))
-    console.log(id)
-    // axios.get(`http://localhost:5000/admin/oneAdmin/${id}`)
-  },[])
+  
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  const [adminData, setAdminData] = useState()
+  const [adminRole, setAdminRole] = useState(""); // State to store admin role
+  console.log(adminRole)
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+      setAdminData(res.data)
+      setAdminRole(res.data?.role); // Update the adminRole state
+      console.log(res.data)
+    })
+  }, [])
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -50,10 +57,10 @@ export default function Overview() {
         <Banner
           gridArea='1 / 1 / 2 / 2'
           banner={banner}
-          avatar={avatar}
-          name='Adela Parkson'
-          email='example@mail.com'
-          phone='0111111111'
+          avatar={adminData?.img}
+          name={adminData?.name}
+          email={adminData?.email}
+          Role={adminData?.role}
           
         />
         <Calender

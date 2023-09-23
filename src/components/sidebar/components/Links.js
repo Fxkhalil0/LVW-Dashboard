@@ -1,10 +1,23 @@
 /* eslint-disable */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import axios from "axios";
+
 
 export function SidebarLinks(props) {
+  const [adminData, setAdminData] = useState()
+  const [adminRole, setAdminRole] = useState(""); // State to store admin role
+  console.log(adminRole)
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+      setAdminData(res.data)
+      setAdminRole(res.data?.role); // Update the adminRole state
+      console.log(res.data)
+    })
+  }, [])
   //   Chakra color mode
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
@@ -46,89 +59,92 @@ export function SidebarLinks(props) {
             {createLinks(route.items)}
           </>
         );
-      } else if (
-        route.layout === "/admin" ||
-        route.layout === "/auth" ||
-        route.layout === "/rtl"  
-      ) {
-        return (
-          <NavLink key={index} to={route.layout + route.path}>
-            {route.icon ? (
-              <Box>
-                <HStack
-                  spacing={
-                    activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
-                  }
-                  py='5px'
-                  ps='10px'>
-                  <Flex w='100%' alignItems='center' justifyContent='center'>
+      } else if (route.layout === "/admin" || route.layout === "/auth" || route.layout === "/rtl" && route.role &&
+        route.role.includes(adminRole)) {
+        console.log("Admin Role:", adminRole);
+        console.log("Route Role:", route.role);
+
+        if (route.role.includes(adminRole)) {
+          console.log("Rendering link:", route.name);
+          return (
+            <NavLink key={index} to={route.layout + route.path}>
+              {route.icon ? (
+                <Box>
+                  <HStack
+                    spacing={
+                      activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
+                    }
+                    py='5px'
+                    ps='10px'>
+                    <Flex w='100%' alignItems='center' justifyContent='center'>
+                      <Box
+                        color={
+                          activeRoute(route.path.toLowerCase())
+                            ? activeIcon
+                            : textColor
+                        }
+                        me='18px'>
+                        {route.icon}
+                      </Box>
+                      <Text
+                        me='auto'
+                        color={
+                          activeRoute(route.path.toLowerCase())
+                            ? activeColor
+                            : textColor
+                        }
+                        fontWeight={
+                          activeRoute(route.path.toLowerCase())
+                            ? "bold"
+                            : "normal"
+                        }>
+                        {route.name}
+                      </Text>
+                    </Flex>
                     <Box
-                      color={
+                      h='36px'
+                      w='4px'
+                      bg={
                         activeRoute(route.path.toLowerCase())
-                          ? activeIcon
-                          : textColor
+                          ? brandColor
+                          : "transparent"
                       }
-                      me='18px'>
-                      {route.icon}
-                    </Box>
+                      borderRadius='5px'
+                    />
+                  </HStack>
+                </Box>
+              ) : (
+                <Box>
+                  <HStack
+                    spacing={
+                      activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
+                    }
+                    py='5px'
+                    ps='10px'>
                     <Text
                       me='auto'
                       color={
                         activeRoute(route.path.toLowerCase())
                           ? activeColor
-                          : textColor
+                          : inactiveColor
                       }
                       fontWeight={
-                        activeRoute(route.path.toLowerCase())
-                          ? "bold"
-                          : "normal"
+                        activeRoute(route.path.toLowerCase()) ? "bold" : "normal"
                       }>
                       {route.name}
                     </Text>
-                  </Flex>
-                  <Box
-                    h='36px'
-                    w='4px'
-                    bg={
-                      activeRoute(route.path.toLowerCase())
-                        ? brandColor
-                        : "transparent"
-                    }
-                    borderRadius='5px'
-                  />
-                </HStack>
-              </Box>
-            ) : (
-              <Box>
-                <HStack
-                  spacing={
-                    activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
-                  }
-                  py='5px'
-                  ps='10px'>
-                  <Text
-                    me='auto'
-                    color={
-                      activeRoute(route.path.toLowerCase())
-                        ? activeColor
-                        : inactiveColor
-                    }
-                    fontWeight={
-                      activeRoute(route.path.toLowerCase()) ? "bold" : "normal"
-                    }>
-                    {route.name}
-                  </Text>
-                  <Box h='36px' w='4px' bg='brand.400' borderRadius='5px' />
-                </HStack>
-              </Box>
-            )}
-          </NavLink>
-        );
+                    <Box h='36px' w='4px' bg='brand.400' borderRadius='5px' />
+                  </HStack>
+                </Box>
+              )}
+            </NavLink>
+          );
+        }
       }
     });
   };
   //  BRAND
-  return createLinks(routes);
+  return createLinks(routes, adminRole);
 }
 
 export default SidebarLinks;

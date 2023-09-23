@@ -6,8 +6,9 @@ import Project2 from "assets/img/profile/Project2.png";
 import Project3 from "assets/img/profile/Project3.png";
 // Custom components
 import Card from "components/card/Card.js";
-import React from "react";
+import React , { useState, useEffect } from "react";
 import Project from "views/admin/profile/components/Project";
+import axios from "axios";
 
 export default function Projects(props) {
   // Chakra Color Mode
@@ -17,6 +18,19 @@ export default function Projects(props) {
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+  const [adminData, setAdminData] = useState()
+  const [adminRole, setAdminRole] = useState(""); // State to store admin role
+  console.log(adminRole)
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+      setAdminData(res.data)
+      setAdminRole(res.data?.role); // Update the adminRole state
+      console.log(res.data)
+    })
+  }, [])
+  if(adminRole === "superAdmin"){
+
   return (
     <Card mb={{ base: "0px", "2xl": "20px" }}>
       <Text
@@ -39,4 +53,7 @@ export default function Projects(props) {
      
     </Card>
   );
+} else {
+  return null;
+}
 }

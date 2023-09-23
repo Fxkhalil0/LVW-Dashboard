@@ -4,11 +4,19 @@ import { Box, Flex, Stack } from "@chakra-ui/react";
 import Brand from "components/sidebar/components/Brand";
 import Links from "components/sidebar/components/Links";
 import SidebarCard from "components/sidebar/components/SidebarCard";
-import React from "react";
+import React , {useEffect, useState} from "react";
+import axios from "axios";
 
 // FUNCTIONS
 
 function SidebarContent(props) {
+  const [adminData , setAdminData] = useState()
+
+  useEffect(()=> {
+    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res)=>{
+      setAdminData(res.data)
+    })
+  },[])
   const { routes } = props;
   // SIDEBAR
   return (

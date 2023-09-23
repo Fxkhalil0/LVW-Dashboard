@@ -44,6 +44,7 @@ const routes = [
     path: "/default",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
+    role: ["superAdmin", "headAdmin", "admin"],
   },
   {
     name: "Admins Table",
@@ -51,6 +52,8 @@ const routes = [
     path: "/admins-table",
     icon: <Icon as={MdVerifiedUser} width='20px' height='20px' color='inherit' />,
     component: admins,
+    role: ["superAdmin"],
+
   },
   {
     name: "Users Table",
@@ -58,6 +61,8 @@ const routes = [
     path: "/users-table",
     icon: <Icon as={MdAccountCircle} width='20px' height='20px' color='inherit' />,
     component: usersTable,
+    role: ["superAdmin","admin"],
+
   },
   {
     name: "Tour Guides Table",
@@ -65,6 +70,8 @@ const routes = [
     path: "/tourguides-table",
     icon: <Icon as={MdSupervisedUserCircle} width='20px' height='20px' color='inherit' />,
     component: tourGuidesTable,
+    role: ["superAdmin", "admin"],
+
   },
   {
     name: "Camera Operators Table",
@@ -72,6 +79,8 @@ const routes = [
     path: "/cameraoperators-table",
     icon: <Icon as={MdCameraEnhance} width='20px' height='20px' color='inherit' />,
     component: cameraOperators,
+    role: ["superAdmin", "admin"],
+
   },
   {
     name: "Directors Table",
@@ -79,6 +88,8 @@ const routes = [
     path: "/directors-table",
     icon: <Icon as={MdControlCamera} width='20px' height='20px' color='inherit' />,
     component: directors,
+    role: ["superAdmin", "admin"],
+
   },
   {
     name: "Tours Table",
@@ -86,6 +97,8 @@ const routes = [
     path: "/tours-table",
     icon: <Icon as={MdLocationOn} width='20px' height='20px' color='inherit' />,
     component: tours,
+    role: ["superAdmin", "headAdmin", "admin"],
+
   },
   {
     name: "Reveiws Table",
@@ -93,42 +106,26 @@ const routes = [
     path: "/reveiws-table",
     icon: <Icon as={MdMessage} width='20px' height='20px' color='inherit' />,
     component: reveiws,
-  },
-  {
-    name: "Payment Table",
-    layout: "/admin",
-    path: "/payment-table",
-    icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
-    component: payment,
-  },
-  {
-    name: "User Payment Table",
-    layout: "/admin",
-    path: "/userpayment-table",
-    icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
-    component: userpayment,
+    role: ["superAdmin", "headAdmin"],
+
   },
   // {
-  //   name: "NFT Marketplace",
+  //   name: "Payment Table",
   //   layout: "/admin",
-  //   path: "/nft-marketplace",
-  //   icon: (
-  //     <Icon
-  //       as={MdOutlineShoppingCart}
-  //       width='20px'
-  //       height='20px'
-  //       color='inherit'
-  //     />
-  //   ),
-  //   component: NFTMarketplace,
-  //   secondary: true,
+  //   path: "/payment-table",
+  //   icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+  //   component: payment,
+  //   role: ["superAdmin", "headAdmin"],
+
   // },
   // {
-  //   name: "Data Tables",
+  //   name: "User Payment Table",
   //   layout: "/admin",
-  //   icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-  //   path: "/data-tables",
-  //   component: DataTables,
+  //   path: "/userpayment-table",
+  //   icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+  //   component: userpayment,
+  //   role: ["superAdmin"],
+
   // },
   {
     name: "Profile",
@@ -136,6 +133,7 @@ const routes = [
     path: "/profile",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
+    role: ["superAdmin", "headAdmin", "admin"],
   },
   {
     name: "Sign In",
@@ -143,15 +141,8 @@ const routes = [
     path: "/sign-in",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: SignInCentered,
+    role: ["superAdmin", "headAdmin", "admin"],
   },
-
-  // {
-  //   name: "RTL Admin",
-  //   layout: "/rtl",
-  //   path: "/rtl-default",
-  //   icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-  //   component: RTL,
-  // },
 ];
 
 export default routes;

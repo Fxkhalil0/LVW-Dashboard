@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
+import axios from "axios";
 
 // Chakra imports
 import { Box, useColorModeValue } from "@chakra-ui/react";
@@ -12,6 +13,14 @@ import { SidebarContext } from "contexts/SidebarContext";
 export default function Auth() {
   // states and functions
   const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [adminData, setAdminData] = useState()
+  const [adminRole, setAdminRole] = useState(""); // State to store admin role
+  console.log(adminRole)
+
+  useEffect(() => {
+    
+  }, [])
+
   // functions for changing the states from components
   const getRoute = () => {
     return window.location.pathname !== "/auth/full-screen-maps";

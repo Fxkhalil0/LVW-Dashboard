@@ -61,6 +61,7 @@ export default function Project(props) {
   const [italianTourGuides, setItalianTourGuides] = useState([])
   const [italianCameraOperators, setItalianCameraOperators] = useState([])
   const [italianDirectors, setItalianDirectors] = useState([])
+  const [tourType, setTourType] = useState("")
 
   const [allCountriesData, setAllCountriesData] = useState([]);
   const [addAddress, setAddAddress] = useState("");
@@ -68,6 +69,15 @@ export default function Project(props) {
   const [country, setCountry] = useState([]);
   const [city, setCity] = useState([]);
   const [category, setCategory] = useState("")
+  const [arabicGuideLocation, setArabicGuideLocation] = useState([])
+  const [arabicOperatorLocation, setArabicOperatorLocation] = useState([])
+  const [arabicDirectorLocation, setArabicDirectorLocation] = useState([])
+  const [englishGuideLocation, setEnglishGuideLocation] = useState([])
+  const [englishOperatorLocation, setEnglishOperatorLocation] = useState([])
+  const [englishDirectorLocation, setEnglishDirectorLocation] = useState([])
+  const [italianGuideLocation, setItalianGuideLocation] = useState([])
+  const [italianOperatorLocation, setItalianOperatorLocation] = useState([])
+  const [italianDirectorLocation, setItalianDirectorLocation] = useState([])
 
   useEffect(() => {
     axios.get("https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json")
@@ -97,7 +107,8 @@ export default function Project(props) {
     price: '',
     tags: [],
     instructions: [],
-    images: []
+    images: [],
+    tourType: ''
   });
 
   const handleInputChange = (event) => {
@@ -194,13 +205,14 @@ export default function Project(props) {
     // Append the non-file fields to formDataToSend
     formDataToSend.append("title", formData.title);
     formDataToSend.append("desc", formData.desc);
-    formDataToSend.append('date', formData.date?formData.date:"");
+    formDataToSend.append('date', formData.date ? formData.date : "");
     formDataToSend.append("startTime", formData.startTime);
     formDataToSend.append("hours", formData.hours);
     formDataToSend.append("price", formData.price);
     formDataToSend.append("address", addAddress)
     formDataToSend.append("city", addCity)
     formDataToSend.append("category", category)
+    formDataToSend.append("tourType", tourType)
 
     console.log("my start time is:", formData.startTime)
     console.log("my start time type:", typeof formData.startTime)
@@ -245,21 +257,21 @@ export default function Project(props) {
 
     axios.post("http://localhost:5000/admin/addTour", formDataToSend, {}).then((res) => {
       console.log(res.data);
-      if(res.data.status === 200){
+      if (res.data.status === 200) {
         setErrorMsg(res.data.message)
         setShowErrorModal(true)
-        setTimeout(()=>{
+        setTimeout(() => {
           setShowErrorModal(false)
-        },3000)
+        }, 3000)
       }
-      else if(res.data.status === 400){
+      else if (res.data.status === 400) {
         setShowSuccessModal(true)
-        setTimeout(()=>{
+        setTimeout(() => {
           setShowSuccessModal(false)
-        },3000)
+          window.location.reload();
+        }, 3000)
       }
     });
-    // console.log(formData);
   };
   useEffect(() => {
     axios.get("http://localhost:5000/admin/arabicTourGuides").then((res) => {
@@ -301,9 +313,9 @@ export default function Project(props) {
   const bg = useColorModeValue("white", "navy.700");
 
   //succes modaal
-  const [showSuccessModal,setShowSuccessModal] = useState(false)
-  const [showErrorModal,setShowErrorModal] = useState(false)
-  const [errorMsg,setErrorMsg] = useState("")
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
   return (
     <Card bg={bg} {...rest} p='14px'>
       {
@@ -390,7 +402,45 @@ export default function Project(props) {
               <Select
                 placeholder="Select Country"
                 value={addAddress}
-                onChange={(e) => setAddAddress(e.target.value)}
+                onChange={(e) => {
+                  setAddAddress(e.target.value);
+                  const arabicTourGuidesLocation = arabicTourGuides ? arabicTourGuides.filter((theArabictourGuide) =>
+                    theArabictourGuide?.address === e.target.value
+                  ) : [];
+                  const arabicOperatorsLocation = arabicCameraOperators? arabicCameraOperators.filter((theArabicOperator) =>
+                    theArabicOperator?.address === e.target.value
+                  ) : []
+                  const arabicDirectorsLocation = arabicDirectors? arabicDirectors.filter((theArabicDirector) =>
+                    theArabicDirector?.address === e.target.value
+                  ) : []
+                  const englishTourGuidesLocation = englishTourGuides? englishTourGuides.filter((theEnglishtourGuide) =>
+                    theEnglishtourGuide?.address === e.target.value
+                  ) : []
+                  const englishOperatorsLocation = englishCameraOperators? englishCameraOperators.filter((theEnglishOperator) =>
+                    theEnglishOperator?.address === e.target.value
+                  ) : []
+                  const englishDirectorsLocation = englishDirectors? englishDirectors.filter((theEnglishDirector) =>
+                    theEnglishDirector?.address === e.target.value
+                  ) :[]
+                  const italianTourGuidesLocation = italianTourGuides? italianTourGuides.filter((theItaliantourGuide) =>
+                    theItaliantourGuide?.address === e.target.value
+                  ) : []
+                  const italianOperatorsLocation = italianCameraOperators? italianCameraOperators.filter((theItalianOperator) =>
+                    theItalianOperator?.address === e.target.value
+                  ) :[]
+                  const italianDirectorsLocation = italianDirectors? italianDirectors.filter((theItalianDirector) =>
+                    theItalianDirector?.address === e.target.value
+                  ) : []
+                  setArabicGuideLocation(arabicTourGuidesLocation);
+                  setArabicOperatorLocation(arabicOperatorsLocation);
+                  setArabicDirectorLocation(arabicDirectorsLocation)
+                  setEnglishGuideLocation(englishTourGuidesLocation)
+                  setEnglishOperatorLocation(englishOperatorsLocation)
+                  setEnglishDirectorLocation(englishDirectorsLocation)
+                  setItalianGuideLocation(italianTourGuidesLocation)
+                  setItalianOperatorLocation(italianOperatorsLocation)
+                  setItalianDirectorLocation(italianDirectorsLocation)
+                }}
                 mb="24px"
                 name="address"
               >
@@ -431,8 +481,27 @@ export default function Project(props) {
               }}
             >
 
-              <option value={"public"}>public</option>
+              <option value={"public"}>Public</option>
               <option value={"VIP"}>VIP</option>
+            </Select>
+          </FormControl>
+
+          <FormControl id="address" style={{ marginRight: '10px' }}>
+            <FormLabel>Add Type</FormLabel>
+            <Select
+              defaultValue={0}
+              placeholder="Select Type"
+              mb="24px"
+              name="tourType"
+              onChange={(e) => {
+                setTourType(e.target.value)
+              }}
+            >
+
+              <option value={"education"}>Education</option>
+              <option value={"tourism"}>Tourism</option>
+              <option value={"shopping"}>Shopping</option>
+
             </Select>
           </FormControl>
 
@@ -453,27 +522,30 @@ export default function Project(props) {
             </Button>
             {activeButtons.includes('Arabic') && (
               <>
-                <Select
-                  placeholder="Select tour guide"
-                  mb="24px"
-                  mr="10px"
-                  name="tourGuideArabic"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      tourGuide: [
-                        ...formData.tourGuide.filter((guide) => guide.language !== 'Arabic'),
-                        { language: 'Arabic', guide: e.target.value },
-                      ],
-                    })
-                  }
-                >
-                  {arabicTourGuides &&
-                    arabicTourGuides.map((value, index) => {
-                      return <option key={value._id} value={value._id}>{value.name}</option>;
-                    })
-                  }
-                </Select>
+                {
+                  tourType != "shopping" &&
+                  <Select
+                    placeholder="Select tour guide"
+                    mb="24px"
+                    mr="10px"
+                    name="tourGuideArabic"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        tourGuide: [
+                          ...formData.tourGuide.filter((guide) => guide.language !== 'Arabic'),
+                          { language: 'Arabic', guide: e.target.value },
+                        ],
+                      })
+                    }
+                  >
+                    {arabicGuideLocation &&
+                      arabicGuideLocation.map((value, index) => {
+                        return <option key={value._id} value={value._id}>{value.name}</option>;
+                      })
+                    }
+                  </Select>
+                }
 
                 <Select
                   placeholder="Select camera operator"
@@ -490,34 +562,36 @@ export default function Project(props) {
                     })
                   }
                 >
-                  {arabicCameraOperators &&
-                    arabicCameraOperators.map((value, index) => {
+                  {arabicOperatorLocation &&
+                    arabicOperatorLocation.map((value, index) => {
                       return <option key={value._id} value={value._id}>{value.name}</option>;
                     })
                   }
                 </Select>
-
-                <Select
-                  placeholder="Select director"
-                  mb="24px"
-                  mr="10px"
-                  name="directorArabic"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      director: [
-                        ...formData.director.filter((director) => director.language !== 'Arabic'),
-                        { language: 'Arabic', director: e.target.value },
-                      ],
-                    })
-                  }
-                >
-                  {arabicDirectors &&
-                    arabicDirectors.map((value, index) => {
-                      return <option key={value._id} value={value._id}>{value.name}</option>;
-                    })
-                  }
-                </Select>
+                {
+                  tourType != "shopping" &&
+                  <Select
+                    placeholder="Select director"
+                    mb="24px"
+                    mr="10px"
+                    name="directorArabic"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        director: [
+                          ...formData.director.filter((director) => director.language !== 'Arabic'),
+                          { language: 'Arabic', director: e.target.value },
+                        ],
+                      })
+                    }
+                  >
+                    {arabicDirectorLocation &&
+                      arabicDirectorLocation.map((value, index) => {
+                        return <option key={value._id} value={value._id}>{value.name}</option>;
+                      })
+                    }
+                  </Select>
+                }
               </>
             )}
 
@@ -536,27 +610,30 @@ export default function Project(props) {
             </Button>
             {activeButtons.includes('English') && (
               <>
-                <Select
-                  placeholder="Select tour guide"
-                  mb="24px"
-                  mr="10px"
-                  name="tourGuideEnglish"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      tourGuide: [
-                        ...formData.tourGuide.filter((guide) => guide.language !== 'English'),
-                        { language: 'English', guide: e.target.value },
-                      ],
-                    })
-                  }
-                >
-                  {englishTourGuides &&
-                    englishTourGuides.map((value, index) => {
-                      return <option key={value._id} value={value._id}>{value.name}</option>;
-                    })
-                  }
-                </Select>
+                {
+                  tourType != "shopping" &&
+                  <Select
+                    placeholder="Select tour guide"
+                    mb="24px"
+                    mr="10px"
+                    name="tourGuideEnglish"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        tourGuide: [
+                          ...formData.tourGuide.filter((guide) => guide.language !== 'English'),
+                          { language: 'English', guide: e.target.value },
+                        ],
+                      })
+                    }
+                  >
+                    {englishGuideLocation &&
+                      englishGuideLocation.map((value, index) => {
+                        return <option key={value._id} value={value._id}>{value.name}</option>;
+                      })
+                    }
+                  </Select>
+                }
 
                 <Select
                   placeholder="Select camera operator"
@@ -573,34 +650,35 @@ export default function Project(props) {
                     })
                   }
                 >
-                  {englishCameraOperators &&
-                    englishCameraOperators.map((value, index) => {
+                  {englishOperatorLocation &&
+                    englishOperatorLocation.map((value, index) => {
                       return <option key={value._id} value={value._id}>{value.name}</option>;
                     })
                   }
                 </Select>
-
-                <Select
-                  placeholder="Select director"
-                  mb="24px"
-                  mr="10px"
-                  name="directorEnglish"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      director: [
-                        ...formData.director.filter((director) => director.language !== 'English'),
-                        { language: 'English', director: e.target.value },
-                      ],
-                    })
-                  }
-                >
-                  {englishDirectors &&
-                    englishDirectors.map((value, index) => {
-                      return <option key={value._id} value={value._id}>{value.name}</option>;
-                    })
-                  }
-                </Select>
+                {tourType != "shopping" &&
+                  <Select
+                    placeholder="Select director"
+                    mb="24px"
+                    mr="10px"
+                    name="directorEnglish"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        director: [
+                          ...formData.director.filter((director) => director.language !== 'English'),
+                          { language: 'English', director: e.target.value },
+                        ],
+                      })
+                    }
+                  >
+                    {englishDirectorLocation &&
+                      englishDirectorLocation.map((value, index) => {
+                        return <option key={value._id} value={value._id}>{value.name}</option>;
+                      })
+                    }
+                  </Select>
+                }
               </>
             )}
 
@@ -618,27 +696,30 @@ export default function Project(props) {
             </Button>
             {activeButtons.includes('Italiano') && (
               <>
-                <Select
-                  placeholder="Select tour guide"
-                  mb="24px"
-                  mr="10px"
-                  name="tourGuideItaliano"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      tourGuide: [
-                        ...formData.tourGuide.filter((guide) => guide.language !== 'Italiano'),
-                        { language: 'Italiano', guide: e.target.value },
-                      ],
-                    })
-                  }
-                >
-                  {italianTourGuides &&
-                    italianTourGuides.map((value, index) => {
-                      return <option key={value._id} value={value._id}>{value.name}</option>;
-                    })
-                  }
-                </Select>
+                {
+                  tourType != "shopping" &&
+                  <Select
+                    placeholder="Select tour guide"
+                    mb="24px"
+                    mr="10px"
+                    name="tourGuideItaliano"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        tourGuide: [
+                          ...formData.tourGuide.filter((guide) => guide.language !== 'Italiano'),
+                          { language: 'Italiano', guide: e.target.value },
+                        ],
+                      })
+                    }
+                  >
+                    {italianGuideLocation &&
+                      italianGuideLocation.map((value, index) => {
+                        return <option key={value._id} value={value._id}>{value.name}</option>;
+                      })
+                    }
+                  </Select>
+                }
 
                 <Select
                   placeholder="Select camera operator"
@@ -655,34 +736,36 @@ export default function Project(props) {
                     })
                   }
                 >
-                  {italianCameraOperators &&
-                    italianCameraOperators.map((value, index) => {
+                  {italianOperatorLocation &&
+                    italianOperatorLocation.map((value, index) => {
                       return <option key={value._id} value={value._id}>{value.name}</option>;
                     })
                   }
                 </Select>
-
-                <Select
-                  placeholder="Select director"
-                  mb="24px"
-                  mr="10px"
-                  name="directorItaliano"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      director: [
-                        ...formData.director.filter((director) => director.language !== 'Italiano'),
-                        { language: 'Italiano', director: e.target.value },
-                      ],
-                    })
-                  }
-                >
-                  {italianDirectors &&
-                    italianDirectors.map((value, index) => {
-                      return <option key={value._id} value={value._id}>{value.name}</option>;
-                    })
-                  }
-                </Select>
+                {
+                  tourType != "shopping" &&
+                  <Select
+                    placeholder="Select director"
+                    mb="24px"
+                    mr="10px"
+                    name="directorItaliano"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        director: [
+                          ...formData.director.filter((director) => director.language !== 'Italiano'),
+                          { language: 'Italiano', director: e.target.value },
+                        ],
+                      })
+                    }
+                  >
+                    {italianDirectorLocation &&
+                      italianDirectorLocation.map((value, index) => {
+                        return <option key={value._id} value={value._id}>{value.name}</option>;
+                      })
+                    }
+                  </Select>
+                }
               </>
             )}
           </FormControl>

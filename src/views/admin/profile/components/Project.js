@@ -177,11 +177,6 @@ export default function Project(props) {
     const updatedTags = tags.filter((t) => t !== tag);
     setTags(updatedTags);
   };
-  //   const handleSubmit = () => {
-  //   // Update the formData with the tags array
-  //   setFormData({ ...formData, tags: tags });
-  //   console.log(formData);
-  // };
   const handleAddInstruction = () => {
     setInstructions([...instructions, ""]);
   };
@@ -407,28 +402,28 @@ export default function Project(props) {
                   const arabicTourGuidesLocation = arabicTourGuides ? arabicTourGuides.filter((theArabictourGuide) =>
                     theArabictourGuide?.address === e.target.value
                   ) : [];
-                  const arabicOperatorsLocation = arabicCameraOperators? arabicCameraOperators.filter((theArabicOperator) =>
+                  const arabicOperatorsLocation = arabicCameraOperators ? arabicCameraOperators.filter((theArabicOperator) =>
                     theArabicOperator?.address === e.target.value
                   ) : []
-                  const arabicDirectorsLocation = arabicDirectors? arabicDirectors.filter((theArabicDirector) =>
+                  const arabicDirectorsLocation = arabicDirectors ? arabicDirectors.filter((theArabicDirector) =>
                     theArabicDirector?.address === e.target.value
                   ) : []
-                  const englishTourGuidesLocation = englishTourGuides? englishTourGuides.filter((theEnglishtourGuide) =>
+                  const englishTourGuidesLocation = englishTourGuides ? englishTourGuides.filter((theEnglishtourGuide) =>
                     theEnglishtourGuide?.address === e.target.value
                   ) : []
-                  const englishOperatorsLocation = englishCameraOperators? englishCameraOperators.filter((theEnglishOperator) =>
+                  const englishOperatorsLocation = englishCameraOperators ? englishCameraOperators.filter((theEnglishOperator) =>
                     theEnglishOperator?.address === e.target.value
                   ) : []
-                  const englishDirectorsLocation = englishDirectors? englishDirectors.filter((theEnglishDirector) =>
+                  const englishDirectorsLocation = englishDirectors ? englishDirectors.filter((theEnglishDirector) =>
                     theEnglishDirector?.address === e.target.value
-                  ) :[]
-                  const italianTourGuidesLocation = italianTourGuides? italianTourGuides.filter((theItaliantourGuide) =>
+                  ) : []
+                  const italianTourGuidesLocation = italianTourGuides ? italianTourGuides.filter((theItaliantourGuide) =>
                     theItaliantourGuide?.address === e.target.value
                   ) : []
-                  const italianOperatorsLocation = italianCameraOperators? italianCameraOperators.filter((theItalianOperator) =>
+                  const italianOperatorsLocation = italianCameraOperators ? italianCameraOperators.filter((theItalianOperator) =>
                     theItalianOperator?.address === e.target.value
-                  ) :[]
-                  const italianDirectorsLocation = italianDirectors? italianDirectors.filter((theItalianDirector) =>
+                  ) : []
+                  const italianDirectorsLocation = italianDirectors ? italianDirectors.filter((theItalianDirector) =>
                     theItalianDirector?.address === e.target.value
                   ) : []
                   setArabicGuideLocation(arabicTourGuidesLocation);
@@ -483,6 +478,7 @@ export default function Project(props) {
 
               <option value={"public"}>Public</option>
               <option value={"VIP"}>VIP</option>
+              <option value={"free"}>FREE</option>
             </Select>
           </FormControl>
 
@@ -769,22 +765,23 @@ export default function Project(props) {
               </>
             )}
           </FormControl>
-
-          <FormControl id="price">
-            <FormLabel>Add Price</FormLabel>
-            <InputGroup>
-              <InputLeftAddon width="5rem">
-                <Icon as={MdAttachMoney} color={brandColor} boxSize={6} />
-              </InputLeftAddon>
-              <Input
-                id="price"
-                type="number"
-                placeholder="Add Price"
-                pr="5rem"
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-              />
-            </InputGroup>
-          </FormControl>
+          {category != 'free' &&
+            <FormControl id="price">
+              <FormLabel>Add Price</FormLabel>
+              <InputGroup>
+                <InputLeftAddon width="5rem">
+                  <Icon as={MdAttachMoney} color={brandColor} boxSize={6} />
+                </InputLeftAddon>
+                <Input
+                  id="price"
+                  type="number"
+                  placeholder="Add Price"
+                  pr="5rem"
+                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                />
+              </InputGroup>
+            </FormControl>
+          }
 
           <FormControl id="tags">
             <FormLabel>Tags</FormLabel>

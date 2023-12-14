@@ -478,3 +478,76 @@ export const AllAdminsData = [
     Header: "CHANGE ROLE",
   }
 ];
+export const AllRequestsData = [
+  {
+    Header: "TITLE",
+    accessor: "title",
+  },
+  {
+    Header: "LOCATION",
+    accessor: "address",
+  },
+  {
+    Header: "PRICE",
+    accessor: "price",
+  },
+  {
+    Header: "AVGRATE",
+    accessor: "avgRate",
+  },
+  {
+    Header: "CATEGORY",
+    accessor: "category",
+  },
+  {
+    Header: "DATE",
+    accessor: "date",
+  },
+  {
+    Header: "TIME",
+    accessor: "time",
+  },
+  {
+    Header:"More Details"
+  },
+  {
+    Header: "",
+    accessor:"arabicTourGuide"
+  },
+  {
+    Header: "",
+    accessor:"arabicCameraOperator"
+  },
+  {
+    Header: "",
+    accessor:"arabicDirector"
+  },
+  {
+    Header: "",
+    accessor:"englishTourGuide"
+  },
+  {
+    Header: "",
+    accessor:"englishCameraOperator"
+  },
+  {
+    Header: "",
+    accessor:"englishDirector"
+  },
+  {
+    Header: "",
+    accessor:"italianTourGuide"
+  },
+  {
+    Header: "",
+    accessor:"italianCameraOperator"
+  },
+  {
+    Header: "",
+    accessor:"italianDirector"
+  },
+  {
+    Header: "action",
+  },
+
+];

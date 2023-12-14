@@ -14,7 +14,11 @@ import {
   MdLocationOn,
   MdMessage,
   MdAttachMoney,
-  MdVerifiedUser
+  MdVerifiedUser,
+  MdOutlineRequestQuote,
+  MdOutlineRequestPage,
+  MdRequestQuote,
+  MdRequestPage
 } from "react-icons/md";
 
 // Admin Imports
@@ -36,6 +40,7 @@ import admins from "views/admin/admintable/Admin"
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
+import RequestsTable from "views/admin/requestsTable/requestTable";
 
 const routes = [
   {
@@ -106,6 +111,15 @@ const routes = [
     path: "/reveiws-table",
     icon: <Icon as={MdMessage} width='20px' height='20px' color='inherit' />,
     component: reveiws,
+    role: ["superAdmin", "headAdmin"],
+
+  },
+  {
+    name: "Requests Table",
+    layout: "/admin",
+    path: "/requests-table",
+    icon: <Icon as={MdRequestQuote} width='20px' height='20px' color='inherit' />,
+    component: RequestsTable,
     role: ["superAdmin", "headAdmin"],
 
   },

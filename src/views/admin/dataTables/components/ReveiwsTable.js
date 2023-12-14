@@ -132,7 +132,7 @@ import axios from "axios";
                                 color={textColor}
                                 fontSize='sm'
                                 fontWeight='600'>
-                                {row.values["book"].user.name}
+                                {row.values["book"].user?.name}
                               </Text>
                           );
                     } else if (cell.column.Header === "TOUR") {

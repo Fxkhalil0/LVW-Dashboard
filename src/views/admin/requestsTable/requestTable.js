@@ -13,7 +13,8 @@ import axios from "axios";
 export default function RequestsTable() {
   const [requests,setRequests] =useState([])
 useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allUsers").then((res)=>{
+    axios.get("http://localhost:5000/admin/allRequests").then((res)=>{
+      console.log(res)
       setRequests(res.data.data)
     })
   },[])

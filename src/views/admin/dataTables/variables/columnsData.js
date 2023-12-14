@@ -480,74 +480,43 @@ export const AllAdminsData = [
 ];
 export const AllRequestsData = [
   {
-    Header: "TITLE",
-    accessor: "title",
+    Header: "User",
+    accessor: "user.name",
   },
   {
-    Header: "LOCATION",
-    accessor: "address",
+    Header: "Country",
+    accessor: "tour.address",
   },
   {
-    Header: "PRICE",
-    accessor: "price",
+    Header: "City",
+    accessor: "tour.city",
   },
   {
-    Header: "AVGRATE",
-    accessor: "avgRate",
-  },
-  {
-    Header: "CATEGORY",
-    accessor: "category",
-  },
-  {
-    Header: "DATE",
-    accessor: "date",
+    Header: "Date",
+    accessor: "",
   },
   {
     Header: "TIME",
-    accessor: "time",
+    accessor: "startTime",
+  },
+  {
+    Header: "Language",
+    accessor: "language",
   },
   {
     Header:"More Details"
   },
   {
     Header: "",
-    accessor:"arabicTourGuide"
+    accessor:"emails"
   },
   {
     Header: "",
-    accessor:"arabicCameraOperator"
+    accessor:"tour"
   },
+
   {
-    Header: "",
-    accessor:"arabicDirector"
-  },
-  {
-    Header: "",
-    accessor:"englishTourGuide"
-  },
-  {
-    Header: "",
-    accessor:"englishCameraOperator"
-  },
-  {
-    Header: "",
-    accessor:"englishDirector"
-  },
-  {
-    Header: "",
-    accessor:"italianTourGuide"
-  },
-  {
-    Header: "",
-    accessor:"italianCameraOperator"
-  },
-  {
-    Header: "",
-    accessor:"italianDirector"
-  },
-  {
-    Header: "action",
+    Header: "action"
   },
 
 ];

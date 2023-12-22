@@ -514,6 +514,10 @@ export const AllRequestsData = [
     Header: "",
     accessor:"tour"
   },
+  {
+    Header: "",
+    accessor:"_id"
+  },
 
   {
     Header: "action"

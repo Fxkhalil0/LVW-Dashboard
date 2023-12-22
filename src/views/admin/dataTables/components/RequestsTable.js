@@ -85,6 +85,9 @@ export default function RequestsTable(props) {
   const [italianTourGuide, setItalianTourGuide] = useState([]);
   const [italianCameraOperator, setItalianCameraOperators] = useState([]);
   const [italianDirectors, setItalianDirectors] = useState([]);
+  const [tourGuide,setTourGuide] = useState("")
+  const [cameraOperator,setCameraOperator] = useState("")
+  const [director,setDirector] = useState("")
 
   useEffect(() => {
     axios.get("http://localhost:5000/admin/arabicTourGuides").then((res) => {
@@ -145,6 +148,26 @@ export default function RequestsTable(props) {
     updatedModalState[rowIndex] = false;
     setAcceptModalOpen(updatedModalState);
   };
+
+  function submit(id){
+    axios.get("http://localhost:5000/admin/requestById", { params: { id: id } }).then((res)=>{
+      console.log(res.data)
+      axios.post("http://localhost:5000/admin/acceptRequest",{
+        tour:res.data.data.tour,
+        language:res.data.data.language,
+        emails:res.data.data.emails,
+        startTime:res.data.data.startTime,
+        tourGuide:tourGuide,
+        cameraOperator:cameraOperator,
+        director:director,
+        user:res.data.data.user,
+        Request:id
+      }).then((result)=>{
+        
+      })
+     })
+    console.log(id)
+  }
 
   return (
     <Card
@@ -412,22 +435,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select tour guide"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setTourGuide(e.target.value)
+                                                }
                                               >
                                                 {arabicTourGuide &&
                                                   arabicTourGuide.map(
@@ -454,22 +464,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select tour guide"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setTourGuide(e.target.value)
+                                                }
                                               >
                                                 {englishTourGuide &&
                                                   englishTourGuide.map(
@@ -496,22 +493,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select tour guide"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setTourGuide(e.target.value)
+                                                }
                                               >
                                                 {italianTourGuide &&
                                                   italianTourGuide.map(
@@ -538,22 +522,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select Camera Operator"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setCameraOperator(e.target.value)
+                                                }
                                               >
                                                 {arabicCameraOperator &&
                                                   arabicCameraOperator.map(
@@ -580,22 +551,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select tour guide"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setCameraOperator(e.target.value)
+                                                }
                                               >
                                                 {englishCameraOperator &&
                                                   englishCameraOperator.map(
@@ -622,22 +580,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select Camera Operator"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setCameraOperator(e.target.value)
+                                                }
                                               >
                                                 {italianCameraOperator &&
                                                   italianCameraOperator.map(
@@ -664,22 +609,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select tour guide"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setDirector(e.target.value)
+                                                }
                                               >
                                                 {arabicDirectors &&
                                                   arabicDirectors.map(
@@ -706,22 +638,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select tour guide"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setDirector(e.target.value)
+                                                }
                                               >
                                                 {englishDirector &&
                                                   englishDirector.map(
@@ -748,22 +667,9 @@ export default function RequestsTable(props) {
                                                 placeholder="Select Director"
                                                 mb="24px"
                                                 mr="10px"
-                                                // onChange={(e) =>
-                                                //   setFormData({
-                                                //     ...formData,
-                                                //     tourGuide: [
-                                                //       ...formData.tourGuide.filter(
-                                                //         (guide) =>
-                                                //           guide.language !==
-                                                //           "Arabic"
-                                                //       ),
-                                                //       {
-                                                //         language: "Arabic",
-                                                //         guide: e.target.value,
-                                                //       },
-                                                //     ],
-                                                //   })
-                                                // }
+                                                onChange={(e) =>
+                                                  setDirector(e.target.value)
+                                                }
                                               >
                                                 {italianDirectors &&
                                                   italianDirectors.map(
@@ -800,7 +706,7 @@ export default function RequestsTable(props) {
                                 <Button
                                   colorScheme="blue"
                                   mr={3}
-                                  onClick={() => handleCloseModal(index)}
+                                  onClick={()=>submit(row.values["_id"])}
                                 >
                                   Accept
                                 </Button>

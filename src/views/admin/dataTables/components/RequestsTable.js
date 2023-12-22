@@ -85,9 +85,9 @@ export default function RequestsTable(props) {
   const [italianTourGuide, setItalianTourGuide] = useState([]);
   const [italianCameraOperator, setItalianCameraOperators] = useState([]);
   const [italianDirectors, setItalianDirectors] = useState([]);
-  const [tourGuide,setTourGuide] = useState("")
-  const [cameraOperator,setCameraOperator] = useState("")
-  const [director,setDirector] = useState("")
+  const [tourGuide, setTourGuide] = useState("")
+  const [cameraOperator, setCameraOperator] = useState("")
+  const [director, setDirector] = useState("")
 
   useEffect(() => {
     axios.get("http://localhost:5000/admin/arabicTourGuides").then((res) => {
@@ -149,23 +149,27 @@ export default function RequestsTable(props) {
     setAcceptModalOpen(updatedModalState);
   };
 
-  function submit(id){
-    axios.get("http://localhost:5000/admin/requestById", { params: { id: id } }).then((res)=>{
+  function submit(id) {
+    axios.get("http://localhost:5000/admin/requestById", { params: { id: id } }).then((res) => {
       console.log(res.data)
-      axios.post("http://localhost:5000/admin/acceptRequest",{
-        tour:res.data.data.tour,
-        language:res.data.data.language,
-        emails:res.data.data.emails,
-        startTime:res.data.data.startTime,
-        tourGuide:tourGuide,
-        cameraOperator:cameraOperator,
-        director:director,
-        user:res.data.data.user,
-        Request:id
-      }).then((result)=>{
-        
+      axios.post("http://localhost:5000/admin/acceptRequest", {
+        tour: res.data.data.tour,
+        language: res.data.data.language,
+        emails: res.data.data.emails,
+        startTime: res.data.data.startTime,
+        tourGuide: tourGuide,
+        cameraOperator: cameraOperator,
+        director: director,
+        user: res.data.data.user,
+        Request: id
+      }).then((result) => {
+        if(result.data.status == 200 ){
+          window.location.reload();
+        } else{
+          console.log(result)
+        }
       })
-     })
+    })
     console.log(id)
   }
 
@@ -291,15 +295,7 @@ export default function RequestsTable(props) {
                           {cell.value}
                         </Text>
                       );
-                    }
-                    // else if (cell.column.Header === "DATE") {
-                    //   tData = (
-                    //     <Text color={textColor} fontSize="sm" fontWeight="700">
-                    //       {(cell?.value).slice(0, 10)}
-                    //     </Text>
-                    //   );
-                    // }
-                    else if (cell.column.Header === "Date") {
+                    } else if (cell.column.Header === "Date") {
                       const dataValue = row.values["startTime"] || "";
                       tData = (
                         <Text color={textColor} fontSize="sm" fontWeight="700">
@@ -308,9 +304,10 @@ export default function RequestsTable(props) {
                       );
                     } else if (cell.column.Header === "TIME") {
                       const dataValue = row.values["startTime"] || "";
+                      const localTime = new Date(dataValue).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                       tData = (
                         <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {dataValue?.slice(11, 16)}
+                          {localTime}
                         </Text>
                       );
                     } else if (cell.column.Header === "Language") {
@@ -427,7 +424,7 @@ export default function RequestsTable(props) {
                                   >
                                     <Table variant="simple">
                                       <Tbody>
-                                        {row.values["language"] === "Arabic" && (
+                                        {row.values["language"] === "arabic" && (
                                           <Tr>
                                             <Td>Select Tour Guide</Td>
                                             <Td>
@@ -456,7 +453,7 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "ُEnglish" && (
+                                        {row.values["language"] === "english" && (
                                           <Tr>
                                             <Td>Select Tour Guide</Td>
                                             <Td>
@@ -485,7 +482,7 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "Italian" && (
+                                        {row.values["language"] === "italian" && (
                                           <Tr>
                                             <Td>Select Tour Guide</Td>
                                             <Td>
@@ -514,7 +511,7 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "Arabic" && (
+                                        {row.values["language"] === "arabic" && (
                                           <Tr>
                                             <Td>Select cameraOperator</Td>
                                             <Td>
@@ -543,16 +540,16 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "ُEnglish" && (
+                                        {row.values["language"] === "english" && (
                                           <Tr>
                                             <Td>Select Camera Operator</Td>
                                             <Td>
                                               <Select
-                                                placeholder="Select tour guide"
+                                                placeholder="Select camera operator"
                                                 mb="24px"
                                                 mr="10px"
                                                 onChange={(e) =>
-                                                  setCameraOperator(e.target.value)
+                                                  setTourGuide(e.target.value)
                                                 }
                                               >
                                                 {englishCameraOperator &&
@@ -572,7 +569,7 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "Italian" && (
+                                        {row.values["language"] === "italian" && (
                                           <Tr>
                                             <Td>Select cameraOperator</Td>
                                             <Td>
@@ -601,12 +598,12 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "Arabic" && (
+                                        {row.values["language"] === "arabic" && (
                                           <Tr>
                                             <Td>Select director</Td>
                                             <Td>
                                               <Select
-                                                placeholder="Select tour guide"
+                                                placeholder="Select Director"
                                                 mb="24px"
                                                 mr="10px"
                                                 onChange={(e) =>
@@ -630,16 +627,16 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "ُEnglish" && (
+                                        {row.values["language"] === "english" && (
                                           <Tr>
                                             <Td>Select Director</Td>
                                             <Td>
                                               <Select
-                                                placeholder="Select tour guide"
+                                                placeholder="Select director"
                                                 mb="24px"
                                                 mr="10px"
                                                 onChange={(e) =>
-                                                  setDirector(e.target.value)
+                                                  setTourGuide(e.target.value)
                                                 }
                                               >
                                                 {englishDirector &&
@@ -659,7 +656,7 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        {row.values["language"] === "Italian" && (
+                                        {row.values["language"] === "italian" && (
                                           <Tr>
                                             <Td>Select Director</Td>
                                             <Td>
@@ -688,7 +685,7 @@ export default function RequestsTable(props) {
                                             </Td>
                                           </Tr>
                                         )}
-                                        
+
                                       </Tbody>
                                     </Table>
                                   </Box>
@@ -706,7 +703,7 @@ export default function RequestsTable(props) {
                                 <Button
                                   colorScheme="blue"
                                   mr={3}
-                                  onClick={()=>submit(row.values["_id"])}
+                                  onClick={() => submit(row.values["_id"])}
                                 >
                                   Accept
                                 </Button>

@@ -18,7 +18,8 @@ import {
   MdOutlineRequestQuote,
   MdOutlineRequestPage,
   MdRequestQuote,
-  MdRequestPage
+  MdRequestPage,
+  MdDynamicForm
 } from "react-icons/md";
 
 // Admin Imports
@@ -41,6 +42,7 @@ import admins from "views/admin/admintable/Admin"
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 import RequestsTable from "views/admin/requestsTable/requestTable";
+import ContactUs from "views/admin/contactUs/contactUs";
 
 const routes = [
   {
@@ -109,7 +111,7 @@ const routes = [
     name: "Reveiws Table",
     layout: "/admin",
     path: "/reveiws-table",
-    icon: <Icon as={MdMessage} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdDynamicForm} width='20px' height='20px' color='inherit' />,
     component: reveiws,
     role: ["superAdmin", "headAdmin"],
 
@@ -120,6 +122,15 @@ const routes = [
     path: "/requests-table",
     icon: <Icon as={MdRequestQuote} width='20px' height='20px' color='inherit' />,
     component: RequestsTable,
+    role: ["superAdmin", "headAdmin"],
+
+  },
+  {
+    name: "Contact Us Table",
+    layout: "/admin",
+    path: "/contactus-table",
+    icon: <Icon as={MdMessage} width='20px' height='20px' color='inherit' />,
+    component: ContactUs,
     role: ["superAdmin", "headAdmin"],
 
   },

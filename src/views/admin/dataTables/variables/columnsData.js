@@ -524,3 +524,22 @@ export const AllRequestsData = [
   },
 
 ];
+export const AllContactUsData = [
+  {
+    Header: "FULL NAME",
+    accessor: "fullName",
+  },
+  {
+    Header: "EMAIL",
+    accessor: "email",
+  },
+  {
+    Header: "SUBJECT",
+    accessor: "subject",
+  },
+  {
+    Header: "MESSAGE",
+    accessor: "message",
+  },
+
+];

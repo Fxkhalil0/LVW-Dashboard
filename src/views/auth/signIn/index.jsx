@@ -180,7 +180,6 @@ function SignIn() {
                   fontWeight='500'
                   size='lg'
                   onChange={(e) => {
-                    console.log(e.target.value)
                     setLoginEmail(e.target.value)
                   }}
                 />
@@ -202,7 +201,6 @@ function SignIn() {
                     size='lg'
                     type={show ? "text" : "password"}
                     onChange={(e) => {
-                      console.log(e.target.value)
                       setLoginPassword(e.target.value)
                     }}
                   // variant='auth'
@@ -255,7 +253,6 @@ function SignIn() {
                       password: loginPassword
                     }).then((res) => {
                       if (res.data.status === 200) {
-                        console.log(res.data.data)
                         setShowLoginSuccessModal(true)
                         localStorage.setItem("admin", JSON.stringify(res.data.data._id));
                         setTimeout(()=>{
@@ -419,7 +416,6 @@ function SignIn() {
                     fontWeight='500'
                     size='lg'
                     onChange={(e) => {
-                      console.log(e.target.value)
                       setSignUpName(e.target.value)
                     }}
                   />
@@ -445,7 +441,6 @@ function SignIn() {
                     fontWeight='500'
                     size='lg'
                     onChange={(e) => {
-                      console.log(e.target.value)
                       setSignUpEmail(e.target.value)
                     }}
                   />
@@ -467,7 +462,6 @@ function SignIn() {
                       size='lg'
                       type={show ? "text" : "password"}
                       onChange={(e) => {
-                        console.log(e.target.value)
                         setSignUpPasswors(e.target.value)
                       }}
                     // variant='auth'
@@ -495,7 +489,6 @@ function SignIn() {
                         password: signUpPassword
                       }).then((res) => {
                         if (res.data.status === 200) {
-                          console.log(res.data.data);
                           setShowRegisterSuccessModal(true)
                           setTimeout(() => {
                             setShowRegisterSuccessModal(false)

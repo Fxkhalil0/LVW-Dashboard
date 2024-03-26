@@ -486,7 +486,7 @@ function SignIn() {
                     h='50'
                     mb='24px'
                     onClick={() => {
-                      axios.post("http://localhost:5000/admin/register", {
+                      axios.post(`${uri}/admin/register`, {
                         name: signUpName,
                         email: signUpEnail,
                         password: signUpPassword

@@ -496,6 +496,7 @@ function SignIn() {
                           setTimeout(() => {
                             setShowRegisterSuccessModal(false)
                             toggleSignInForm()
+                          history.push("/auth/sign-in");
                           }, 3000)
                         }
                         else if(res.data.status === 400){

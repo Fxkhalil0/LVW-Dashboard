@@ -32,7 +32,7 @@ import axios from "axios";
 import { useHistory } from 'react-router-dom';
 require("dotenv").config();
 
-const uri = process.env.BACKEND_URI
+const uri = process.env.REACT_APP_BACKEND
 
 function SignIn() {
 

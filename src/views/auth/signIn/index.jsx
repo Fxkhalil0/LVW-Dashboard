@@ -30,7 +30,6 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import Footer from "components/footer/FooterAuth"
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
-require("dotenv").config();
 
 const uri = process.env.REACT_APP_BACKEND
 

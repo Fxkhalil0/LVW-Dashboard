@@ -5,14 +5,14 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
 import axios from "axios";
 
-
+const uri = process.env.REACT_APP_BACKEND
 export function SidebarLinks(props) {
   const [adminData, setAdminData] = useState()
   const [adminRole, setAdminRole] = useState(""); // State to store admin role
   console.log(adminRole)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+    axios.get(`${uri}/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
       setAdminData(res.data)
       setAdminRole(res.data?.role); // Update the adminRole state
       console.log(res.data)

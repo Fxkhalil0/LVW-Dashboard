@@ -30,6 +30,9 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import Footer from "components/footer/FooterAuth"
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
+require("dotenv").config();
+
+const uri = process.env.BACKEND_URI
 
 function SignIn() {
 
@@ -248,7 +251,7 @@ function SignIn() {
                   h='50'
                   mb='24px'
                   onClick={() => {
-                    axios.post("http://localhost:5000/admin/login", {
+                    axios.post(`${uri}/admin/login`, {
                       email: loginEmail,
                       password: loginPassword
                     }).then((res) => {

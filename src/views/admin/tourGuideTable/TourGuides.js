@@ -165,8 +165,6 @@ export default function TourGuidesTable() {
           </ModalContent>
         </Modal>
       </>
-
-
       <SimpleGrid
         mb='20px'
         columns={{ sm: 1, md: 1 }}

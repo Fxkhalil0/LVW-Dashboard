@@ -10,10 +10,12 @@ import tableAllUsers from "views/admin/dataTables/variables/tableAllUsers.json"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const uri = process.env.REACT_APP_BACKEND
+
 export default function UsersTable() {
   const [users,setUsers] =useState([])
 useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allUsers").then((res)=>{
+    axios.get(`${uri}/admin/allUsers`).then((res)=>{
       setUsers(res.data.data)
     })
   },[])

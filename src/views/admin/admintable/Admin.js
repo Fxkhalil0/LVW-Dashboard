@@ -21,6 +21,7 @@ import { AllAdminsData } from "views/admin/dataTables/variables/columnsData";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const uri = process.env.REACT_APP_BACKEND
 export default function ToursTable() {
   const [isRowModalOpen, setIsRowModalOpen] = useState(false);
   const [admins, setAdmins] = useState([])
@@ -32,7 +33,7 @@ export default function ToursTable() {
 
   // Chakra Color Mode
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/allAdmins").then((res) => {
+    axios.get(`${uri}/admin/allAdmins`).then((res) => {
       setAdmins(res.data.data)
     })
   }, [])
@@ -47,7 +48,7 @@ export default function ToursTable() {
   const handleSave = () => {
 
     console.log(name, email, password, adminRole)
-    axios.post(`http://localhost:5000/admin/addAdmin`, {
+    axios.post(`${uri}/admin/addAdmin`, {
       name: name,
       email: email,
       password: password,
@@ -56,7 +57,7 @@ export default function ToursTable() {
       .then((res) => {
         handleCloseModal();
         console.log("Admin added successfully:", res.data);
-        axios.get("http://localhost:5000/admin/allAdmins").then((res) => {
+        axios.get(`${uri}/admin/allAdmins`).then((res) => {
           setAdmins(res.data.data)
         })
       })

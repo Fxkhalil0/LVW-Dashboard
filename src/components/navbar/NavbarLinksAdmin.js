@@ -28,6 +28,9 @@ import { ThemeEditor } from './ThemeEditor';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+const uri = process.env.REACT_APP_BACKEND
+
+
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -49,7 +52,7 @@ export default function HeaderLinks(props) {
   console.log(adminRole)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+    axios.get(`${uri}/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
       setAdminData(res.data)
       setAdminRole(res.data?.role); // Update the adminRole state
       console.log(res.data)

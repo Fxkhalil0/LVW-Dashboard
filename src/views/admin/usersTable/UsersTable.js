@@ -16,7 +16,7 @@ export default function UsersTable() {
   const [users,setUsers] =useState([])
 useEffect(()=>{
     axios.get(`${uri}/admin/allUsers`).then((res)=>{
-      setUsers(res.data.data)
+      setUsers(res?.data?.data)
     })
   },[])
   // Chakra Color Mode

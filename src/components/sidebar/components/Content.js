@@ -6,6 +6,8 @@ import Links from "components/sidebar/components/Links";
 import SidebarCard from "components/sidebar/components/SidebarCard";
 import React , {useEffect, useState} from "react";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 // FUNCTIONS
 
@@ -13,7 +15,7 @@ function SidebarContent(props) {
   const [adminData , setAdminData] = useState()
 
   useEffect(()=> {
-    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res)=>{
+    axios.get(`${uri}/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res)=>{
       setAdminData(res.data)
     })
   },[])

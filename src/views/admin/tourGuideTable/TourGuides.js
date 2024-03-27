@@ -51,8 +51,9 @@ export default function TourGuidesTable() {
 
   useEffect(() => {
     axios.get(`${uri}/admin/allTourGuides`).then((res) => {
-      if(res.data.status == 200){}
+      if(res.data.status == 200){
       setTourGuides(res.data.data)
+      }
     })
   }, [])
   const handleOpenModal = () => {
@@ -77,8 +78,9 @@ export default function TourGuidesTable() {
       }
     })
     axios.get(`${uri}/admin/allTourGuides`).then((res) => {
-      console.log(res.data)
-      setTourGuides(res.data.data)
+      if(res.data.status == 200){
+        setTourGuides(res.data.data)
+        }
     })
     handleCloseModal();
   };

@@ -34,7 +34,9 @@ export default function ToursTable() {
   // Chakra Color Mode
   useEffect(() => {
     axios.get(`${uri}/admin/allAdmins`).then((res) => {
-      setAdmins(res.data.data)
+      if(res.data.status == 200){
+        setAdmins(res.data.data)
+      }
     })
   }, [])
   const handleOpenModal = () => {

@@ -45,7 +45,9 @@ export default function DirectorsTable() {
   // Chakra Color Mode
   useEffect(() => {
     axios.get(`${uri}/admin/allDirectors`).then((res) => {
-      setDirector(res.data.data)
+      if (res.data.status == 200) {
+        setDirector(res.data.data)
+      }
     })
   }, [])
 
@@ -67,11 +69,13 @@ export default function DirectorsTable() {
 
     axios.post(`${uri}/admin/addDirector`, formData).then((res) => {
       if (res.data.status === 200) {
-        console.log(res.data)
+        console.log(res.data.data)
       }
     })
     axios.get(`${uri}/admin/allDirectors`).then((res) => {
-      setDirector(res.data.data)
+      if (res.data.status == 200) {
+        setDirector(res.data.data)
+      }
     })
     handleCloseModal();
   };

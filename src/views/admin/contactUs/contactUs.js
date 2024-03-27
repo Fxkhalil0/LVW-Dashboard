@@ -16,7 +16,9 @@ export default function ContactUs() {
   const [contactUs ,setContactUs] =useState([])
 useEffect(()=>{
     axios.get(`${uri}/admin/allcontactus`).then((res)=>{
-      setContactUs(res.data.data)
+      if(res.data.status == 200){
+        setContactUs(res.data.data)
+        }
     })
   },[])
   // Chakra Color Mode

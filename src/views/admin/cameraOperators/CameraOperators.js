@@ -51,7 +51,9 @@ export default function CameraOperators() {
   const [cameraoperators, setCameraOperators] = useState([])
   useEffect(() => {
     axios.get(`${uri}/admin/allCameraOperators`).then((res) => {
-      setCameraOperators(res.data.data)
+      if(res.data.status == 200){
+        setCameraOperators(res.data.data)
+        }
     })
   }, [])
   const handleOpenModal = () => {
@@ -72,11 +74,13 @@ export default function CameraOperators() {
 
     axios.post(`${uri}/admin/addCameraOperator`, formData).then((res) => {
       if (res.data.status === 200) {
-        console.log(res.data.status)
+        console.log(res.data.data)
       }
     })
     axios.get(`${uri}/admin/allCameraOperators`).then((res) => {
-      setCameraOperators(res.data.data)
+      if(res.data.status == 200){
+        setCameraOperators(res.data.data)
+        }
     })
     
     handleCloseModal();

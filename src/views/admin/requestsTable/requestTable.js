@@ -13,13 +13,14 @@ const uri = process.env.REACT_APP_BACKEND
 
 
 export default function RequestsTable() {
-  const [requests,setRequests] =useState([])
-useEffect(()=>{
-    axios.get(`${uri}/admin/allRequests`).then((res)=>{
-      console.log(res)
-      setRequests(res.data.data)
+  const [requests, setRequests] = useState([])
+  useEffect(() => {
+    axios.get(`${uri}/admin/allRequests`).then((res) => {
+      if (res.data.status == 200) {
+        setRequests(res.data.data)
+      }
     })
-  },[])
+  }, [])
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -27,7 +28,7 @@ useEffect(()=>{
         mb='20px'
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}>
-            <AllRequestsTable columnsData={AllRequestsData} tableData={requests} />
+        <AllRequestsTable columnsData={AllRequestsData} tableData={requests} />
       </SimpleGrid>
     </Box>
   );

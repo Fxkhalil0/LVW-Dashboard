@@ -14,20 +14,22 @@ const uri = process.env.REACT_APP_BACKEND
 
 export default function ReveiwsTable() {
   // Chakra Color Mode
-  const [reviews,setReviews] = useState([])
+  const [reviews, setReviews] = useState([])
   // Chakra Color Mode
-  useEffect(()=>{
-    axios.get(`${uri}/admin/allReviews`).then((res)=>{
-      setReviews(res.data)
+  useEffect(() => {
+    axios.get(`${uri}/admin/allReviews`).then((res) => {
+      if (res.data.status == 200) {
+        setReviews(res.data)
+      }
     })
-  },[])
+  }, [])
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
         mb='20px'
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}>
-            <AllReveiwsTable columnsData={AllReveiwsData} tableData={reviews} />
+        <AllReveiwsTable columnsData={AllReveiwsData} tableData={reviews} />
       </SimpleGrid>
     </Box>
   );

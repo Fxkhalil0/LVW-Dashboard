@@ -17,7 +17,9 @@ export default function ToursTable() {
   // Chakra Color Mode
   useEffect(()=>{
     axios.get(`${uri}/admin/allTours`).then((res)=>{
-      setTours(res.data.data)
+      if(res.data.status == 200){
+        setTours(res.data.data)
+        }
     })
   },[])
   

@@ -9,11 +9,13 @@ import { AllRequestsData } from "views/admin/dataTables/variables/columnsData";
 import tableAllUsers from "views/admin/dataTables/variables/tableAllUsers.json"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function RequestsTable() {
   const [requests,setRequests] =useState([])
 useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allRequests").then((res)=>{
+    axios.get(`${uri}/admin/allRequests`).then((res)=>{
       console.log(res)
       setRequests(res.data.data)
     })

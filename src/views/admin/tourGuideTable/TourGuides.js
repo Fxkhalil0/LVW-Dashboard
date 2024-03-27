@@ -30,6 +30,8 @@ import { AllTourGuidesData, AllCameraOperatorsData } from "views/admin/dataTable
 import tableAllTourGuides from "views/admin/dataTables/variables/tableAllTourGuides.json"
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function TourGuidesTable() {
   
@@ -48,8 +50,7 @@ export default function TourGuidesTable() {
   const [tourGuides, setTourGuides] = useState([])
 
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/allTourGuides").then((res) => {
-      console.log(res.data.data)
+    axios.get(`${uri}/admin/allTourGuides`).then((res) => {
       setTourGuides(res.data.data)
     })
   }, [])
@@ -70,13 +71,12 @@ export default function TourGuidesTable() {
     formData.append("license", license);
     formData.append("role", tourGuideRole);
 
-    axios.post("http://localhost:5000/admin/addTourGuide", formData).then((res) => {
+    axios.post(`${uri}/admin/addTourGuide`, formData).then((res) => {
       if (res.data.status === 200) {
         console.log(res.data)
       }
     })
-    axios.get("http://localhost:5000/admin/allTourGuides").then((res) => {
-      console.log(res.data.data)
+    axios.get(`${uri}/admin/allTourGuides`).then((res) => {
       setTourGuides(res.data.data)
     })
     handleCloseModal();

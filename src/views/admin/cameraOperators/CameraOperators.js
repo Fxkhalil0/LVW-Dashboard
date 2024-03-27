@@ -35,6 +35,9 @@ import tableAllCameraOperators from "views/admin/dataTables/variables/tableAllCa
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const uri = process.env.REACT_APP_BACKEND
+
+
 export default function CameraOperators() {
 
 
@@ -47,7 +50,7 @@ export default function CameraOperators() {
 
   const [cameraoperators, setCameraOperators] = useState([])
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/allCameraOperators").then((res) => {
+    axios.get(`${uri}/admin/allCameraOperators`).then((res) => {
       setCameraOperators(res.data.data)
     })
   }, [])
@@ -67,12 +70,12 @@ export default function CameraOperators() {
     formData.append("cv", cv);
     formData.append("license", license);
 
-    axios.post("http://localhost:5000/admin/addCameraOperator", formData).then((res) => {
+    axios.post(`${uri}/admin/addCameraOperator`, formData).then((res) => {
       if (res.data.status === 200) {
-        console.log(res.data)
+        console.log(res.data.status)
       }
     })
-    axios.get("http://localhost:5000/admin/allCameraOperators").then((res) => {
+    axios.get(`${uri}/admin/allCameraOperators`).then((res) => {
       setCameraOperators(res.data.data)
     })
     

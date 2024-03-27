@@ -9,6 +9,8 @@ import Card from "components/card/Card.js";
 import React , { useState, useEffect } from "react";
 import Project from "views/admin/profile/components/Project";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function Projects(props) {
   // Chakra Color Mode
@@ -23,10 +25,9 @@ export default function Projects(props) {
   console.log(adminRole)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+    axios.get(`${uri}/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
       setAdminData(res.data)
       setAdminRole(res.data?.role); // Update the adminRole state
-      console.log(res.data)
     })
   }, [])
   if(adminRole === "superAdmin"){

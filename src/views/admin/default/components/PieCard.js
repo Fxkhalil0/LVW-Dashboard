@@ -8,6 +8,9 @@ import { VSeparator } from "components/separator/Separator";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const uri = process.env.REACT_APP_BACKEND
+
+
 export default function Conversion(props) {
   const { ...rest } = props;
   const [publicData,setPublicData] = useState(0)
@@ -27,9 +30,9 @@ export default function Conversion(props) {
     const fetchData = async () => {
       try {
         const [vipResponse, publicResponse, allToursResponse] = await Promise.all([
-          axios.get("http://localhost:5000/admin/vip"),
-          axios.get("http://localhost:5000/admin/public"),
-          axios.get("http://localhost:5000/admin/allTours"),
+          axios.get(`${uri}/admin/vip`),
+          axios.get(`${uri}/admin/public`),
+          axios.get(`${uri}/admin/allTours`),
         ]);
 
         setVip(vipResponse.data.length);
@@ -47,7 +50,6 @@ export default function Conversion(props) {
   useEffect(()=>{
     if (publicData !== 0 && vip !== 0) {
       setCharts([publicData, vip])
-      console.log("Charts updated:", [publicData, vip]);
     }
   },[publicData,vip])
   
@@ -88,9 +90,6 @@ export default function Conversion(props) {
           <Flex align='center'>
             <Box h='8px' w='8px' bg='brand.500' borderRadius='50%' me='5px' marginBottom='4px'/>
             <Text onClick={()=>{
-              console.log(publicData,"pub")
-              console.log(vip,"vip")
-              console.log(tours,"vip")
             }}
               fontSize='xs'
               color='secondaryGray.600'

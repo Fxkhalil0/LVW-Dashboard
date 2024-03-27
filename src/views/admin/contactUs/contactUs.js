@@ -9,10 +9,13 @@ import { AllContactUsData } from "views/admin/dataTables/variables/columnsData";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const uri = process.env.REACT_APP_BACKEND
+
+
 export default function ContactUs() {
   const [contactUs ,setContactUs] =useState([])
 useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allcontactus").then((res)=>{
+    axios.get(`${uri}/admin/allcontactus`).then((res)=>{
       setContactUs(res.data.data)
     })
   },[])

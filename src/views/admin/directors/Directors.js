@@ -30,6 +30,8 @@ import { AllDirectorsData } from "views/admin/dataTables/variables/columnsData";
 import tableAllDirectors from "views/admin/dataTables/variables/tableAllDirectors.json"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 export default function DirectorsTable() {
 
   const [isRowModalOpen, setIsRowModalOpen] = useState(false);
@@ -42,7 +44,7 @@ export default function DirectorsTable() {
   const [director, setDirector] = useState([])
   // Chakra Color Mode
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/allDirectors").then((res) => {
+    axios.get(`${uri}/admin/allDirectors`).then((res) => {
       setDirector(res.data.data)
     })
   }, [])
@@ -63,15 +65,14 @@ export default function DirectorsTable() {
     formData.append("cv", cv);
     formData.append("license", license);
 
-    axios.post("http://localhost:5000/admin/addDirector", formData).then((res) => {
+    axios.post(`${uri}/admin/addDirector`, formData).then((res) => {
       if (res.data.status === 200) {
         console.log(res.data)
       }
     })
-    axios.get("http://localhost:5000/admin/allDirectors").then((res) => {
+    axios.get(`${uri}/admin/allDirectors`).then((res) => {
       setDirector(res.data.data)
     })
-    
     handleCloseModal();
   };
 

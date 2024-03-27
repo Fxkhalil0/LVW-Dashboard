@@ -9,12 +9,14 @@ import { AllToursData } from "views/admin/dataTables/variables/columnsData";
 import tableAllTours from "views/admin/dataTables/variables/tableAllTours.json"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function ToursTable() {
   const [tours,setTours] =useState([])
   // Chakra Color Mode
   useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allTours").then((res)=>{
+    axios.get(`${uri}/admin/allTours`).then((res)=>{
       setTours(res.data.data)
     })
   },[])

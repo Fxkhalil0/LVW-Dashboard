@@ -9,14 +9,15 @@ import { AllReveiwsData } from "views/admin/dataTables/variables/columnsData";
 import tableAllReveiws from "views/admin/dataTables/variables/tableAllReveiws.json"
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function ReveiwsTable() {
   // Chakra Color Mode
   const [reviews,setReviews] = useState([])
   // Chakra Color Mode
   useEffect(()=>{
-    axios.get("http://localhost:5000/admin/allReviews").then((res)=>{
-      console.log(res.data)
+    axios.get(`${uri}/admin/allReviews`).then((res)=>{
       setReviews(res.data)
     })
   },[])

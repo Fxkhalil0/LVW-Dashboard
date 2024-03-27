@@ -1,7 +1,7 @@
 
 
 // Chakra imports
-import { Box, Grid, Flex, Text, Button, useColorModeValue} from "@chakra-ui/react";
+import { Box, Grid, Flex, Text, Button, useColorModeValue } from "@chakra-ui/react";
 import SuccessandEroorModal from "../../../views/admin/SuccessandErorrModals/SuccessandErrorModals"
 // Custom components
 import Banner from "views/admin/profile/components/Banner";
@@ -19,30 +19,29 @@ import Nft2 from "assets/img/nfts/Nft2.png";
 import Nft5 from "assets/img/nfts/Nft5.png";
 
 
-import React, { useEffect , useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
 
 export default function Overview() {
-  
+
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const [adminData, setAdminData] = useState()
   const [adminRole, setAdminRole] = useState(""); // State to store admin role
-  console.log(adminRole)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
+    axios.get(`${uri}/admin/oneAdmin/${JSON.parse(localStorage.getItem('admin'))}`).then((res) => {
       setAdminData(res.data)
       setAdminRole(res.data?.role); // Update the adminRole state
-      console.log(res.data)
     })
   }, [])
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      
 
-      
-      
+
+
+
       {/* Main Fields */}
       <Grid
         templateColumns={{
@@ -61,7 +60,7 @@ export default function Overview() {
           name={adminData?.name}
           email={adminData?.email}
           Role={adminData?.role}
-          
+
         />
         <Calender
           gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
@@ -71,50 +70,50 @@ export default function Overview() {
           pt='30px'
         />
         <Box
-  gridArea={{
-    base: "3 / 1 / 4 / 2",
-    lg: "1 / 3 / 2 / 4",
-  }}
-  minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
-  pe='20px'
-  pb={{ base: "100px", lg: "20px" }}
->
-  <Card p='4px'>
-    <Flex
-      align={{ sm: "flex-start", lg: "center" }}
-      justify='space-between'
-      w='100%'
-      px='22px'
-      py='18px'
-    >
-      <Text color={textColor} fontSize='xl' fontWeight='600'>
-        History
-      </Text>
-    </Flex>
+          gridArea={{
+            base: "3 / 1 / 4 / 2",
+            lg: "1 / 3 / 2 / 4",
+          }}
+          minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
+          pe='20px'
+          pb={{ base: "100px", lg: "20px" }}
+        >
+          <Card p='4px'>
+            <Flex
+              align={{ sm: "flex-start", lg: "center" }}
+              justify='space-between'
+              w='100%'
+              px='22px'
+              py='18px'
+            >
+              <Text color={textColor} fontSize='xl' fontWeight='600'>
+                History
+              </Text>
+            </Flex>
 
-    <HistoryItem
-      name='Colorful Heaven'
-      location='Paris, France'
-      date='OCT 22, 2022'
-      image={Nft5}
-      price='100'
-    />
-    <HistoryItem
-      name='Abstract Colors'
-      location='Cairo, Egypt'
-      date='OCT 22, 2022'
-      image={Nft1}
-      price='100'
-    />
-    <HistoryItem
-      name='Old Museum'
-      location='Milano, Italy'
-      date='OCT 22, 2022'
-      image={Nft2}
-      price='100'
-    />
-  </Card>
-</Box>
+            <HistoryItem
+              name='Colorful Heaven'
+              location='Paris, France'
+              date='OCT 22, 2022'
+              image={Nft5}
+              price='100'
+            />
+            <HistoryItem
+              name='Abstract Colors'
+              location='Cairo, Egypt'
+              date='OCT 22, 2022'
+              image={Nft1}
+              price='100'
+            />
+            <HistoryItem
+              name='Old Museum'
+              location='Milano, Italy'
+              date='OCT 22, 2022'
+              image={Nft2}
+              price='100'
+            />
+          </Card>
+        </Box>
       </Grid>
       <Grid
         mb='20px'

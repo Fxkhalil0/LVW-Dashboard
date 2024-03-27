@@ -30,6 +30,8 @@ import tableTours from "views/admin/default/variables/tableTours.json";
 import tableCameraOperators from "views/admin/default/variables/tableCameraOperators.json"
 import axios from 'axios';
 
+const uri = process.env.REACT_APP_BACKEND
+
 export default function UserReports() {
   const [earnings,setEarnings] = useState(0)
   const [tours,setTours]=useState(0)
@@ -48,53 +50,53 @@ export default function UserReports() {
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/allRevenue").then((res)=>{
+    axios.get(`${uri}/admin/allRevenue`).then((res)=>{
     setEarnings(res.data)
     })
-    axios.get("http://localhost:5000/admin/allTours").then((res)=>{
-      if(res.data.status === 400){
+    axios.get(`${uri}/admin/allTours`).then((res)=>{
+      if(res.data.status === 200){
       setTours(res.data.data.length)}
       else{
         setTours(0)
       }
     })
-    axios.get("http://localhost:5000/admin/allUsers").then((res)=>{
-      if(res.data.status === 400){
+    axios.get(`${uri}/admin/allUsers`).then((res)=>{
+      if(res.data.status === 200){
         setUsers(res.data.data.length)}
         else{
           setUsers(0)
         }
     })
-    axios.get("http://localhost:5000/admin/allCameraOperators").then((res)=>{
-      if(res.data.status === 400){
+    axios.get(`${uri}/admin/allCameraOperators`).then((res)=>{
+      if(res.data.status === 200){
         setCameraOperators(res.data.data.length)}
         else{
           setCameraOperators(0)
         }
     })
-    axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
-      if(res.data.status === 400){
+    axios.get(`${uri}/admin/allDirectors`).then((res)=>{
+      if(res.data.status === 200){
         setDirectors(res.data.data.length)}
         else{
           setDirectors(0)
         }
     })
-    axios.get("http://localhost:5000/admin/topFiveTourGuides").then((res)=>{
+    axios.get(`${uri}/admin/topFiveTourGuides`).then((res)=>{
       setTopTourGuides(res.data)
       console.log(res.data)
     })
-    axios.get("http://localhost:5000/admin/topFiveDirectors").then((res)=>{
+    axios.get(`${uri}/admin/topFiveDirectors`).then((res)=>{
       setTopDirectors(res.data)
       console.log(res.data)
     })
-    axios.get("http://localhost:5000/admin/topFiveCameraOperators").then((res)=>{
+    axios.get(`${uri}/admin/topFiveCameraOperators`).then((res)=>{
       setTopCameraOperators(res.data)
     })
-    axios.get("http://localhost:5000/admin/topFiveTours").then((res)=>{
+    axios.get(`${uri}/admin/topFiveTours`).then((res)=>{
       setTopTours(res.data)
     })
-    axios.get("http://localhost:5000/admin//allTourGuides").then((res)=>{
-      if(res.data.status === 400){
+    axios.get(`${uri}/admin//allTourGuides`).then((res)=>{
+      if(res.data.status === 200){
         setTourGuides(res.data.data.length)}
         else{
           setTourGuides(0)

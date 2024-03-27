@@ -50,6 +50,8 @@ import React, { useState, useEffect } from "react";
 import { MdEdit, MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function Project(props) {
   const { title, ranking, link, image, selectRange, ...rest } = props;
@@ -93,11 +95,9 @@ export default function Project(props) {
       )
       .then((res) => {
         setAllCountriesData(res.data);
-        console.log(res.data);
         let countries = [...new Set(res.data.map((item) => item.country))];
         countries.sort();
         setCountry(countries);
-        console.log(countries);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -139,7 +139,6 @@ export default function Project(props) {
     );
     setFormData({ ...formData, date: selectedDate.toISOString() });
     onChange(selectedDate);
-    console.log(selectedDate);
     onClose();
   };
 
@@ -206,7 +205,6 @@ export default function Project(props) {
     const updatedInstructions = [...instructions];
     updatedInstructions[index] = value;
     setInstructions(updatedInstructions);
-    console.log(instructions);
     setFormData({ ...formData, instructions: instructions });
   };
   const handleImagesSelect = (imageFiles) => {
@@ -230,8 +228,6 @@ export default function Project(props) {
     formDataToSend.append("category", category);
     formDataToSend.append("tourType", tourType);
 
-    console.log("my start time is:", formData.startTime);
-    console.log("my start time type:", typeof formData.startTime);
 
     // Append the language fields to formDataToSend
     formData.language.forEach((language) => {
@@ -267,62 +263,59 @@ export default function Project(props) {
     formData.images.forEach((image, index) => {
       formDataToSend.append(`images`, image);
     });
-    console.log(formData);
     // Now you can use formDataToSend to submit your data
 
     axios
-      .post("http://localhost:5000/admin/addTour", formDataToSend, {})
+      .post(`${uri}/admin/addTour`, formDataToSend, {})
       .then((res) => {
-        console.log(res.data);
         if (res.data.status === 200) {
-          setErrorMsg(res.data.message);
-          setShowErrorModal(true);
-          setTimeout(() => {
-            setShowErrorModal(false);
-          }, 3000);
-        } else if (res.data.status === 400) {
+          console.log(res.data.status)
           setShowSuccessModal(true);
           setTimeout(() => {
             setShowSuccessModal(false);
             window.location.reload();
           }, 3000);
+        } else if (res.data.status === 400) {
+          setErrorMsg(res.data.message);
+          setShowErrorModal(true);
+          setTimeout(() => {
+            setShowErrorModal(false);
+          }, 3000);
         }
       });
   };
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/arabicTourGuides").then((res) => {
-      console.log(res.data.data);
+    axios.get(`${uri}/admin/arabicTourGuides`).then((res) => {
       setArabicTourGuides(res.data.data);
-      console.log(arabicTourGuides);
     });
     axios
-      .get("http://localhost:5000/admin/arabicCameraOperators")
+      .get(`${uri}/admin/arabicCameraOperators`)
       .then((res) => {
         setArabicCameraOperators(res.data.data);
       });
-    axios.get("http://localhost:5000/admin/arabicDierctors").then((res) => {
+    axios.get(`${uri}/admin/arabicDierctors`).then((res) => {
       setArabicDirectors(res.data.data);
     });
-    axios.get("http://localhost:5000/admin/englishTourGuides").then((res) => {
+    axios.get(`${uri}/admin/englishTourGuides`).then((res) => {
       setEnglishTourGuides(res.data.data);
     });
     axios
-      .get("http://localhost:5000/admin/englishCameraOperator")
+      .get(`${uri}/admin/englishCameraOperator`)
       .then((res) => {
         setEnglishCameraOperators(res.data.data);
       });
-    axios.get("http://localhost:5000/admin/englishDirectors").then((res) => {
+    axios.get(`${uri}/admin/englishDirectors`).then((res) => {
       setEnglishDirectors(res.data.data);
     });
-    axios.get("http://localhost:5000/admin/italianoTourGuides").then((res) => {
+    axios.get(`${uri}/admin/italianoTourGuides`).then((res) => {
       setItalianTourGuides(res.data.data);
     });
     axios
-      .get("http://localhost:5000/admin/italianoCameraOperator")
+      .get(`${uri}/admin/italianoCameraOperator`)
       .then((res) => {
         setItalianCameraOperators(res.data.data);
       });
-    axios.get("http://localhost:5000/admin/italianoDirectors").then((res) => {
+    axios.get(`${uri}/admin/italianoDirectors`).then((res) => {
       setItalianDirectors(res.data.data);
     });
   }, [formData]);
@@ -392,8 +385,8 @@ export default function Project(props) {
                 value={
                   value
                     ? new Date(value).toLocaleDateString("en-GB", {
-                        timeZone: "Africa/Cairo",
-                      })
+                      timeZone: "Africa/Cairo",
+                    })
                     : ""
                 }
                 placeholder="Select date"
@@ -449,57 +442,57 @@ export default function Project(props) {
                   setAddAddress(e.target.value);
                   const arabicTourGuidesLocation = arabicTourGuides
                     ? arabicTourGuides.filter(
-                        (theArabictourGuide) =>
-                          theArabictourGuide?.address === e.target.value
-                      )
+                      (theArabictourGuide) =>
+                        theArabictourGuide?.address === e.target.value
+                    )
                     : [];
                   const arabicOperatorsLocation = arabicCameraOperators
                     ? arabicCameraOperators.filter(
-                        (theArabicOperator) =>
-                          theArabicOperator?.address === e.target.value
-                      )
+                      (theArabicOperator) =>
+                        theArabicOperator?.address === e.target.value
+                    )
                     : [];
                   const arabicDirectorsLocation = arabicDirectors
                     ? arabicDirectors.filter(
-                        (theArabicDirector) =>
-                          theArabicDirector?.address === e.target.value
-                      )
+                      (theArabicDirector) =>
+                        theArabicDirector?.address === e.target.value
+                    )
                     : [];
                   const englishTourGuidesLocation = englishTourGuides
                     ? englishTourGuides.filter(
-                        (theEnglishtourGuide) =>
-                          theEnglishtourGuide?.address === e.target.value
-                      )
+                      (theEnglishtourGuide) =>
+                        theEnglishtourGuide?.address === e.target.value
+                    )
                     : [];
                   const englishOperatorsLocation = englishCameraOperators
                     ? englishCameraOperators.filter(
-                        (theEnglishOperator) =>
-                          theEnglishOperator?.address === e.target.value
-                      )
+                      (theEnglishOperator) =>
+                        theEnglishOperator?.address === e.target.value
+                    )
                     : [];
                   const englishDirectorsLocation = englishDirectors
                     ? englishDirectors.filter(
-                        (theEnglishDirector) =>
-                          theEnglishDirector?.address === e.target.value
-                      )
+                      (theEnglishDirector) =>
+                        theEnglishDirector?.address === e.target.value
+                    )
                     : [];
                   const italianTourGuidesLocation = italianTourGuides
                     ? italianTourGuides.filter(
-                        (theItaliantourGuide) =>
-                          theItaliantourGuide?.address === e.target.value
-                      )
+                      (theItaliantourGuide) =>
+                        theItaliantourGuide?.address === e.target.value
+                    )
                     : [];
                   const italianOperatorsLocation = italianCameraOperators
                     ? italianCameraOperators.filter(
-                        (theItalianOperator) =>
-                          theItalianOperator?.address === e.target.value
-                      )
+                      (theItalianOperator) =>
+                        theItalianOperator?.address === e.target.value
+                    )
                     : [];
                   const italianDirectorsLocation = italianDirectors
                     ? italianDirectors.filter(
-                        (theItalianDirector) =>
-                          theItalianDirector?.address === e.target.value
-                      )
+                      (theItalianDirector) =>
+                        theItalianDirector?.address === e.target.value
+                    )
                     : [];
                   setArabicGuideLocation(arabicTourGuidesLocation);
                   setArabicOperatorLocation(arabicOperatorsLocation);
@@ -956,7 +949,6 @@ export default function Project(props) {
             variant="brand"
             mt="40px"
             display="block"
-            // onClick={() => console.log(formData)}
             onClick={handleSubmit}
           >
             Submit

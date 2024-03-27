@@ -35,6 +35,8 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
+
 
 export default function RequestsTable(props) {
   const { columnsData, tableData } = props;
@@ -90,39 +92,37 @@ export default function RequestsTable(props) {
   const [director, setDirector] = useState("")
 
   useEffect(() => {
-    axios.get("http://localhost:5000/admin/arabicTourGuides").then((res) => {
-      console.log(res.data.data);
+    axios.get(`${uri}/admin/arabicTourGuides`).then((res) => {
       setArabicTourGuide(res.data.data);
-      // console.log(arabicTourGuides);
     });
     axios
-      .get("http://localhost:5000/admin/arabicCameraOperators")
+      .get(`${uri}/admin/arabicCameraOperators`)
       .then((res) => {
         setArabicCameraOperators(res.data.data);
       });
-    axios.get("http://localhost:5000/admin/arabicDierctors").then((res) => {
+    axios.get(`${uri}/admin/arabicDierctors`).then((res) => {
       setArabicDirectors(res.data.data);
     });
-    axios.get("http://localhost:5000/admin/englishTourGuides").then((res) => {
+    axios.get(`${uri}/admin/englishTourGuides`).then((res) => {
       setEnglishTourGuide(res.data.data);
     });
     axios
-      .get("http://localhost:5000/admin/englishCameraOperator")
+      .get(`${uri}/admin/englishCameraOperator`)
       .then((res) => {
         setEnglishCameraOperators(res.data.data);
       });
-    axios.get("http://localhost:5000/admin/englishDirectors").then((res) => {
+    axios.get(`${uri}/admin/englishDirectors`).then((res) => {
       setEnglishDirector(res.data.data);
     });
-    axios.get("http://localhost:5000/admin/italianoTourGuides").then((res) => {
+    axios.get(`${uri}/admin/italianoTourGuides`).then((res) => {
       setItalianTourGuide(res.data.data);
     });
     axios
-      .get("http://localhost:5000/admin/italianoCameraOperator")
+      .get(`${uri}/admin/italianoCameraOperator`)
       .then((res) => {
         setItalianCameraOperators(res.data.data);
       });
-    axios.get("http://localhost:5000/admin/italianoDirectors").then((res) => {
+    axios.get(`${uri}/admin/italianoDirectors`).then((res) => {
       setItalianDirectors(res.data.data);
     });
   }, []);
@@ -150,9 +150,8 @@ export default function RequestsTable(props) {
   };
 
   function submit(id) {
-    axios.get("http://localhost:5000/admin/requestById", { params: { id: id } }).then((res) => {
-      console.log(res.data)
-      axios.post("http://localhost:5000/admin/acceptRequest", {
+    axios.get(`${uri}/admin/requestById`, { params: { id: id } }).then((res) => {
+      axios.post(`${uri}/admin/acceptRequest`, {
         tour: res.data.data.tour,
         language: res.data.data.language,
         emails: res.data.data.emails,
@@ -166,11 +165,9 @@ export default function RequestsTable(props) {
         if(result.data.status == 200 ){
           window.location.reload();
         } else{
-          console.log(result)
         }
       })
     })
-    console.log(id)
   }
 
   return (

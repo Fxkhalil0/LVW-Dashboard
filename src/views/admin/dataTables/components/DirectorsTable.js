@@ -32,6 +32,7 @@ import {
   // Custom components
   import Card from "components/card/Card";
 import axios from "axios";
+const uri = process.env.REACT_APP_BACKEND
 
 
   export default function DirectorsTable(props) {
@@ -61,7 +62,7 @@ import axios from "axios";
       prepareRow,
       initialState,
     } = tableInstance;
-    initialState.pageSize = 11;
+    initialState.pageSize = 5;
   
     const textColor = useColorModeValue("secondaryGray.900", "white");
     const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -165,7 +166,7 @@ import axios from "axios";
                       );
                     } 
                       else if (cell.column.Header === "cv") {
-                        const pdfUrl = `http://localhost:5000/${cell.value}`;
+                        const pdfUrl = `${uri}/${cell.value}`;
                         let fileName = pdfUrl.substring(pdfUrl.lastIndexOf('/') + 1);
                         fileName = fileName.replace(/^\d+/, '');
                         data = (
@@ -175,7 +176,7 @@ import axios from "axios";
                         );
                       }
                       else if (cell.column.Header === "Licence") {
-                        const pdfUrl = `http://localhost:5000/${cell.value}`;
+                        const pdfUrl = `${uri}/${cell.value}`;
                         let fileName = pdfUrl.substring(pdfUrl.lastIndexOf('/') + 1);
                         fileName = fileName.replace(/^\d+/, '');
                         data = (
@@ -187,30 +188,30 @@ import axios from "axios";
                       else if (cell.column.Header === "action") {
                         data = row.values["status"] === "pending" ? (
                           <Button onClick={() => {
-                            axios.put("http://localhost:5000/admin/accept", {
+                            axios.put(`${uri}/admin/accept`, {
                               id: row.values["_id"],
                             }).then((res)=>{
-                              axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+                              axios.get(`${uri}/admin/allDirectors`).then((res)=>{
                                 setData(res.data.data)
                               })
                             })
                           }} colorScheme="blue">accept</Button>
                         ) : row.values["status"] === "accepted" ? (
                           <Button onClick={() => {
-                            axios.put("http://localhost:5000/admin/block", {
+                            axios.put(`${uri}/admin/block`, {
                               id: row.values["_id"]
                             }).then((res)=>{
-                              axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+                              axios.get(`${uri}/admin/allDirectors`).then((res)=>{
                                 setData(res.data.data)
                               })
                             })
                           }} colorScheme="blue">block</Button>
                         ) : row.values["status"] === "blocked" ? (
                           <Button onClick={() => {
-                            axios.put("http://localhost:5000/admin/unblock", {
+                            axios.put(`${uri}/admin/unblock`, {
                               id: row.values["_id"]
                             }).then((res)=>{
-                              axios.get("http://localhost:5000/admin/allDirectors").then((res)=>{
+                              axios.get(`${uri}/admin/allDirectors`).then((res)=>{
                                 setData(res.data.data)
                               })
                             })

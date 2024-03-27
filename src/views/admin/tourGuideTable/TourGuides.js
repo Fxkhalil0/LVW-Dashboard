@@ -51,9 +51,8 @@ export default function TourGuidesTable() {
 
   useEffect(() => {
     axios.get(`${uri}/admin/allTourGuides`).then((res) => {
-      if(res.data.status == 200){
-        setTourGuides(res.data.data)
-      }
+      if(res.data.status == 200){}
+      setTourGuides(res.data.data)
     })
   }, [])
   const handleOpenModal = () => {
@@ -171,9 +170,8 @@ export default function TourGuidesTable() {
         mb='20px'
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}>
-
         <AllTourGuidesTable columnsData={AllTourGuidesData} tableData={tourGuides} />
-
+                      
       </SimpleGrid>
     </Box>
   );

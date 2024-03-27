@@ -51,6 +51,7 @@ export default function TourGuidesTable() {
 
   useEffect(() => {
     axios.get(`${uri}/admin/allTourGuides`).then((res) => {
+      console.log(res.data.data)
       setTourGuides(res.data.data)
     })
   }, [])

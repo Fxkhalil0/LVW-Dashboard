@@ -51,8 +51,10 @@ export default function TourGuidesTable() {
 
   useEffect(() => {
     axios.get(`${uri}/admin/allTourGuides`).then((res) => {
-      console.log(res)
-      setTourGuides(res.data.data)
+      if(res.data.status == 200){
+
+        setTourGuides(res.data.data)
+      }
     })
   }, [])
   const handleOpenModal = () => {

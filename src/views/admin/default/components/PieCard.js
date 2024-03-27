@@ -35,9 +35,9 @@ export default function Conversion(props) {
           axios.get(`${uri}/admin/allTours`),
         ]);
 
-        setVip(vipResponse.data.length);
-        setPublicData(publicResponse.data.length);
-        setTours(allToursResponse.data.data.length);
+        setVip(vipResponse?.data?.length);
+        setPublicData(publicResponse?.data?.length);
+        setTours(allToursResponse?.data?.data?.length);
         // setCharts([publicResponse.data.length,vipResponse.data.length])
         setLoading(false);
       } catch (error) {

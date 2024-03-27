@@ -74,10 +74,10 @@ export default function TourGuidesTable() {
 
     axios.post(`${uri}/admin/addTourGuide`, formData).then((res) => {
       if (res.data.status === 200) {
-        console.log(res.data)
       }
     })
     axios.get(`${uri}/admin/allTourGuides`).then((res) => {
+      console.log(res.data)
       setTourGuides(res.data.data)
     })
     handleCloseModal();
